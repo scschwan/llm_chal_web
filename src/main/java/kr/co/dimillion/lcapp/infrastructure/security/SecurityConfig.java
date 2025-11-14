@@ -19,13 +19,13 @@ public class SecurityConfig {
     UserDetailsService userDetailsService() {
         UserDetails worker = User.withDefaultPasswordEncoder()
                 .username("worker")
-                .password("1234")
+                .password("worker")
                 .roles(Role.WORKER.name())
                 .build();
 
         UserDetails admin = User.withDefaultPasswordEncoder()
                 .username("admin")
-                .password("1234")
+                .password("admin")
                 .roles(Role.ADMIN.name())
                 .build();
 
