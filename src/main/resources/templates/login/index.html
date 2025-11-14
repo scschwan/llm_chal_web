@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link th:href="@{/output.css}" rel="stylesheet">
+</head>
+<body class="w-full min-h-screen font-pretendard bg-[linear-gradient(135deg,_#667eea_0%,_#764ba2_100%)] flex justify-center items-center">
+
+<div class="bg-white p-[40px] rounded-[10px] max-w-[400px] w-full shadow-[0_10px_25px_rgba(0,0,0,0.2)]">
+    <div class="text-[60px] mb-[20px] text-center">
+        🔍
+    </div>
+    <div class="font-bold text-[28px] text-[#333] mb-[10px] text-center">
+        불량 검출 시스템
+    </div>
+    <div class="text-[#666] text-[14px] text-center mb-[30px]">
+        Manufacturing Defect Detection System
+    </div>
+    <div class="flex justify-between items-center font-medium text-[#999] w-[320px] h-[49px] mb-[25px] border-b-[1.5px] border-b-[rgb(240,240,240)]">
+        <label class="role-tab w-[160px] h-[49px] cursor-pointer transition-all duration-300 ease-in-out hover:bg-[rgb(249,249,249)] flex justify-center items-center "
+               data-role="worker">
+            <span>👷 작업자</span>
+        </label>
+        <label class="role-tab w-[160px] h-[49px] cursor-pointer transition-all duration-300 ease-in-out hover:bg-[rgb(249,249,249)] flex justify-center items-center"
+               data-role="admin">
+            <span>
+                👨‍💼 관리자
+            </span>
+        </label>
+    </div>
+    <form th:action="@{/login}" method="post" class="flex flex-col w-[320px]">
+        <div class="flex flex-col mb-[20px]">
+            <label class="text-[#555] text-[14px] font-medium mb-[8px]">아이디</label>
+            <input class="py-[12px] px-[15px] border-[1px] text-[14px] border-[rgb(221,221,221)] rounded-[6px] focus:border-[#667eea]"
+                   type="text" name="username" autofocus/>
+        </div>
+        <div class="flex flex-col mb-[20px]">
+            <label class="text-[#555] text-[14px] font-medium mb-[8px]">비밀번호 </label>
+            <input class="py-[12px] px-[15px] border-[1px] text-[14px] border-[rgb(221,221,221)] rounded-[6px] focus:border-[#667eea]"
+                   type="password" name="password"/>
+        </div>
+        <button type="submit"
+                class="w-full p-[14px] bg-[linear-gradient(135deg,_#667eea_0%,_#764ba2_100%)] text-white rounded-[6px] text-[16px] font-semibold">
+            로그인
+        </button>
+    </form>
+    <div class="w-[320px] bg-[#f9f9f9] p-[15px] rounded-[6px] mt-[20px] text-[13px text-[#666]">
+        <div class="mb-[8px] text-[#333] text-[13px] font-bold">
+            테스트 계정
+        </div>
+        <div id="role-desc-worker" class="bg-white p-[8px] rounded-[4px] mt-[5px] text-[13px] text-[#666] font-mono">
+            ID: worker / PW: worker
+        </div>
+        <div id="role-desc-admin" class="bg-white p-[8px] rounded-[4px] mt-[5px] text-[13px] text-[#666] font-mono">
+            ID: admin / PW: admin
+        </div>
+    </div>
+</div>
+<!--TODO: Modal-->
+<div th:if="${param.error}">
+    <p>아이디 혹은 비밀번호가 잘못되었습니다.</p>
+</div>
+
+<script>
+    let current = 'worker';
+
+    function updateUI() {
+        document.querySelectorAll('.role-tab').forEach(tab => {
+            const active = tab.dataset.role === current;
+            tab.classList.toggle('text-[#667eea]', active);
+            tab.classList.toggle('border-b-[3px]', active);
+            tab.classList.toggle('border-b-[#667eea]', active);
+
+        });
+        document.getElementById('role-desc-worker').style.display = (current === 'worker' ? '' : 'none');
+        document.getElementById('role-desc-admin').style.display = (current === 'admin' ? '' : 'none');
+    }
+
+    document.querySelectorAll('.role-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            current = tab.dataset.role;
+            updateUI();
+        });
+    });
+
+    // 최초 렌더링 상태
+    updateUI();
+</script>
+
+</body>
+</html>
