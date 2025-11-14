@@ -1,6 +1,5 @@
-package kr.co.dimillion.lcapp.infrastructure;
+package kr.co.dimillion.lcapp.infrastructure.security;
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.co.dimillion.lcapp.application.Role;
