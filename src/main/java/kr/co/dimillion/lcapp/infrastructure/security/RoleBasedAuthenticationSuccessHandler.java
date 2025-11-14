@@ -17,11 +17,10 @@ public class RoleBasedAuthenticationSuccessHandler implements AuthenticationSucc
         for (GrantedAuthority auth : authentication.getAuthorities()) {
             if (auth.getAuthority().equals(Role.WORKER.getAuthority())) {
                 redirectUrl = "/";
-                break;
             } else {
                 redirectUrl = "/admin";
-                break;
             }
+            break;
         }
 
         response.sendRedirect(redirectUrl);
