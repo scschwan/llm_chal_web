@@ -42,8 +42,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .anyRequest().authenticated())
                 .formLogin(login -> login
+                        .loginPage("/login").permitAll()
+                        .loginProcessingUrl("/login").permitAll()
                         .successHandler(new RoleBasedAuthenticationSuccessHandler()));
-
         return http.build();
     }
 }
