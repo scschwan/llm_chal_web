@@ -42,7 +42,8 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .anyRequest().authenticated())
-                .formLogin(Customizer.withDefaults());
+                .formLogin(login -> login
+                        .successHandler(new RoleBasedAuthenticationSuccessHandler()));
 
         return http.build();
     }
