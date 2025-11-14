@@ -8,7 +8,7 @@
     <title>Document</title>
     <link th:href="@{/output.css}" rel="stylesheet">
 </head>
-<body class="w-full min-h-screen font-pretendard bg-[linear-gradient(135deg,_#667eea_0%,_#764ba2_100%)] flex justify-center items-center">
+<body class="w-full min-h-screen font-pretendard bg-[linear-gradient(135deg,_#667eea_0%,_#764ba2_100%)] flex justify-center items-center p-[20px]">
 
 <div th:if="${param.error}"
      class="error-modal-bg fixed inset-0 z-[9999] flex items-center justify-center bg-[rgba(0,0,0,0.4)]"
@@ -27,7 +27,7 @@
     </div>
 </div>
 
-<div class="bg-white p-[40px] rounded-[10px] max-w-[400px] w-full shadow-[0_10px_25px_rgba(0,0,0,0.2)]">
+<div class="bg-white p-[40px] rounded-[10px] max-w-[400px] w-full shadow-[0_10px_25px_rgba(0,0,0,0.2)] my-[10px]">
     <div class="text-[60px] mb-[20px] text-center">
         🔍
     </div>

@@ -194,6 +194,9 @@
   .my-\[10px\] {
     margin-block: 10px;
   }
+  .my-\[20px\] {
+    margin-block: 20px;
+  }
   .my-\[100px\] {
     margin-block: 100px;
   }
@@ -382,6 +385,9 @@
   }
   .p-\[15px\] {
     padding: 15px;
+  }
+  .p-\[20px\] {
+    padding: 20px;
   }
   .p-\[40px\] {
     padding: 40px;
