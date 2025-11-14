@@ -1,6 +1,7 @@
 package kr.co.dimillion.lcapp.interfaces;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -8,7 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/login")
 public class LoginController {
     @GetMapping
-    public String login() {
+    public String login(Model model) {
+        model.addAttribute("role", "worker");
         return "login/index";
     }
 }
