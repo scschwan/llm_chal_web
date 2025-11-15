@@ -1,8 +1,6 @@
 package kr.co.dimillion.lcapp.interfaces;
 
-import kr.co.dimillion.lcapp.application.Product;
-import kr.co.dimillion.lcapp.application.ProductRepository;
-import kr.co.dimillion.lcapp.application.ProductService;
+import kr.co.dimillion.lcapp.application.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -22,6 +20,8 @@ import java.util.List;
 public class AdminController {
     private final ProductRepository productRepository;
     private final ProductService productService;
+    private final FileUploadService fileUploadService;
+    private final ManualService manualService;
 
     @GetMapping
     public String admin() {
@@ -64,8 +64,12 @@ public class AdminController {
     @PostMapping("/manual-management/manual")
     public String manual(@ModelAttribute ManualUploadForm manualUploadForm,
                          @RequestParam("file") MultipartFile file) {
-        System.out.println("manualUploadForm.getProductId() = " + manualUploadForm.getProductId());
-        System.out.println("file = " + file);
+        String filePath = fileUploadService.uploadFile(file, "menual_store");
+
+        String[] split = filePath.split("/");
+        String filename = split[split.length - 1];
+        manualService.save(manualUploadForm.getProductId(), filename, filePath);
+
         return "redirect:/admin/manual-management";
     }
 
