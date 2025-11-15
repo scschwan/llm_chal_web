@@ -67,16 +67,16 @@
                 </tr>
             </thead>
             <tbody class="table-row-group vertical-align-middle ">
-            <tr>
-                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">1</td>
-                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">prod5</td>
-                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">테스트제품</td>
-                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">2025-11-22</td>
-                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">상태종류?</td>
-                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">
+            <tr th:each="product : ${products}">
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]" th:text="${product.id}">1</td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]" th:text="${product.code}">prod5</td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]" th:text="${product.name}">테스트제품</td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]" th:text="${product.createdAt}">2025-11-22</td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]" th:text="${product.active}">상태종류?</td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]" th:text="${product.id}">
                     <button class="px-2 py-1 border border-[#ddd] bg-white text-[#666] rounded-[4px] cursor-pointer
                                     text-[12px] mr-[5px] transition-all duration-300">
-                        무엇?
+                        삭제
                     </button>
                 </td>
             </tr>
