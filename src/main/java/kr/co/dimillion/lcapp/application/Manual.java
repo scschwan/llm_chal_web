@@ -17,7 +17,7 @@ public class Manual {
     @Column(name = "manual_id")
     private Integer id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Product product;
 
@@ -27,6 +27,8 @@ public class Manual {
     private String path;
     @Column(name = "vector_indexed")
     private boolean indexed;
+    @Column(name = "use_yn")
+    private boolean used;
     private LocalDateTime createdAt;
 
     public Manual(Product product, String name, String path) {
@@ -34,6 +36,11 @@ public class Manual {
         this.name = name;
         this.path = path;
         this.indexed = false;
+        this.used = true;
         this.createdAt = LocalDateTime.now();
+    }
+
+    public void delete() {
+        this.used = false;
     }
 }

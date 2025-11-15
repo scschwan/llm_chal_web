@@ -2,6 +2,8 @@ package kr.co.dimillion.lcapp.application;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
+
 public interface ManualRepository extends JpaRepository<Manual, Integer> {
-    void deleteByProduct(Product productId);
+    Optional<Manual> findByProductAndUsed(Product product, boolean used);
 }

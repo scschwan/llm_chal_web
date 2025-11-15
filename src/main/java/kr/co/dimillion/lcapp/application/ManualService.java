@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class ManualService {
@@ -13,7 +15,8 @@ public class ManualService {
     @Transactional
     public Manual save(Integer productId, String filename, String filepath) {
         Product product = productRepository.findById(productId).orElseThrow();
-        manualRepository.deleteByProduct(product);
+        Optional<Manual> maybeManual = manualRepository.findByProductAndUsed(product, true);
+        maybeManual.ifPresent(Manual::delete);
         return manualRepository.save(new Manual(product, filename, filepath));
     }
 }
