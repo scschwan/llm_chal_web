@@ -37,7 +37,7 @@ public class LoginController {
 
         else if (Role.ADMIN == role && username.equals("admin") && password.equals("admin")) {
             authenticateUser(username, role, request);
-            return "redirect:/admin";
+            return "redirect:/admin/dashboard";
         }
 
         else

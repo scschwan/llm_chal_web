@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en" class="bg-[#f5f7fa]">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link th:href="@{/output.css}" rel="stylesheet">
+</head>
+<body>
+<header class="bg-[linear-gradient(135deg,_#667eea_0%,_#764ba2_100%)] w-full text-white
+               px-[30px] py-[20px] shadow-[0_2px_4px_rgba(0,0,0,0.1)] flex justify-between items-center">
+    <div>
+        <h1 class="text-[24px] mb-[5px] font-bold">📊 대시보드</h1>
+        <p class="text-[14px] opacity-90">시스템 현황 및 통계</p>
+    </div>
+    <nav class="flex items-center gap-[15px]">
+        <a class="bg-white/20 border border-white/30 text-white px-[16px] py-[8px] rounded-[4px] cursor-pointer
+                    text [14px] transition-all duration-300 text-[14px]"
+           th:href="@{/admin}">
+            ⚙️ 관리 메뉴
+        </a>
+        <a class="bg-white/20 border border-white/30 text-white px-[16px] py-[8px] rounded-[4px] cursor-pointer
+                    text [14px] transition-all duration-300 text-[14px]"
+           th:href="@{/}">
+            🔍 검사 시스템
+        </a>
+        <form th:action="@{/logout}" method="post" style="display: inline;">
+            <button type="submit"
+                    class="bg-white/20 border border-white/30 text-white px-[16px] py-[8px] rounded-[4px] cursor-pointer
+                    text [14px] transition-all duration-300 text-[14px]">
+                로그아웃
+            </button>
+        </form>
+    </nav>
+</header>
+<div class="max-w-[1400px] mx-auto my-[30px] px-[20px]">
+    <div class="grid gap-[20px] mb-[30px]"
+         style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+        <div class="bg-white p-6 rounded-lg shadow-lg flex items-center gap-5 transition-transform duration-300
+                    hover:-translate-y-[3px] hover:shadow-[0_4px_12px_rgba(0,0,0,0.15)]">
+            <div class="flex items-center justify-center rounded-[10px] w-[70px] h-[70px] text-[48px] bg-[#e3f2fd]">
+                📦
+            </div>
+            <div class="flex-1">
+                <div class="text-[14px] text-[#666] mb-[5px]">
+                    등록 제품
+                </div>
+                <div class="text-[32px] font-semibold text-[#333]">
+                    6
+                </div>
+                <div class="text-[#4caf50] text-[12px] mt-[5px]">
+                    +0 (이번 주)
+                </div>
+            </div>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-lg flex items-center gap-5 transition-transform duration-300
+                    hover:-translate-y-[3px] hover:shadow-[0_4px_12px_rgba(0,0,0,0.15)]">
+            <div class="flex items-center justify-center rounded-[10px] w-[70px] h-[70px] text-[48px] bg-[#e8f5e9]">
+                ✅
+            </div>
+            <div class="flex-1">
+                <div class="text-[14px] text-[#666] mb-[5px]">
+                    정상 이미지
+                </div>
+                <div class="text-[32px] font-semibold text-[#333]">
+                    0
+                </div>
+                <div class="text-[#4caf50] text-[12px] mt-[5px]">
+                    +0 (이번 주)
+                </div>
+            </div>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-lg flex items-center gap-5 transition-transform duration-300
+                    hover:-translate-y-[3px] hover:shadow-[0_4px_12px_rgba(0,0,0,0.15)]">
+            <div class="flex items-center justify-center rounded-[10px] w-[70px] h-[70px] text-[48px] bg-[#fff3e0]">
+                ⚠️
+            </div>
+            <div>
+                <div class="text-[14px] text-[#666] mb-[5px]">
+                    불량 이미지
+                </div>
+                <div class="text-[32px] font-semibold text-[#333]">
+                    1,990
+                </div>
+                <div class="text-[#4caf50] text-[12px] mt-[5px]">
+                    +0 (이번 주)
+                </div>
+            </div>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-lg flex items-center gap-5 transition-transform duration-300
+                    hover:-translate-y-[3px] hover:shadow-[0_4px_12px_rgba(0,0,0,0.15)]">
+            <div class="flex items-center justify-center rounded-[10px] w-[70px] h-[70px] text-[48px] bg-[#ffebee]">
+                🔍
+            </div>
+            <div>
+                <div class="text-[14px] text-[#666] mb-[5px]">
+                    검사 횟수 (오늘)
+                </div>
+                <div class="text-[32px] font-semibold text-[#333]">
+                    0
+                </div>
+                <div class="text-[#4caf50] text-[12px] mt-[5px]">
+                    +0 (전일 대비)
+                </div>
+            </div>
+        </div>
+    </div>
+    <h2 class="text-[20px] font-semibold text-[#333] mt-[30px] mb-[15px] pb-[10px] border-b-[2px] border-[#667eea]">
+        📈 검사 추이
+    </h2>
+    <div class="grid grid-cols-[repeat(auto-fit,_minmax(500px,_1fr))] gap-[20px] mb-[30px]">
+        <div class="bg-white p-[25px] rounded-[10px] shadow-[0_2px_8px_rgba(0,0,0,0.1)]">
+            <div class="flex justify-between items-center mb-[20px]">
+                <div class="text-[18px] font-semibold text-[#333]">
+                    일별 검사 건수
+                </div>
+                <div class="flex gap-[5px]">
+                    <button class="px-[12px] py-[5px] border border-[#ddd] bg-white text-[#666] rounded-[4px] cursor-pointer text-[12px] transition-all duration-300">
+                        7일
+                    </button>
+                    <button class="px-[12px] py-[5px] border border-[#ddd] bg-white text-[#666] rounded-[4px] cursor-pointer text-[12px] transition-all duration-300">
+                        30일
+                    </button>
+                    <button class="px-[12px] py-[5px] border border-[#ddd] bg-white text-[#666] rounded-[4px] cursor-pointer text-[12px] transition-all duration-300">
+                        90일
+                    </button>
+                </div>
+            </div>
+            <div class="h-[300px] flex items-center justify-center bg-[#f9f9f9] rounded-[8px] text-[#999] text-[14px]">
+                차트 데이터 불러오는 중...
+            </div>
+        </div>
+        <div class="bg-white p-[25px] rounded-[10px] shadow-[0_2px_8px_rgba(0,0,0,0.1)]">
+            <div class="flex justify-between items-center mb-[20px]">
+                <div class="text-[18px] font-semibold text-[#333]">
+                    제품별 불량 검출 비율
+                </div>
+                <div class="flex gap-[5px]">
+                    <button class="px-[12px] py-[5px] border border-[#ddd] bg-white text-[#666] rounded-[4px] cursor-pointer text-[12px] transition-all duration-300">
+                        오늘
+                    </button>
+                    <button class="px-[12px] py-[5px] border border-[#ddd] bg-white text-[#666] rounded-[4px] cursor-pointer text-[12px] transition-all duration-300">
+                        이번 주
+                    </button>
+                    <button class="px-[12px] py-[5px] border border-[#ddd] bg-white text-[#666] rounded-[4px] cursor-pointer text-[12px] transition-all duration-300">
+                        이번 달
+                    </button>
+                </div>
+            </div>
+            <div class="h-[300px] flex items-center justify-center bg-[#f9f9f9] rounded-[8px] text-[#999] text-[14px]">
+                차트 데이터 불러오는 중...
+            </div>
+        </div>
+    </div>
+    <h2 class="text-[20px] font-semibold text-[#333] mt-[30px] mb-[15px] pb-[10px] border-b-[2px] border-[#667eea]">
+        🕒 최근 검사 내역
+    </h2>
+    <div class="bg-white p-[25px] rounded-[10px] shadow-[0_2px_8px_rgba(0,0,0,0.1)] mb-[30px]">
+        <div class="flex justify-between items-center mb-5">
+            <div class="text-[18px] font-semibold text-[#333]">최근 20건</div>
+            <div class="relative">
+                <input type="text" placeholder="제품명, 작업자 검색"
+                       class="py-2 pr-[35px] pl-3 border border-[#ddd] rounded-[4px] text-[14px] w-[250px]">
+                <span class="absolute right-[10px] top-1/2 -translate-y-1/2 pointer-events-none text-lg">🔍</span>
+            </div>
+        </div>
+        <table class="w-full border-collapse border-spacing-[2px] border-gray-400">
+            <thead class="bg-[#f5f7fa]">
+            <tr class="table-row">
+                <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
+                    시간
+                </th>
+                <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
+                    제품
+                </th>
+                <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
+                    불량 유형
+                </th>
+                <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
+                    결과
+                </th>
+                <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
+                    이상 점수
+                </th>
+                <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
+                    작업자
+                </th>
+                <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
+                    작업
+                </th>
+            </tr>
+            </thead>
+            <tbody class="table-row-group vertical-align-middle ">
+            <tr>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">2025-11-15 12:49:30</td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">prod1</td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">hole</td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">정상</td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">0.1234</td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">작업자1</td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">
+                    <button class="px-2 py-1 border border-[#ddd] bg-white text-[#666] rounded-[4px] cursor-pointer
+                                    text-[12px] mr-[5px] transition-all duration-300">
+                        상세
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <h2 class="text-[20px] font-semibold text-[#333] mt-[30px] mb-[15px] pb-[10px] border-b-[2px] border-[#667eea]">
+        📦 제품별 통계
+    </h2>
+    <div class="bg-white p-[25px] rounded-[10px] shadow-[0_2px_8px_rgba(0,0,0,0.1)] mb-[30px]">
+        <div class="flex justify-start items-center mb-5">
+            <div class="text-[18px] font-semibold text-[#333]">제품 목록</div>
+        </div>
+        <table class="w-full border-collapse border-spacing-[2px] border-gray-400">
+            <thead class="bg-[#f5f7fa]">
+            <tr class="table-row">
+                <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
+                    제품명
+                </th>
+                <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
+                    정상 이미지
+                </th>
+                <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
+                    불량 이미지
+                </th>
+                <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
+                    총 검사
+                </th>
+                <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
+                    불량 검출율
+                </th>
+                <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
+                    작업
+                </th>
+            </tr>
+            </thead>
+            <tbody class="table-row-group vertical-align-middle ">
+            <tr>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">주조제품</td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">0</td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">63</td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">0</td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">0.0%</td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">
+                    <button class="px-2 py-1 border border-[#ddd] bg-white text-[#666] rounded-[4px] cursor-pointer
+                                    text-[12px] mr-[5px] transition-all duration-300">
+                        관리
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
