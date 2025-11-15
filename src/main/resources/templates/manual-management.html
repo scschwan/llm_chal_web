@@ -80,7 +80,7 @@
                 <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]" th:text="${manual.id}"></td>
                 <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
                     th:text="${manual.productName}"></td>
-                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]" th:text="${manual.name}"></td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]" th:text="${manual.originalName}"></td>
                 <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
                     th:text="${manual.size + ' MB'}"></td>
                 <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[14px]"
@@ -89,13 +89,11 @@
                 <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
                     th:text="${#temporals.format(manual.createdAt, 'yyyy-MM-dd')}"></td>
                 <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px] flex gap-[5px]">
-                    <form action="">
-                        <button type="submit"
-                                class="bg-[#2196F3] px-[10px] py-[5px] text-[12px] text-white cursor-pointer
-                                        rounded-[4px] font-medium transition-all duration-300 hover:bg-[#0b7dda]">
-                            다운로드
-                        </button>
-                    </form>
+                    <a th:href="@{|/api/v1/file?fileId=${manual.id}&subFolder=menual_store&fileName=${manual.name}|}"
+                       class="bg-[#2196F3] px-[10px] py-[5px] text-[12px] text-white cursor-pointer
+                                rounded-[4px] font-medium transition-all duration-300 hover:bg-[#0b7dda]">
+                        다운로드
+                    </a>
                     <form action="">
                         <button type="submit"
                                 class="bg-[#f44336] px-[10px] py-[5px] text-[12px] text-white cursor-pointer

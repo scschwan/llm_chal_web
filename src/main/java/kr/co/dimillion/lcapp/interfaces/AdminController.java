@@ -20,7 +20,7 @@ import java.util.List;
 public class AdminController {
     private final ProductRepository productRepository;
     private final ProductService productService;
-    private final FileUploadService fileUploadService;
+    private final FileSystem fileSystem;
     private final ManualService manualService;
     private final ManualRepository manualRepository;
 
@@ -74,7 +74,9 @@ public class AdminController {
     public static class ManualDto {
         private Integer id;
         private String productName;
+        private String originalName;
         private String name;
+        private String path;
         private String size;
         private boolean indexed;
         private LocalDateTime createdAt;
@@ -82,7 +84,9 @@ public class AdminController {
         public ManualDto(Manual manual) {
             this.id = manual.getId();
             this.productName = manual.getProduct().getName();
-            this.name = manual.getName();
+            this.originalName = manual.getName();
+            String[] split = manual.getPath().split("/");
+            this.name = split[split.length - 1];
             this.size = getSizeMB(manual.getSize());
             this.indexed = manual.isIndexed();
             this.createdAt = manual.getCreatedAt();
@@ -98,7 +102,7 @@ public class AdminController {
     @PostMapping("/manual-management/manual")
     public String manual(@ModelAttribute ManualUploadForm manualUploadForm,
                          @RequestParam("file") MultipartFile file) {
-        String filePath = fileUploadService.uploadFile(file, "menual_store");
+        String filePath = fileSystem.uploadFile(file, "menual_store");
         manualService.save(manualUploadForm.getProductId(), file.getOriginalFilename(), filePath, file.getSize());
         return "redirect:/admin/manual-management";
     }
