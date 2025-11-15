@@ -16,4 +16,9 @@ public class AdminController {
     public String dashboard() {
         return "dashboard";
     }
+
+    @GetMapping("/product-management")
+    public String productManagement() {
+        return "product-management";
+    }
 }
