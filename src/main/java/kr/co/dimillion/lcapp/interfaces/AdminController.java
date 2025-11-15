@@ -5,6 +5,9 @@ import kr.co.dimillion.lcapp.application.ProductRepository;
 import kr.co.dimillion.lcapp.application.ProductService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,12 +36,10 @@ public class AdminController {
     }
 
     @GetMapping("/product-management")
-    public String productManagement(@ModelAttribute ProductCreateForm productCreateForm, Model model) {
-        List<ProductDto> productDtoList = productRepository.findAll()
-                .stream()
-                .map(ProductDto::from)
-                .toList();
-        model.addAttribute("products", productDtoList);
+    public String productManagement(@ModelAttribute ProductCreateForm productCreateForm, @PageableDefault Pageable pageable, Model model) {
+        Page<Product> productPage = productRepository.findAll(pageable);
+        model.addAttribute("products", productPage.getContent());
+        model.addAttribute("page", productPage);
         return "product-management";
     }
 
@@ -53,11 +54,5 @@ public class AdminController {
         private String code;
         private String name;
         private String description;
-    }
-
-    public record ProductDto(Integer id, String code, String name, LocalDateTime createdAt, boolean active) {
-        public static ProductDto from(Product product) {
-            return new ProductDto(product.getId(), product.getCode(), product.getName(), product.getCreatedAt(), product.isActive());
-        }
     }
 }
