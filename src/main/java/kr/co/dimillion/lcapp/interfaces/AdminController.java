@@ -10,10 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -49,15 +47,32 @@ public class AdminController {
         return "redirect:/admin/product-management";
     }
 
-    @GetMapping("/manual-management")
-    public String manualManagement() {
-        return "manual-management";
-    }
-
     @Data
     public static class ProductCreateForm {
         private String code;
         private String name;
         private String description;
     }
+
+    @GetMapping("/manual-management")
+    public String manualManagement(Model model, @ModelAttribute ManualUploadForm manualUploadForm) {
+        List<Product> products = productRepository.findAll();
+        model.addAttribute("products", products);
+        return "manual-management";
+    }
+
+    @PostMapping("/manual-management/manual")
+    public String manual(@ModelAttribute ManualUploadForm manualUploadForm,
+                         @RequestParam("file") MultipartFile file) {
+        System.out.println("manualUploadForm.getProductId() = " + manualUploadForm.getProductId());
+        System.out.println("file = " + file);
+        return "redirect:/admin/manual-management";
+    }
+
+    @Data
+    public static class ManualUploadForm {
+        private Integer productId;
+    }
+
+
 }

@@ -9,6 +9,76 @@
     <link th:href="@{/output.css}" rel="stylesheet">
 </head>
 <body>
+<div class="max-w-[1200px] mx-auto bg-white p-[30px] rounded-[8px] shadow-[0_2px_4px_rgba(0,0,0,0.1)]">
+    <header class="flex justify-start items-center gap-[10px] text-[#333] mb-[30px] pb-[15px] border-b-[3px] border-b-[#9C27B0] font-bold text-[2rem]">
+        <a th:href="@{/admin}"> <img th:src="@{/images/arrow-back.svg}" alt="arrow-back"> </a>
+        <h1>매뉴얼 관리</h1>
+    </header>
+    <div class="bg-[#f9f9f9] p-[25px] rounded-[6px] mb-[30px]">
+        <h2 class="text-[#555] mb-5 text-[1.3rem] font-bold">매뉴얼 파일 업로드</h2>
+        <form th:action="@{/admin/manual-management/manual}"
+              method="post"
+              th:object="${manualUploadForm}"
+              enctype="multipart/form-data">
+            <div class="mb-[15px]">
+                <label for="productId"
+                       class="block mb-[5px] text-[#555] font-medium">
+                    제품 선택 *
+                </label>
+                <select required
+                        th:field="*{productId}"
+                        class="w-full p-[10px] border boder-[#ddd] rounded-[4px] text-[14px]">
+                    <option value="">-- 제품을 선택하세요 --</option>
+                    <option th:each="product : ${products}"
+                            th:value="${product.id}"
+                            th:text="${product.name}">
+                    </option>
+                </select>
+            </div>
+            <div class="mb-[15px]">
+                <label for="uploadArea"
+                       class="block mb-[5px] text-[#555] font-medium">
+                    파일 선택 (PDF만 가능)
+                </label>
+                <div id="uploadArea"
+                     onclick="document.getElementById('fileInput').click()"
+                     class="border-2 border-dashed border-[#ddd] rounded-[6px] p-[30px] text-center bg-[#fafafa] cursor-pointer transition-all duration-300">
+                    <p>📄 클릭하여 파일 선택 또는 드래그 앤 드롭</p>
+                    <input type="file" id="fileInput" name="file" accept=".pdf" class="hidden">
+                    <p id="fileName" class="mt-[10px] text-[#666]"></p>
+                </div>
+            </div>
+            <button type="submit" class="bg-[#9C27B0] text-white px-5 py-[10px] rounded-[4px] text-[14px] font-medium transition-all duration-300 mt-[15px]">
+                업로드
+            </button>
+        </form>
+        <div class="text-[#666] text-[0.9rem] mt-[10px]">
+            ※ 매뉴얼 파일은 Object Storage에 저장됩니다.
+            <br>
+            ※ 인덱싱은 서버 배포 메뉴에서 수행합니다.
+        </div>
+    </div>
+</div>
+
+<script>
+    function formatFileSize(bytes) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return (bytes / Math.pow(k, i)).toFixed(2) + ' ' + sizes[i];
+    }
+
+    document.getElementById('fileInput').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        const fileInfo = document.getElementById('fileName');
+        if (file) {
+            fileInfo.textContent = `선택된 파일: ${file.name} (${formatFileSize(file.size)})`;
+        } else {
+            fileInfo.textContent = '';
+        }
+    });
+</script>
 
 </body>
 </html>

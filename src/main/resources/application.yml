@@ -17,6 +17,11 @@ spring:
     show-sql: true
     open-in-view: false
 
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 100MB
+
 
 logging.level:
   org.hibernate:
