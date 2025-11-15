@@ -24,7 +24,7 @@ public class LoginController {
         model.addAttribute("role", "");
         model.addAttribute("username", "");
         model.addAttribute("password", "");
-        return "login/index";
+        return "login";
     }
 
     @PostMapping

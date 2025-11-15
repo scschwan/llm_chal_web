@@ -1,13 +1,9 @@
 package kr.co.dimillion.lcapp.infrastructure.security;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import kr.co.dimillion.lcapp.application.Role;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -20,21 +16,19 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
-import java.io.IOException;
-
 @Configuration(proxyBeanMethods = false)
 public class SecurityConfig {
     @Bean
-    UserDetailsService userDetailsService() {
-        UserDetails worker = User.withDefaultPasswordEncoder()
+    UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
+        UserDetails worker = User.builder()
                 .username("worker")
-                .password("worker")
+                .password(passwordEncoder.encode("worker"))
                 .roles(Role.WORKER.name())
                 .build();
 
-        UserDetails admin = User.withDefaultPasswordEncoder()
+        UserDetails admin = User.builder()
                 .username("admin")
-                .password("admin")
+                .password(passwordEncoder.encode("admin"))
                 .roles(Role.ADMIN.name())
                 .build();
 
