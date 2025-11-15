@@ -44,7 +44,7 @@
                      onclick="document.getElementById('fileInput').click()"
                      class="border-2 border-dashed border-[#ddd] rounded-[6px] p-[30px] text-center bg-[#fafafa] cursor-pointer transition-all duration-300 hover:border-[#9C27B0] hover:bg-[#f5f5f5]">
                     <p>📄 클릭하여 파일 선택 또는 드래그 앤 드롭</p>
-                    <input type="file" id="fileInput" name="file" accept=".pdf" class="hidden">
+                    <input type="file" id="fileInput" name="file" accept=".pdf" class="hidden" required>
                     <p id="fileName" class="mt-[10px] text-[#666]"></p>
                 </div>
             </div>
@@ -94,7 +94,8 @@
                                 rounded-[4px] font-medium transition-all duration-300 hover:bg-[#0b7dda]">
                         다운로드
                     </a>
-                    <form action="">
+                    <form th:action="@{/admin/manual-management/manual}" th:method="delete">
+                        <input type="hidden" name="id" th:value="${manual.id}" />
                         <button type="submit"
                                 class="bg-[#f44336] px-[10px] py-[5px] text-[12px] text-white cursor-pointer
                                         rounded-[4px] font-medium transition-all duration-300 hover:bg-[#da190b]">

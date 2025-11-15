@@ -60,7 +60,7 @@ public class AdminController {
         List<Product> products = productRepository.findAll();
         model.addAttribute("products", products);
 
-        Page<Manual> manualPage = manualRepository.findAll(pageable);
+        Page<Manual> manualPage = manualRepository.findByUsed(true, pageable);
         model.addAttribute("manualPage", manualPage);
 
         List<ManualDto> manuals = manualPage.getContent().stream().map(ManualDto::new)
@@ -104,6 +104,12 @@ public class AdminController {
                          @RequestParam("file") MultipartFile file) {
         String filePath = fileSystem.uploadFile(file, "menual_store");
         manualService.save(manualUploadForm.getProductId(), file.getOriginalFilename(), filePath, file.getSize());
+        return "redirect:/admin/manual-management";
+    }
+
+    @DeleteMapping("/manual-management/manual")
+    public String manual(@RequestParam Integer id) {
+        manualService.deactivate(id);
         return "redirect:/admin/manual-management";
     }
 

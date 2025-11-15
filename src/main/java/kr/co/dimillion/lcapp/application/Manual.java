@@ -43,7 +43,7 @@ public class Manual {
         this.createdAt = LocalDateTime.now();
     }
 
-    public void delete() {
+    public void deactivate() {
         this.used = false;
     }
 }

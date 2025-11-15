@@ -16,7 +16,13 @@ public class ManualService {
     public Manual save(Integer productId, String filename, String filepath, long filesize) {
         Product product = productRepository.findById(productId).orElseThrow();
         Optional<Manual> maybeManual = manualRepository.findByProductAndUsed(product, true);
-        maybeManual.ifPresent(Manual::delete);
+        maybeManual.ifPresent(Manual::deactivate);
         return manualRepository.save(new Manual(product, filename, filepath, filesize));
+    }
+
+    @Transactional
+    public void deactivate(Integer id) {
+        manualRepository.findById(id)
+                .ifPresent(Manual::deactivate);
     }
 }
