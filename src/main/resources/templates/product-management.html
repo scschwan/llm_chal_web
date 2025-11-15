@@ -14,9 +14,47 @@
         <a th:href="@{/admin}"> <img th:src="@{/images/arrow-back.svg}" alt="arrow-back"> </a>
         <h1>제품 관리</h1>
     </header>
-</div>
-<header>
+    <div class="bg-[#f9f9f9] p-[25px] rounded-[6px] mb-[30px]">
+        <h2 class="text-[#555] mb-5 text-[1.3rem] font-bold">신규 제품 등록</h2>
+        <form th:action="@{/admin/product-management/product}" method="post" th:object="${productCreateForm}">
+            <div class="mb-[15px]">
+                <label for="code"
+                       class="block mb-[5px] text-[#555] font-medium">
+                    제품 코드 *
+                </label>
+                <input th:field="*{code}" required
+                       placeholder="예: prod5, leather2"
+                       class="w-full p-[10px] border-[1px] border-[#ddd] rounded-[4px] text-[14px] bg-white">
+            </div>
+            <div class="mb-[15px]">
+                <label for="name"
+                       class="block mb-[5px] text-[#555] font-medium">
+                    제품명 *
+                </label>
+                <input th:field="*{name}" required
+                       placeholder="예: 주조 B형"
+                       class="w-full p-[10px] border-[1px] border-[#ddd] rounded-[4px] text-[14px] bg-white">
+            </div>
+            <div class="mb-[15px]">
+                <label for="description"
+                       class="block mb-[5px] text-[#555] font-medium">
+                    제품설명
+                </label>
+                <textarea th:field="*{description}" required
+                          placeholder="제품에 대한 간단한 설명을 입력하세요"
+                          class="min-h-[80px] resize-y w-full p-[10px] border-[1px] border-[#ddd] rounded-[4px] text-[14px] bg-white">
+                </textarea>
+            </div>
+            <button type="submit" class="bg-[#4CAF50] text-white px-5 py-[10px] rounded-[4px] text-[14px] font-medium transition-all duration-300">
+                등록
+            </button>
+            <button type="reset" class="bg-[#2196F3] text-white px-5 py-[10px] rounded-[4px] text-[14px] font-medium transition-all duration-300">
+                초기화
+            </button>
+        </form>
+    </div>
 
-</header>
+</div>
+
 </body>
 </html>
