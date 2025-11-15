@@ -42,13 +42,14 @@
     <div class="grid grid-cols-[repeat(auto-fit,_minmax(300px,_1fr))] gap-5 mt-[30px]">
         <a class="bg-white p-[30px] rounded-[10px] shadow-[0_2px_8px_rgba(0,0,0,0.1)] cursor-pointer transition-all duration-300 block
                     hover:shadow-[0_5px_20px_rgba(0,0,0,0.15)] hover:translate-y-[-5px]"
-            th:href="@{/admin/product-management}">
+           th:href="@{/admin/product-management}">
             <div class="text-[48px] mb-[15px]">📦</div>
             <div class="text-[20px] font-semibold text-[#333] mb-[10px]">제품 관리</div>
             <div class="text-[14px] text-[#666] leading-[1.6]">제품 등록, 수정, 삭제 및 제품 정보 관리</div>
         </a>
         <a class="bg-white p-[30px] rounded-[10px] shadow-[0_2px_8px_rgba(0,0,0,0.1)] cursor-pointer transition-all duration-300 block
-                    hover:shadow-[0_5px_20px_rgba(0,0,0,0.15)] hover:translate-y-[-5px]">
+                    hover:shadow-[0_5px_20px_rgba(0,0,0,0.15)] hover:translate-y-[-5px]"
+           th:href="@{/admin/manual-management}">
             <div class="text-[48px] mb-[15px]">📄</div>
             <div class="text-[20px] font-semibold text-[#333] mb-[10px]">매뉴얼 관리</div>
             <div class="text-[14px] text-[#666] leading-[1.6]">제품별 대응 매뉴얼 PDF 파일 업로드 및 관리</div>
@@ -76,9 +77,11 @@
                     hover:shadow-[0_5px_20px_rgba(0,0,0,0.15)] hover:translate-y-[-5px]">
             <div class="text-[48px] mb-[15px]">❌</div>
             <div class="text-[20px] font-semibold text-[#333] mb-[10px]">불량 이미지 등록</div>
-            <div class="text-[14px] text-[#666] leading-[1.6]"><div class="menu-description">
-                불량 유형별 이미지 업로드 및 관리 (다중/ZIP 지원)
-            </div></div>
+            <div class="text-[14px] text-[#666] leading-[1.6]">
+                <div class="menu-description">
+                    불량 유형별 이미지 업로드 및 관리 (다중/ZIP 지원)
+                </div>
+            </div>
         </a>
     </div>
     <h2 class="text-[20px] font-semibold text-[#333] mt-[30px] mb-[15px] pb-[10px] border-b-[2px] border-[#667eea]">
@@ -97,9 +100,11 @@
                     hover:shadow-[0_5px_20px_rgba(0,0,0,0.15)] hover:translate-y-[-5px]">
             <div class="text-[48px] mb-[15px]">🤖</div>
             <div class="text-[20px] font-semibold text-[#333] mb-[10px]">모델 선택</div>
-            <div class="text-[14px] text-[#666] leading-[1.6]"><div class="menu-description">
-                검출 모델, 유사도 모델, 생성 AI 모델 선택
-            </div></div>
+            <div class="text-[14px] text-[#666] leading-[1.6]">
+                <div class="menu-description">
+                    검출 모델, 유사도 모델, 생성 AI 모델 선택
+                </div>
+            </div>
         </a>
     </div>
     <h2 class="text-[20px] font-semibold text-[#333] mt-[30px] mb-[15px] pb-[10px] border-b-[2px] border-[#667eea]">
@@ -118,9 +123,11 @@
                     hover:shadow-[0_5px_20px_rgba(0,0,0,0.15)] hover:translate-y-[-5px]">
             <div class="text-[48px] mb-[15px]">🧠</div>
             <div class="text-[20px] font-semibold text-[#333] mb-[10px]">PatchCore 메모리뱅크 생성</div>
-            <div class="text-[14px] text-[#666] leading-[1.6]"><div class="menu-description">
-                이상 검출 메모리뱅크 생성 및 배포
-            </div></div>
+            <div class="text-[14px] text-[#666] leading-[1.6]">
+                <div class="menu-description">
+                    이상 검출 메모리뱅크 생성 및 배포
+                </div>
+            </div>
         </a>
     </div>
 

@@ -49,6 +49,11 @@ public class AdminController {
         return "redirect:/admin/product-management";
     }
 
+    @GetMapping("/manual-management")
+    public String manualManagement() {
+        return "manual-management";
+    }
+
     @Data
     public static class ProductCreateForm {
         private String code;
