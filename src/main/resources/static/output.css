@@ -559,6 +559,9 @@
   .border-b-\[rgb\(240\,240\,240\)\] {
     border-bottom-color: rgb(240,240,240);
   }
+  .bg-\[\#0b7dda\] {
+    background-color: #0b7dda;
+  }
   .bg-\[\#4CAF50\] {
     background-color: #4CAF50;
   }
@@ -585,6 +588,9 @@
   }
   .bg-\[\#f9f9f9\] {
     background-color: #f9f9f9;
+  }
+  .bg-\[\#f44336\] {
+    background-color: #f44336;
   }
   .bg-\[\#fafafa\] {
     background-color: #fafafa;
@@ -666,6 +672,9 @@
   }
   .px-5 {
     padding-inline: calc(var(--spacing) * 5);
+  }
+  .px-\[10px\] {
+    padding-inline: 10px;
   }
   .px-\[12px\] {
     padding-inline: 12px;
@@ -812,11 +821,17 @@
     --tw-font-weight: var(--font-weight-semibold);
     font-weight: var(--font-weight-semibold);
   }
+  .text-\[\#00BB00\] {
+    color: #00BB00;
+  }
   .text-\[\#4CAF50\] {
     color: #4CAF50;
   }
   .text-\[\#4caf50\] {
     color: #4caf50;
+  }
+  .text-\[\#9C27B0\] {
+    color: #9C27B0;
   }
   .text-\[\#333\] {
     color: #333;
@@ -832,6 +847,12 @@
   }
   .text-\[\#999\] {
     color: #999;
+  }
+  .text-\[\#CC2222\] {
+    color: #CC2222;
+  }
+  .text-\[\#FF9800\] {
+    color: #FF9800;
   }
   .text-blue-500 {
     color: var(--color-blue-500);
@@ -917,6 +938,20 @@
     &:hover {
       @media (hover: hover) {
         border-color: #9C27B0;
+      }
+    }
+  }
+  .hover\:bg-\[\#0b7dda\] {
+    &:hover {
+      @media (hover: hover) {
+        background-color: #0b7dda;
+      }
+    }
+  }
+  .hover\:bg-\[\#da190b\] {
+    &:hover {
+      @media (hover: hover) {
+        background-color: #da190b;
       }
     }
   }

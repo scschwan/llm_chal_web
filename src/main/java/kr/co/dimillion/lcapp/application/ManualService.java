@@ -13,10 +13,10 @@ public class ManualService {
     private final ManualRepository manualRepository;
 
     @Transactional
-    public Manual save(Integer productId, String filename, String filepath) {
+    public Manual save(Integer productId, String filename, String filepath, long filesize) {
         Product product = productRepository.findById(productId).orElseThrow();
         Optional<Manual> maybeManual = manualRepository.findByProductAndUsed(product, true);
         maybeManual.ifPresent(Manual::delete);
-        return manualRepository.save(new Manual(product, filename, filepath));
+        return manualRepository.save(new Manual(product, filename, filepath, filesize));
     }
 }

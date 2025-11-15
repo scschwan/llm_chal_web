@@ -16,7 +16,6 @@ spring:
         dialect: org.hibernate.dialect.MariaDBDialect
         default_batch_fetch_size: 50
     show-sql: true
-    open-in-view: false
 
   servlet:
     multipart:

@@ -22,6 +22,7 @@ public class AdminController {
     private final ProductService productService;
     private final FileUploadService fileUploadService;
     private final ManualService manualService;
+    private final ManualRepository manualRepository;
 
     @GetMapping
     public String admin() {
@@ -55,21 +56,50 @@ public class AdminController {
     }
 
     @GetMapping("/manual-management")
-    public String manualManagement(Model model, @ModelAttribute ManualUploadForm manualUploadForm) {
+    public String manualManagement(@ModelAttribute ManualUploadForm manualUploadForm, @PageableDefault Pageable pageable, Model model) {
         List<Product> products = productRepository.findAll();
         model.addAttribute("products", products);
+
+        Page<Manual> manualPage = manualRepository.findAll(pageable);
+        model.addAttribute("manualPage", manualPage);
+
+        List<ManualDto> manuals = manualPage.getContent().stream().map(ManualDto::new)
+                .toList();
+        model.addAttribute("manuals", manuals);
+
         return "manual-management";
+    }
+
+    @Data
+    public static class ManualDto {
+        private Integer id;
+        private String productName;
+        private String name;
+        private String size;
+        private boolean indexed;
+        private LocalDateTime createdAt;
+
+        public ManualDto(Manual manual) {
+            this.id = manual.getId();
+            this.productName = manual.getProduct().getName();
+            this.name = manual.getName();
+            this.size = getSizeMB(manual.getSize());
+            this.indexed = manual.isIndexed();
+            this.createdAt = manual.getCreatedAt();
+        }
+
+        public String getSizeMB(Long size) {
+            if (size == null) return "0";
+            double mb = size / 1024.0 / 1024.0;
+            return String.format("%.2f", mb);
+        }
     }
 
     @PostMapping("/manual-management/manual")
     public String manual(@ModelAttribute ManualUploadForm manualUploadForm,
                          @RequestParam("file") MultipartFile file) {
         String filePath = fileUploadService.uploadFile(file, "menual_store");
-
-        String[] split = filePath.split("/");
-        String filename = split[split.length - 1];
-        manualService.save(manualUploadForm.getProductId(), filename, filePath);
-
+        manualService.save(manualUploadForm.getProductId(), file.getOriginalFilename(), filePath, file.getSize());
         return "redirect:/admin/manual-management";
     }
 

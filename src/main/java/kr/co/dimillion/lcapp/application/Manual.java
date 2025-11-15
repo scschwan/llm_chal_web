@@ -25,16 +25,19 @@ public class Manual {
     private String name;
     @Column(name = "file_path")
     private String path;
+    @Column(name = "file_size")
+    private Long size;
     @Column(name = "vector_indexed")
     private boolean indexed;
     @Column(name = "use_yn")
     private boolean used;
     private LocalDateTime createdAt;
 
-    public Manual(Product product, String name, String path) {
+    public Manual(Product product, String name, String path, long size) {
         this.product = product;
         this.name = name;
         this.path = path;
+        this.size = size;
         this.indexed = false;
         this.used = true;
         this.createdAt = LocalDateTime.now();

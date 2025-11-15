@@ -48,7 +48,8 @@
                     <p id="fileName" class="mt-[10px] text-[#666]"></p>
                 </div>
             </div>
-            <button type="submit" class="bg-[#9C27B0] text-white px-5 py-[10px] rounded-[4px] text-[14px] font-medium transition-all duration-300 mt-[15px] cursor-pointer">
+            <button type="submit"
+                    class="bg-[#9C27B0] text-white px-5 py-[10px] rounded-[4px] text-[14px] font-medium transition-all duration-300 mt-[15px] cursor-pointer">
                 업로드
             </button>
         </form>
@@ -58,6 +59,80 @@
             ※ 인덱싱은 서버 배포 메뉴에서 수행합니다.
             <br>
             ※ 중복 업로드할 경우 기존 이미지를 덮어씁니다.
+        </div>
+    </div>
+    <div class="mt-[30px]">
+        <h2 class="text-[1.5rem] font-bold">등록된 매뉴얼 목록</h2>
+        <table class="w-full border-collapse mt-5 table border-spacing-0.5">
+            <thead class="table-header-group virtical-align-middle">
+            <tr class="table-row">
+                <th class="bg-[#f5f5f5] font-semibold text-[#555] p-3 text-left border-b border-b-[#ddd]">ID</th>
+                <th class="bg-[#f5f5f5] font-semibold text-[#555] p-3 text-left border-b border-b-[#ddd]">제품</th>
+                <th class="bg-[#f5f5f5] font-semibold text-[#555] p-3 text-left border-b border-b-[#ddd]">파일명</th>
+                <th class="bg-[#f5f5f5] font-semibold text-[#555] p-3 text-left border-b border-b-[#ddd]">크기</th>
+                <th class="bg-[#f5f5f5] font-semibold text-[#555] p-3 text-left border-b border-b-[#ddd]">인덱싱</th>
+                <th class="bg-[#f5f5f5] font-semibold text-[#555] p-3 text-left border-b border-b-[#ddd]">등록일</th>
+                <th class="bg-[#f5f5f5] font-semibold text-[#555] p-3 text-left border-b border-b-[#ddd]">작업</th>
+            </tr>
+            </thead>
+            <tbody class="table-row-group vertical-align-middle ">
+            <tr th:each="manual : ${manuals}">
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]" th:text="${manual.id}"></td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
+                    th:text="${manual.productName}"></td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]" th:text="${manual.name}"></td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
+                    th:text="${manual.size + ' MB'}"></td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[14px]"
+                    th:classappend="${manual.indexed} ? 'text-[#4CAF50]' : 'text-[#FF9800]'"
+                    th:text="${manual.indexed ? '완료' : '미완료'}"></td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
+                    th:text="${#temporals.format(manual.createdAt, 'yyyy-MM-dd')}"></td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px] flex gap-[5px]">
+                    <form action="">
+                        <button type="submit"
+                                class="bg-[#2196F3] px-[10px] py-[5px] text-[12px] text-white cursor-pointer
+                                        rounded-[4px] font-medium transition-all duration-300 hover:bg-[#0b7dda]">
+                            다운로드
+                        </button>
+                    </form>
+                    <form action="">
+                        <button type="submit"
+                                class="bg-[#f44336] px-[10px] py-[5px] text-[12px] text-white cursor-pointer
+                                        rounded-[4px] font-medium transition-all duration-300 hover:bg-[#da190b]">
+                            삭제
+                        </button>
+                    </form>
+
+                </td>
+
+            </tr>
+            </tbody>
+
+        </table>
+        <div class="flex justify-center mt-6">
+            <nav>
+                <ul class="inline-flex -space-x-px">
+                    <li>
+                        <a th:if="${!manualPage.first}" th:href="@{|?manualPage=${manualPage.number-1}|}"
+                           class="px-3 py-1 border border-gray-300">이전</a>
+                        <span th:if="${manualPage.first}"
+                              class="px-3 py-1 border border-gray-200 text-gray-400 cursor-not-allowed">이전</span>
+                    </li>
+                    <li th:each="i : ${#numbers.sequence(0, manualPage.totalPages-1)}">
+                        <a th:href="@{|?manualPage=${i}|}"
+                           th:text="${i + 1}"
+                           th:classappend="${manualPage.number == i} ? 'font-bold text-[#9C27B0]' : ''"
+                           class="px-3 py-1 border border-gray-200"></a>
+                    </li>
+                    <li>
+                        <a th:if="${!manualPage.last}" th:href="@{|?manualPage=${page.number+1}|}"
+                           class="px-3 py-1 border border-gray-300">다음</a>
+                        <span th:if="${manualPage.last}"
+                              class="px-3 py-1 border border-gray-200 text-gray-400 cursor-not-allowed">다음</span>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -71,7 +146,7 @@
         return (bytes / Math.pow(k, i)).toFixed(2) + ' ' + sizes[i];
     }
 
-    document.getElementById('fileInput').addEventListener('change', function(e) {
+    document.getElementById('fileInput').addEventListener('change', function (e) {
         const file = e.target.files[0];
         const fileInfo = document.getElementById('fileName');
         if (file) {
