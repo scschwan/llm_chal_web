@@ -22,4 +22,11 @@ public class Product extends BaseEntity {
     private String description;
     @Column(name = "is_active")
     private boolean active;
+
+    public Product(String code, String name, String description) {
+        this.code = code;
+        this.name = name;
+        this.description = description;
+        this.active = true;
+    }
 }

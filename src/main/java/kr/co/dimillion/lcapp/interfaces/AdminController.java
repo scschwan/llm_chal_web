@@ -2,6 +2,7 @@ package kr.co.dimillion.lcapp.interfaces;
 
 import kr.co.dimillion.lcapp.application.Product;
 import kr.co.dimillion.lcapp.application.ProductRepository;
+import kr.co.dimillion.lcapp.application.ProductService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdminController {
     private final ProductRepository productRepository;
+    private final ProductService productService;
 
     @GetMapping
     public String admin() {
@@ -42,7 +44,7 @@ public class AdminController {
 
     @PostMapping("/product-management/product")
     public String product(@ModelAttribute ProductCreateForm productCreateForm) {
-        System.out.println("productCreateForm = " + productCreateForm);
+        productService.create(productCreateForm.getCode(), productCreateForm.getName(), productCreateForm.getDescription());
         return "redirect:/admin/product-management";
     }
 
