@@ -40,7 +40,7 @@
                        class="block mb-[5px] text-[#555] font-medium">
                     제품설명
                 </label>
-                <textarea th:field="*{description}" required
+                <textarea th:field="*{description}"
                           placeholder="제품에 대한 간단한 설명을 입력하세요"
                           class="min-h-[80px] resize-y w-full p-[10px] border-[1px] border-[#ddd] rounded-[4px] text-[14px] bg-white">
                 </textarea>
@@ -63,25 +63,42 @@
                     <th class="bg-[#f5f5f5] font-semibold text-[#555] p-3 text-left border-b border-b-[#ddd]">제품명</th>
                     <th class="bg-[#f5f5f5] font-semibold text-[#555] p-3 text-left border-b border-b-[#ddd]">등록일</th>
                     <th class="bg-[#f5f5f5] font-semibold text-[#555] p-3 text-left border-b border-b-[#ddd]">상태</th>
-                    <th class="bg-[#f5f5f5] font-semibold text-[#555] p-3 text-left border-b border-b-[#ddd]">작업</th>
                 </tr>
             </thead>
             <tbody class="table-row-group vertical-align-middle ">
-            <tr>
-                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">1</td>
-                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">prod5</td>
-                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">테스트제품</td>
-                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">2025-11-22</td>
-                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">상태종류?</td>
-                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">
-                    <button class="px-2 py-1 border border-[#ddd] bg-white text-[#666] rounded-[4px] cursor-pointer
-                                    text-[12px] mr-[5px] transition-all duration-300">
-                        무엇?
-                    </button>
-                </td>
+            <tr th:each="product : ${products}">
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]" th:text="${product.id}">1</td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]" th:text="${product.code}">prod5</td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]" th:text="${product.name}">테스트제품</td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]" th:text="${product.createdAt}">2025-11-22</td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]" th:text="${product.active ? '활성화' : '비활성화'}">상태종류?</td>
             </tr>
             </tbody>
+
         </table>
+        <div class="flex justify-center mt-6">
+            <nav>
+                <ul class="inline-flex -space-x-px">
+                    <!-- Previous -->
+                    <li>
+                        <a th:if="${!page.first}" th:href="@{|?page=${page.number-1}|}" class="px-3 py-1 border border-gray-300">이전</a>
+                        <span th:if="${page.first}" class="px-3 py-1 border border-gray-200 text-gray-400 cursor-not-allowed">이전</span>
+                    </li>
+                    <!-- Page Numbers -->
+                    <li th:each="i : ${#numbers.sequence(0, page.totalPages-1)}">
+                        <a th:href="@{|?page=${i}|}"
+                           th:text="${i + 1}"
+                           th:classappend="${page.number == i} ? 'font-bold text-[#4CAF50]' : ''"
+                           class="px-3 py-1 border border-gray-200"></a>
+                    </li>
+                    <!-- Next -->
+                    <li>
+                        <a th:if="${!page.last}" th:href="@{|?page=${page.number+1}|}" class="px-3 py-1 border border-gray-300">다음</a>
+                        <span th:if="${page.last}" class="px-3 py-1 border border-gray-200 text-gray-400 cursor-not-allowed">다음</span>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </div>
 </div>
 
