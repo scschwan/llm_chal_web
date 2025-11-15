@@ -223,6 +223,9 @@
   .my-\[30px\] {
     margin-block: 30px;
   }
+  .mt-5 {
+    margin-top: calc(var(--spacing) * 5);
+  }
   .mt-\[5px\] {
     margin-top: 5px;
   }
@@ -292,6 +295,9 @@
   .table-cell {
     display: table-cell;
   }
+  .table-header-group {
+    display: table-header-group;
+  }
   .table-row {
     display: table-row;
   }
@@ -345,6 +351,16 @@
   }
   .border-collapse {
     border-collapse: collapse;
+  }
+  .border-spacing-0 {
+    --tw-border-spacing-x: calc(var(--spacing) * 0);
+    --tw-border-spacing-y: calc(var(--spacing) * 0);
+    border-spacing: var(--tw-border-spacing-x) var(--tw-border-spacing-y);
+  }
+  .border-spacing-0\.5 {
+    --tw-border-spacing-x: calc(var(--spacing) * 0.5);
+    --tw-border-spacing-y: calc(var(--spacing) * 0.5);
+    border-spacing: var(--tw-border-spacing-x) var(--tw-border-spacing-y);
   }
   .border-spacing-\[2px\] {
     --tw-border-spacing-x: 2px;
@@ -433,6 +449,10 @@
     border-style: var(--tw-border-style);
     border-width: 1px;
   }
+  .border-b {
+    border-bottom-style: var(--tw-border-style);
+    border-bottom-width: 1px;
+  }
   .border-b-2 {
     border-bottom-style: var(--tw-border-style);
     border-bottom-width: 2px;
@@ -479,6 +499,9 @@
   }
   .border-b-\[\#667eea\] {
     border-bottom-color: #667eea;
+  }
+  .border-b-\[\#ddd\] {
+    border-bottom-color: #ddd;
   }
   .border-b-\[\#e0e0e0\] {
     border-bottom-color: #e0e0e0;
@@ -660,6 +683,9 @@
   }
   .text-\[1\.3rem\] {
     font-size: 1.3rem;
+  }
+  .text-\[1\.5rem\] {
+    font-size: 1.5rem;
   }
   .text-\[1rem\] {
     font-size: 1rem;
