@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link th:href="@{/output.css}" rel="stylesheet">
+</head>
+<body>
+<div class="max-w-[1200px] mx-auto bg-white p-[30px] rounded-[8px] shadow-[0_2px_4px_rgba(0,0,0,0.1)]">
+    <header class="flex justify-start items-center gap-[10px] text-[#333] mb-[30px] pb-[15px] border-b-[3px] border-b-[#9C27B0] font-bold text-[2rem]">
+        <a th:href="@{/admin}"> <img th:src="@{/images/arrow-back.svg}" alt="arrow-back"> </a>
+        <h1>매뉴얼 관리</h1>
+    </header>
+    <div class="bg-[#f9f9f9] p-[25px] rounded-[6px] mb-[30px]">
+        <h2 class="text-[#555] mb-5 text-[1.3rem] font-bold">매뉴얼 파일 업로드</h2>
+        <form th:action="@{/admin/manual-management/manual}"
+              method="post"
+              th:object="${manualUploadForm}"
+              enctype="multipart/form-data">
+            <div class="mb-[15px]">
+                <label for="productId"
+                       class="block mb-[5px] text-[#555] font-medium">
+                    제품 선택 *
+                </label>
+                <select required
+                        th:field="*{productId}"
+                        class="w-full p-[10px] border boder-[#ddd] rounded-[4px] text-[14px]">
+                    <option value="">-- 제품을 선택하세요 --</option>
+                    <option th:each="product : ${products}"
+                            th:value="${product.id}"
+                            th:text="${product.name}">
+                    </option>
+                </select>
+            </div>
+            <div class="mb-[15px]">
+                <label for="uploadArea"
+                       class="block mb-[5px] text-[#555] font-medium">
+                    파일 선택 (PDF만 가능)
+                </label>
+                <div id="uploadArea"
+                     onclick="document.getElementById('fileInput').click()"
+                     class="border-2 border-dashed border-[#ddd] rounded-[6px] p-[30px] text-center bg-[#fafafa] cursor-pointer transition-all duration-300 hover:border-[#9C27B0] hover:bg-[#f5f5f5]">
+                    <p>📄 클릭하여 파일 선택 또는 드래그 앤 드롭</p>
+                    <input type="file" id="fileInput" name="file" accept=".pdf" class="hidden" required>
+                    <p id="fileName" class="mt-[10px] text-[#666]"></p>
+                </div>
+            </div>
+            <button type="submit"
+                    class="bg-[#9C27B0] text-white px-5 py-[10px] rounded-[4px] text-[14px] font-medium transition-all duration-300 mt-[15px] cursor-pointer">
+                업로드
+            </button>
+        </form>
+        <div class="text-[#666] text-[0.9rem] mt-[10px]">
+            ※ 매뉴얼 파일은 Object Storage에 저장됩니다.
+            <br>
+            ※ 인덱싱은 서버 배포 메뉴에서 수행합니다.
+            <br>
+            ※ 중복 업로드할 경우 기존 이미지를 덮어씁니다.
+        </div>
+    </div>
+    <div class="mt-[30px]">
+        <h2 class="text-[1.5rem] font-bold">등록된 매뉴얼 목록</h2>
+        <table class="w-full border-collapse mt-5 table border-spacing-0.5">
+            <thead class="table-header-group virtical-align-middle">
+            <tr class="table-row">
+                <th class="bg-[#f5f5f5] font-semibold text-[#555] p-3 text-left border-b border-b-[#ddd]">ID</th>
+                <th class="bg-[#f5f5f5] font-semibold text-[#555] p-3 text-left border-b border-b-[#ddd]">제품</th>
+                <th class="bg-[#f5f5f5] font-semibold text-[#555] p-3 text-left border-b border-b-[#ddd]">파일명</th>
+                <th class="bg-[#f5f5f5] font-semibold text-[#555] p-3 text-left border-b border-b-[#ddd]">크기</th>
+                <th class="bg-[#f5f5f5] font-semibold text-[#555] p-3 text-left border-b border-b-[#ddd]">인덱싱</th>
+                <th class="bg-[#f5f5f5] font-semibold text-[#555] p-3 text-left border-b border-b-[#ddd]">등록일</th>
+                <th class="bg-[#f5f5f5] font-semibold text-[#555] p-3 text-left border-b border-b-[#ddd]">작업</th>
+            </tr>
+            </thead>
+            <tbody class="table-row-group vertical-align-middle ">
+            <tr th:each="manual : ${manuals}">
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]" th:text="${manual.id}"></td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
+                    th:text="${manual.productName}"></td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]" th:text="${manual.originalName}"></td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
+                    th:text="${manual.size + ' MB'}"></td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[14px]"
+                    th:classappend="${manual.indexed} ? 'text-[#4CAF50]' : 'text-[#FF9800]'"
+                    th:text="${manual.indexed ? '완료' : '미완료'}"></td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
+                    th:text="${#temporals.format(manual.createdAt, 'yyyy-MM-dd')}"></td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px] flex gap-[5px]">
+                    <a th:href="@{|/api/v1/file?fileId=${manual.id}&subFolder=menual_store&fileName=${manual.name}|}"
+                       class="bg-[#2196F3] px-[10px] py-[5px] text-[12px] text-white cursor-pointer
+                                rounded-[4px] font-medium transition-all duration-300 hover:bg-[#0b7dda]">
+                        다운로드
+                    </a>
+                    <form th:action="@{/admin/manual-management/manual}" th:method="delete">
+                        <input type="hidden" name="id" th:value="${manual.id}" />
+                        <button type="submit"
+                                class="bg-[#f44336] px-[10px] py-[5px] text-[12px] text-white cursor-pointer
+                                        rounded-[4px] font-medium transition-all duration-300 hover:bg-[#da190b]">
+                            삭제
+                        </button>
+                    </form>
+
+                </td>
+
+            </tr>
+            </tbody>
+
+        </table>
+        <div class="flex justify-center mt-6">
+            <nav>
+                <ul class="inline-flex -space-x-px">
+                    <li>
+                        <a th:if="${!manualPage.first}" th:href="@{|?manualPage=${manualPage.number-1}|}"
+                           class="px-3 py-1 border border-gray-300">이전</a>
+                        <span th:if="${manualPage.first}"
+                              class="px-3 py-1 border border-gray-200 text-gray-400 cursor-not-allowed">이전</span>
+                    </li>
+                    <li th:each="i : ${#numbers.sequence(0, manualPage.totalPages-1)}">
+                        <a th:href="@{|?manualPage=${i}|}"
+                           th:text="${i + 1}"
+                           th:classappend="${manualPage.number == i} ? 'font-bold text-[#9C27B0]' : ''"
+                           class="px-3 py-1 border border-gray-200"></a>
+                    </li>
+                    <li>
+                        <a th:if="${!manualPage.last}" th:href="@{|?manualPage=${page.number+1}|}"
+                           class="px-3 py-1 border border-gray-300">다음</a>
+                        <span th:if="${manualPage.last}"
+                              class="px-3 py-1 border border-gray-200 text-gray-400 cursor-not-allowed">다음</span>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<script>
+    function formatFileSize(bytes) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return (bytes / Math.pow(k, i)).toFixed(2) + ' ' + sizes[i];
+    }
+
+    document.getElementById('fileInput').addEventListener('change', function (e) {
+        const file = e.target.files[0];
+        const fileInfo = document.getElementById('fileName');
+        if (file) {
+            fileInfo.textContent = `선택된 파일: ${file.name} (${formatFileSize(file.size)})`;
+        } else {
+            fileInfo.textContent = '';
+        }
+    });
+</script>
+
+</body>
+</html>

@@ -14,11 +14,28 @@ spring:
       hibernate:
         format_sql: true
         dialect: org.hibernate.dialect.MariaDBDialect
+        default_batch_fetch_size: 50
     show-sql: true
-    open-in-view: false
+
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 100MB
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
 
 
 logging.level:
   org.hibernate:
     SQL: debug
     type.descriptor.sql: trace
+
+cloud:
+  ncp:
+    credentials:
+      access-key: ${NCP_ACCESS_KEY}
+      secret-key: ${NCP_SECRET_KEY}
+    object-storage:
+      bucket: ${NCP_BUCKET}
