@@ -9,7 +9,32 @@
     <link th:href="@{/output.css}" rel="stylesheet">
 </head>
 <body>
-<div th:replace="~{_fragments/header :: header}"></div>
+<header class="bg-[linear-gradient(135deg,_#667eea_0%,_#764ba2_100%)] w-full text-white
+               px-[30px] py-[20px] shadow-[0_2px_4px_rgba(0,0,0,0.1)] flex justify-between items-center">
+    <div>
+        <h1 class="text-[24px] mb-[5px] font-bold">📊 대시보드</h1>
+        <p class="text-[14px] opacity-90">시스템 현황 및 통계</p>
+    </div>
+    <nav class="flex items-center gap-[15px]">
+        <a class="bg-white/20 border border-white/30 text-white px-[16px] py-[8px] rounded-[4px] cursor-pointer
+                    text [14px] transition-all duration-300 text-[14px]"
+           th:href="@{/admin}">
+            ⚙️ 관리 메뉴
+        </a>
+        <a class="bg-white/20 border border-white/30 text-white px-[16px] py-[8px] rounded-[4px] cursor-pointer
+                    text [14px] transition-all duration-300 text-[14px]"
+           th:href="@{/}">
+            🔍 검사 시스템
+        </a>
+        <form th:action="@{/logout}" method="post" style="display: inline;">
+            <button type="submit"
+                    class="bg-white/20 border border-white/30 text-white px-[16px] py-[8px] rounded-[4px] cursor-pointer
+                    text [14px] transition-all duration-300 text-[14px]">
+                로그아웃
+            </button>
+        </form>
+    </nav>
+</header>
 Dashboard!
 </body>
 </html>
