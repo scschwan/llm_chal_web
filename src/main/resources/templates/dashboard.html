@@ -166,36 +166,97 @@
                 <span class="absolute right-[10px] top-1/2 -translate-y-1/2 pointer-events-none text-lg">🔍</span>
             </div>
         </div>
-        <div>
-            <table class="w-full border-collapse border-spacing-[2px] border-gray-400">
-                <thead class="bg-[#f5f7fa]">
-                <tr class="table-row">
-                    <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">시간</th>
-                    <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">제품</th>
-                    <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">불량 유형</th>
-                    <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">결과</th>
-                    <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">이상 점수</th>
-                    <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">작업자</th>
-                    <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">작업</th>
-                </tr>
-                </thead>
-                <tbody class="table-row-group vertical-align-middle ">
-                <tr>
-                    <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">2025-11-15 12:49:30</td>
-                    <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">prod1</td>
-                    <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">hole</td>
-                    <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">정상</td>
-                    <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">0.1234</td>
-                    <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">작업자1</td>
-                    <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">상세</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+        <table class="w-full border-collapse border-spacing-[2px] border-gray-400">
+            <thead class="bg-[#f5f7fa]">
+            <tr class="table-row">
+                <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
+                    시간
+                </th>
+                <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
+                    제품
+                </th>
+                <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
+                    불량 유형
+                </th>
+                <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
+                    결과
+                </th>
+                <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
+                    이상 점수
+                </th>
+                <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
+                    작업자
+                </th>
+                <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
+                    작업
+                </th>
+            </tr>
+            </thead>
+            <tbody class="table-row-group vertical-align-middle ">
+            <tr>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">2025-11-15 12:49:30</td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">prod1</td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">hole</td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">정상</td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">0.1234</td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">작업자1</td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">
+                    <button class="px-2 py-1 border border-[#ddd] bg-white text-[#666] rounded-[4px] cursor-pointer
+                                    text-[12px] mr-[5px] transition-all duration-300">
+                        상세
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
     <h2 class="text-[20px] font-semibold text-[#333] mt-[30px] mb-[15px] pb-[10px] border-b-[2px] border-[#667eea]">
         📦 제품별 통계
     </h2>
+    <div class="bg-white p-[25px] rounded-[10px] shadow-[0_2px_8px_rgba(0,0,0,0.1)] mb-[30px]">
+        <div class="flex justify-start items-center mb-5">
+            <div class="text-[18px] font-semibold text-[#333]">제품 목록</div>
+        </div>
+        <table class="w-full border-collapse border-spacing-[2px] border-gray-400">
+            <thead class="bg-[#f5f7fa]">
+            <tr class="table-row">
+                <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
+                    제품명
+                </th>
+                <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
+                    정상 이미지
+                </th>
+                <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
+                    불량 이미지
+                </th>
+                <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
+                    총 검사
+                </th>
+                <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
+                    불량 검출율
+                </th>
+                <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
+                    작업
+                </th>
+            </tr>
+            </thead>
+            <tbody class="table-row-group vertical-align-middle ">
+            <tr>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">주조제품</td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">0</td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">63</td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">0</td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">0.0%</td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">
+                    <button class="px-2 py-1 border border-[#ddd] bg-white text-[#666] rounded-[4px] cursor-pointer
+                                    text-[12px] mr-[5px] transition-all duration-300">
+                        관리
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 </body>
 </html>
