@@ -907,6 +907,20 @@
       }
     }
   }
+  .hover\:border-\[\#9C27B0\] {
+    &:hover {
+      @media (hover: hover) {
+        border-color: #9C27B0;
+      }
+    }
+  }
+  .hover\:bg-\[\#f5f5f5\] {
+    &:hover {
+      @media (hover: hover) {
+        background-color: #f5f5f5;
+      }
+    }
+  }
   .hover\:bg-\[rgb\(249\,249\,249\)\] {
     &:hover {
       @media (hover: hover) {
