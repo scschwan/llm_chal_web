@@ -3,6 +3,7 @@ package kr.co.dimillion.lcapp.infrastructure.security;
 import kr.co.dimillion.lcapp.application.Role;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -41,10 +42,12 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/output.css").permitAll()
-                        .anyRequest().authenticated())
+                        .requestMatchers(HttpMethod.POST, "/login").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/admin/**").hasRole(Role.ADMIN.name())
+                        .anyRequest().hasRole(Role.WORKER.name()))
                 .formLogin(login -> login
                         .loginPage("/login").permitAll()
-                        .loginProcessingUrl("/login").permitAll()
+                        .loginProcessingUrl("/login/proc")
                         .successHandler(new RoleBasedAuthenticationSuccessHandler()));
         return http.build();
     }

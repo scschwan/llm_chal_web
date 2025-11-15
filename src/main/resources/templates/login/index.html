@@ -21,7 +21,7 @@
         </div>
         <button
                 onclick="document.querySelector('.error-modal-bg').style.display='none'"
-                class="mt-[8px] py-[8px] px-[22px] bg-[#667eea] text-white rounded-[6px] text-[14px] font-semibold focus:outline-none">
+                class="mt-[8px] py-[8px] px-[22px] bg-[#667eea] text-white rounded-[6px] text-[14px] font-semibold focus:outline-none" autofocus>
             닫기
         </button>
     </div>
@@ -50,10 +50,11 @@
         </label>
     </div>
     <form th:action="@{/login}" method="post" class="flex flex-col w-[320px]">
+        <input type="hidden" name="role" id="role-input" value="worker">
         <div class="flex flex-col mb-[20px]">
             <label class="text-[#555] text-[14px] font-medium mb-[8px]">아이디</label>
             <input class="py-[12px] px-[15px] border-[1px] text-[14px] border-[rgb(221,221,221)] rounded-[6px] focus:border-[#667eea]"
-                   type="text" name="username" autofocus/>
+                   type="text" name="username"/>
         </div>
         <div class="flex flex-col mb-[20px]">
             <label class="text-[#555] text-[14px] font-medium mb-[8px]">비밀번호 </label>
@@ -79,7 +80,7 @@
 </div>
 
 <script>
-    let current = 'worker';
+    let current = localStorage.getItem('loginRole') || 'worker';
 
     function updateUI() {
         document.querySelectorAll('.role-tab').forEach(tab => {
@@ -91,11 +92,13 @@
         });
         document.getElementById('role-desc-worker').style.display = (current === 'worker' ? '' : 'none');
         document.getElementById('role-desc-admin').style.display = (current === 'admin' ? '' : 'none');
+        document.getElementById('role-input').value = current;
     }
 
     document.querySelectorAll('.role-tab').forEach(tab => {
         tab.addEventListener('click', () => {
             current = tab.dataset.role;
+            localStorage.setItem('loginRole', current);
             updateUI();
         });
     });
