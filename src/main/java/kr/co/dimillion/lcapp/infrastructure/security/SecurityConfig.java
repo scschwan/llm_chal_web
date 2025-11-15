@@ -25,16 +25,16 @@ import java.io.IOException;
 @Configuration(proxyBeanMethods = false)
 public class SecurityConfig {
     @Bean
-    UserDetailsService userDetailsService() {
-        UserDetails worker = User.withDefaultPasswordEncoder()
+    UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
+        UserDetails worker = User.builder()
                 .username("worker")
-                .password("worker")
+                .password(passwordEncoder.encode("worker"))
                 .roles(Role.WORKER.name())
                 .build();
 
-        UserDetails admin = User.withDefaultPasswordEncoder()
+        UserDetails admin = User.builder()
                 .username("admin")
-                .password("admin")
+                .password(passwordEncoder.encode("admin"))
                 .roles(Role.ADMIN.name())
                 .build();
 
