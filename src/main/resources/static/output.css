@@ -548,6 +548,9 @@
   .border-b-\[\#667eea\] {
     border-bottom-color: #667eea;
   }
+  .border-b-\[\#2196F3\] {
+    border-bottom-color: #2196F3;
+  }
   .border-b-\[\#FF9800\] {
     border-bottom-color: #FF9800;
   }
@@ -928,6 +931,13 @@
     &:hover {
       @media (hover: hover) {
         border-color: #9C27B0;
+      }
+    }
+  }
+  .hover\:border-\[\#2196F3\] {
+    &:hover {
+      @media (hover: hover) {
+        border-color: #2196F3;
       }
     }
   }

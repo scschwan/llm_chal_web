@@ -13,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
@@ -26,6 +25,7 @@ public class AdminController {
     private final ManualRepository manualRepository;
     private final DefectTypeRepository defectTypeRepository;
     private final DefectTypeService defectTypeService;
+    private final ImageRepository imageRepository;
 
     @GetMapping
     public String admin() {
@@ -185,5 +185,31 @@ public class AdminController {
         private String nameEn;
         private String description;
 
+    }
+
+    @GetMapping("/normal-image-management")
+    public String normalImageManagement(@ModelAttribute NormalImageUploadForm normalImageUploadForm) {
+        List<Product> products = productRepository.findAll();
+        normalImageUploadForm.setProducts(products);
+        return "normal-image-management";
+    }
+
+    @PostMapping("/normal-image-management/image")
+    public String createNormalImage(@ModelAttribute NormalImageUploadForm normalImageUploadForm, @RequestParam MultipartFile[] files) {
+        Product product = productRepository.findById(normalImageUploadForm.getProductId())
+                .orElseThrow();
+        for (MultipartFile file : files) {
+            String filename = file.getOriginalFilename();
+            String filepath = fileSystem.uploadFile(file, "ok_image");
+            long filesize = file.getSize();
+            imageRepository.save(new Image(product, "normal", filename, filepath, filesize));
+        }
+        return "redirect:/admin/normal-image-management";
+    }
+
+    @Data
+    public static class NormalImageUploadForm {
+        private List<Product> products;
+        private Integer productId;
     }
 }

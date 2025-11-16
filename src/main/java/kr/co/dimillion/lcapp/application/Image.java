@@ -33,6 +33,8 @@ public class Image {
 
     @Column(name = "use_yn")
     private boolean used;
+    @Column(name = "sync_yn")
+    private boolean synced;
     private LocalDateTime uploadedAt;
 
     public Image(Product product, String type, String name, String path, Long size) {
@@ -42,6 +44,7 @@ public class Image {
         this.path = path;
         this.size = size;
         this.used = true;
+        this.synced = false;
         this.uploadedAt = LocalDateTime.now();
     }
 }

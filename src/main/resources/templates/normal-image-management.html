@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link th:href="@{/output.css}" rel="stylesheet">
+</head>
+<body>
+<div class="max-w-[1200px] mx-auto bg-white p-[30px] rounded-[8px] shadow-[0_2px_4px_rgba(0,0,0,0.1)]">
+    <header class="flex justify-start items-center gap-[10px] text-[#333] mb-[30px] pb-[15px] border-b-[3px]
+                    border-b-[#2196F3] font-bold text-[2rem]">
+        <a th:href="@{/admin}"> <img th:src="@{/images/arrow-back.svg}" alt="arrow-back"> </a>
+        <h1>정상 이미지 등록</h1>
+    </header>
+    <div class="bg-[#f9f9f9] p-[25px] rounded-[6px] mb-[30px]">
+        <h2 class="text-[#555] mb-5 text-[1.3rem] font-bold">매뉴얼 파일 업로드</h2>
+        <form th:action="@{/admin/normal-image-management/image}"
+              method="post"
+              th:object="${normalImageUploadForm}"
+              enctype="multipart/form-data">
+            <div class="mb-[15px]">
+                <label for="productId"
+                       class="block mb-[5px] text-[#555] font-medium">
+                    제품 선택 *
+                </label>
+                <select required
+                        th:field="*{productId}"
+                        class="w-full p-[10px] border border-[#ddd] rounded-[4px] text-[14px] bg-white">
+                    <option value="">-- 제품을 선택하세요 --</option>
+                    <option th:each="product : *{products}"
+                            th:value="${product.id}"
+                            th:text="${product.name}">
+                    </option>
+                </select>
+            </div>
+            <div class="mb-[15px]">
+                <label for="uploadArea"
+                       class="block mb-[5px] text-[#555] font-medium">
+                    파일 선택 (jpg, png)
+                </label>
+                <div id="uploadArea"
+                     onclick="document.getElementById('files').click()"
+                     class="border-2 border-dashed border-[#ddd] rounded-[6px] p-[30px] text-center bg-[#fafafa] cursor-pointer transition-all duration-300 hover:border-[#2196F3] hover:bg-[#f5f5f5]">
+                    <p>📄 클릭하여 파일 선택 또는 드래그 앤 드롭</p>
+                    <p class="text-[0.9rem] text-[#999] mt-[5px]">다중 선택 가능</p>
+                    <input type="file" id="files" name="files" accept=".jpg, .png" class="hidden" required multiple>
+                    <p id="fileName" class="mt-[10px] text-[#666]"></p>
+                </div>
+            </div>
+            <button type="submit"
+                    class="bg-[#2196F3] text-white px-5 py-[10px] rounded-[4px] text-[14px] font-medium transition-all duration-300 mt-[15px] cursor-pointer">
+                업로드
+            </button>
+        </form>
+        <div class="text-[#666] text-[0.9rem] mt-[10px]">
+            ※ 이미지는 Object Storage에 저장됩니다.
+            <br>
+            ※ 업로드 완료 후 서버 배포를 수행해야 인덱싱됩니다.
+        </div>
+    </div>
+</div>
+</body>
+</html>
