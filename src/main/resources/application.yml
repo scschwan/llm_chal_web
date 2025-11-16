@@ -28,9 +28,12 @@ spring:
 
 
 logging.level:
-  org.hibernate:
-    SQL: debug
-    type.descriptor.sql: trace
+  org:
+    springframework:
+      web.reactive.function.client.ExchangeFunctions: debug
+      http.client.reactive: debug
+  reactor.netty.http.client: debug
+
 
 cloud:
   ncp:
@@ -39,3 +42,5 @@ cloud:
       secret-key: ${NCP_SECRET_KEY}
     object-storage:
       bucket: ${NCP_BUCKET}
+
+ai-server-host: ${AI_SERVER_HOST}

@@ -33,6 +33,7 @@ public class AdminController {
     private final ImageRepository imageRepository;
     private final ImageService imageService;
     private final ModelSettingsRepository modelSettingsRepository;
+    private final AiServerClient aiServerClient;
 
     @GetMapping
     public String admin() {
@@ -114,6 +115,7 @@ public class AdminController {
                          @RequestParam("file") MultipartFile file) {
         String filePath = fileSystem.uploadFile(file, "menual_store");
         manualService.save(manualUploadForm.getProductId(), file.getOriginalFilename(), filePath, file.getSize());
+        aiServerClient.syncManuals().subscribe();
         return "redirect:/admin/manual-management";
     }
 
@@ -125,6 +127,7 @@ public class AdminController {
     @DeleteMapping("/manual-management/manual")
     public String manual(@RequestParam Integer id) {
         manualService.deactivate(id);
+        aiServerClient.syncManuals().subscribe();
         return "redirect:/admin/manual-management";
     }
 
