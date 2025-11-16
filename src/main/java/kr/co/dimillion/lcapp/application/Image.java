@@ -47,4 +47,8 @@ public class Image {
         this.synced = false;
         this.uploadedAt = LocalDateTime.now();
     }
+
+    public void delete() {
+        used = false;
+    }
 }
