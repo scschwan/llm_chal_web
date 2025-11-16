@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@Table(name = "manuals")
 @Entity
+@Table(name = "manuals")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Manual {

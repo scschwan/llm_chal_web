@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link th:href="@{/output.css}" rel="stylesheet">
+</head>
+<body>
+<div class="max-w-[1200px] mx-auto bg-white p-[30px] rounded-[8px] shadow-[0_2px_4px_rgba(0,0,0,0.1)]">
+    <header class="flex justify-start items-center gap-[10px] text-[#333] mb-[30px] pb-[15px] border-b-[3px] border-b-[#FF9800] font-bold text-[2rem]">
+        <a th:href="@{/admin}"> <img th:src="@{/images/arrow-back.svg}" alt="arrow-back"> </a>
+        <h1>불량 유형 관리</h1>
+    </header>
+    <div class="bg-[#f9f9f9] p-[25px] rounded-[6px] mb-[30px]">
+        <h2 class="text-[#555] mb-5 text-[1.3rem] font-bold">신규 불량 유형 등록</h2>
+        <form th:action="@{/admin/defect-type-management/defect-type}"
+              method="post"
+              th:object="${defectTypeCreateForm}"
+              enctype="multipart/form-data">
+            <div class="mb-[15px]">
+                <label for="productId"
+                       class="block mb-[5px] text-[#555] font-medium">
+                    제품 선택 *
+                </label>
+                <select required
+                        th:field="*{productId}"
+                        class="w-full p-[10px] border border-[#ddd] rounded-[4px] text-[14px] bg-white">
+                    <option value="">-- 제품을 선택하세요 --</option>
+                    <option th:each="product : *{products}"
+                            th:value="${product.id}"
+                            th:text="${product.name}">
+                    </option>
+                </select>
+            </div>
+            <div class="mb-[15px]">
+                <label for="nameKo"
+                       class="block mb-[5px] text-[#555] font-medium">
+                    불량명 (한글) *
+                </label>
+                <input th:field="*{nameKo}" required
+                       placeholder="예: 긁힘, 기공, 버"
+                       class="w-full p-[10px] border-[1px] border-[#ddd] rounded-[4px] text-[14px] bg-white">
+            </div>
+            <div class="mb-[15px]">
+                <label for="code"
+                       class="block mb-[5px] text-[#555] font-medium">
+                    매핑명 (영문) *
+                </label>
+                <input th:field="*{code}" required
+                       placeholder="예: scratch, hole, burr"
+                       class="w-full p-[10px] border-[1px] border-[#ddd] rounded-[4px] text-[14px] bg-white">
+            </div>
+            <div class="mb-[15px]">
+                <label for="nameEn"
+                       class="block mb-[5px] text-[#555] font-medium">
+                    불량명 (영문)
+
+                </label>
+                <input th:field="*{nameEn}"
+                       placeholder="예: Scratch, Hole, Burr"
+                       class="w-full p-[10px] border-[1px] border-[#ddd] rounded-[4px] text-[14px] bg-white">
+            </div>
+            <div class="mb-[15px]">
+                <label for="description"
+                       class="block mb-[5px] text-[#555] font-medium">
+                    상세 설명
+                </label>
+                <textarea th:field="*{description}"
+                          placeholder="불량 유형에 대한 상세 설명을 입력하세요"
+                          class="min-h-[80px] resize-y w-full p-[10px] border-[1px] border-[#ddd] rounded-[4px] text-[14px] bg-white">
+                </textarea>
+            </div>
+            <button type="submit"
+                    class="bg-[#FF9800] text-white px-5 py-[10px] rounded-[4px] text-[14px] font-medium transition-all duration-300 mt-[15px] cursor-pointer">
+                등록
+            </button>
+            <button type="reset"
+                    class="bg-[#2196F3] text-white px-5 py-[10px] rounded-[4px] text-[14px] font-medium transition-all duration-300 mt-[15px] cursor-pointer">
+                초기화
+            </button>
+        </form>
+        </div>
+    <div class="mt-[30px]">
+        <div class="mb-5 p-[15px] bg-[#f9f9f9] rounded-[6px]">
+            <form th:action="@{/admin/defect-type-management}" method="get" th:object="${defectTypeInquiryForm}">
+                <label for="productId"
+                       class="mr-[10px] font-medium">
+                    제품 필터:
+                </label>
+                <select th:field="*{productId}"
+                        class="p-2 border border-[#ddd] rounded-[4px] bg-white text-[13px]"
+                        onchange="this.form.submit()">
+                    <option value="">전체 제품</option>
+                    <option th:each="product : *{products}"
+                            th:value="${product.id}"
+                            th:text="${product.name}">
+                    </option>
+                </select>
+            </form>
+        </div>
+        <table class="w-full border-collapse mt-5 table border-spacing-0.5">
+            <thead class="table-header-group virtical-align-middle">
+            <tr class="table-row">
+                <th class="bg-[#f5f5f5] font-semibold text-[#555] p-3 text-left border-b border-b-[#ddd]">ID</th>
+                <th class="bg-[#f5f5f5] font-semibold text-[#555] p-3 text-left border-b border-b-[#ddd]">제품</th>
+                <th class="bg-[#f5f5f5] font-semibold text-[#555] p-3 text-left border-b border-b-[#ddd]">불량명(한글)</th>
+                <th class="bg-[#f5f5f5] font-semibold text-[#555] p-3 text-left border-b border-b-[#ddd]">매핑명(영문)</th>
+                <th class="bg-[#f5f5f5] font-semibold text-[#555] p-3 text-left border-b border-b-[#ddd]">등록일</th>
+                <th class="bg-[#f5f5f5] font-semibold text-[#555] p-3 text-left border-b border-b-[#ddd]">상태</th>
+                <th class="bg-[#f5f5f5] font-semibold text-[#555] p-3 text-left border-b border-b-[#ddd]">작업</th>
+            </tr>
+            </thead>
+            <tbody class="table-row-group vertical-align-middle ">
+            <tr th:each="defectType : ${defectTypes}">
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
+                    th:text="${defectType.id}"></td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
+                    th:text="${defectType.product.name}"></td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
+                    th:text="${defectType.nameKo}"></td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
+                    th:text="${defectType.nameEn}"></td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
+                    th:text="${#temporals.format(defectType.createdAt, 'yyyy-MM-dd')}"></td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[14px]"
+                    th:classappend="${defectType.isActive} ? 'text-[#4CAF50]' : 'text-[#FF9800]'"
+                    th:text="${defectType.isActive ? '활성' : '비활성'}"></td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px] flex gap-[5px]">
+                    <form id="editForm" th:action="@{/admin/defect-type-management/defect-type}" th:method="put">
+                        <input type="hidden" name="id" th:value="${defectType.id}"/>
+                        <input type="hidden" name="newNameKo" id="newNameKo"/>
+                        <button type="button"
+                                class="bg-[#2196F3] px-[10px] py-[5px] text-[12px] text-white cursor-pointer
+                                        rounded-[4px] font-medium transition-all duration-300 hover:bg-[#0b7dda]"
+                                onclick="openPromptAndSubmit()">
+                            수정
+                        </button>
+                    </form>
+                    <form th:action="@{/admin/defect-type-management/defect-type}" th:method="delete">
+                        <input type="hidden" name="id" th:value="${defectType.id}"/>
+                        <button type="submit"
+                                class="bg-[#f44336] px-[10px] py-[5px] text-[12px] text-white cursor-pointer
+                                        rounded-[4px] font-medium transition-all duration-300 hover:bg-[#da190b]">
+                            삭제
+                        </button>
+                    </form>
+
+                </td>
+
+            </tr>
+            </tbody>
+
+        </table>
+        <div class="flex justify-center mt-6">
+            <nav>
+                <ul class="inline-flex -space-x-px">
+                    <li>
+                        <a th:if="${!page.first}" th:href="@{|?page=${page.number-1}|}"
+                           class="px-3 py-1 border border-gray-300">이전</a>
+                        <span th:if="${page.first}"
+                              class="px-3 py-1 border border-gray-200 text-gray-400 cursor-not-allowed">이전</span>
+                    </li>
+                    <li th:each="i : ${#numbers.sequence(0, page.totalPages-1)}">
+                        <a th:href="@{|?page=${i}|}"
+                           th:text="${i + 1}"
+                           th:classappend="${page.number == i} ? 'font-bold text-[#9C27B0]' : ''"
+                           class="px-3 py-1 border border-gray-200"></a>
+                    </li>
+                    <li>
+                        <a th:if="${!page.last}" th:href="@{|?page=${page.number+1}|}"
+                           class="px-3 py-1 border border-gray-300">다음</a>
+                        <span th:if="${page.last}"
+                              class="px-3 py-1 border border-gray-200 text-gray-400 cursor-not-allowed">다음</span>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+>
+</body>
+
+<script>
+    function openPromptAndSubmit() {
+        const value = prompt('새 불량명(한글)을 입력하세요:');
+        if (value !== null && value.trim() !== "") {
+            document.getElementById('newNameKo').value = value;
+            document.getElementById('editForm').submit();
+        }
+    }
+</script>
+</html>

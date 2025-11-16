@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
@@ -23,6 +24,8 @@ public class AdminController {
     private final FileSystem fileSystem;
     private final ManualService manualService;
     private final ManualRepository manualRepository;
+    private final DefectTypeRepository defectTypeRepository;
+    private final DefectTypeService defectTypeService;
 
     @GetMapping
     public String admin() {
@@ -107,16 +110,80 @@ public class AdminController {
         return "redirect:/admin/manual-management";
     }
 
+    @Data
+    public static class ManualUploadForm {
+        private Integer productId;
+    }
+
     @DeleteMapping("/manual-management/manual")
     public String manual(@RequestParam Integer id) {
         manualService.deactivate(id);
         return "redirect:/admin/manual-management";
     }
 
-    @Data
-    public static class ManualUploadForm {
-        private Integer productId;
+    @GetMapping("/defect-type-management")
+    public String defectManagement(Model model,
+                                   @ModelAttribute DefectTypeCreateForm defectTypeCreateForm,
+                                   @PageableDefault Pageable pageable,
+                                   @RequestParam(required = false) Integer productId) {
+        List<Product> products = productRepository.findAll();
+        defectTypeCreateForm.setProducts(products);
+        model.addAttribute("defectTypeInquiryForm", new DefectTypeInquiryForm(products, productId));
+
+        Page<DefectType> defectTypePage;
+        if (productId == null) {
+            defectTypePage = defectTypeRepository.findByUsed(true, pageable);
+        } else {
+            Product product = productRepository.findById(productId).orElseThrow();
+            defectTypePage = defectTypeRepository.findByProductAndUsed(product, true, pageable);
+        }
+        model.addAttribute("defectTypes", defectTypePage.getContent());
+        model.addAttribute("page", defectTypePage);
+
+        return "defect-type-management";
     }
 
+    @Data
+    public static class DefectTypeInquiryForm {
+        private List<Product> products;
+        private Integer productId;
 
+        public DefectTypeInquiryForm(List<Product> products, Integer productId) {
+            this.products = products;
+            this.productId = productId;
+        }
+    }
+
+    @PostMapping("/defect-type-management/defect-type")
+    public String createDefectType(@ModelAttribute DefectTypeCreateForm defectTypeCreateForm) {
+        Product product = productRepository.findById(defectTypeCreateForm.getProductId()).orElseThrow();
+        defectTypeRepository.save(
+                new DefectType(product, defectTypeCreateForm.getCode(), defectTypeCreateForm.getNameKo(),
+                        defectTypeCreateForm.getNameEn(), defectTypeCreateForm.nameKo, defectTypeCreateForm.getDescription()));
+        defectTypeCreateForm.setProductId(null);
+        return "redirect:/admin/defect-type-management";
+    }
+
+    @PutMapping("/defect-type-management/defect-type")
+    public String createDefectType(@RequestParam Integer id, @RequestParam String newNameKo) {
+        defectTypeService.update(id, newNameKo);
+        return "redirect:/admin/defect-type-management";
+    }
+
+    @DeleteMapping("/defect-type-management/defect-type")
+    public String createDefectType(@RequestParam Integer id) {
+        defectTypeService.delete(id);
+        return "redirect:/admin/defect-type-management";
+    }
+
+    @Data
+    public static class DefectTypeCreateForm {
+        List<Product> products;
+        private Integer productId;
+        private String nameKo;
+        private String code;
+        private String nameEn;
+        private String description;
+
+    }
 }
