@@ -164,6 +164,12 @@ public class AdminController {
         return "redirect:/admin/defect-type-management";
     }
 
+    @PutMapping("/defect-type-management/defect-type")
+    public String createDefectType(@RequestParam Integer id, @RequestParam String newNameKo) {
+        defectTypeService.update(id, newNameKo);
+        return "redirect:/admin/defect-type-management";
+    }
+
     @DeleteMapping("/defect-type-management/defect-type")
     public String createDefectType(@RequestParam Integer id) {
         defectTypeService.delete(id);

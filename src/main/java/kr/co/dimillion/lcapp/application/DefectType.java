@@ -56,6 +56,10 @@ public class DefectType {
         this.createdAt = LocalDateTime.now();
     }
 
+    public void updateNameKo(String nameKo) {
+        this.nameKo = nameKo;
+    }
+
     public void deactivate() {
         this.used = false;
     }

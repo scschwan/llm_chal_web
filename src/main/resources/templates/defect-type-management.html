@@ -129,11 +129,13 @@
                     th:classappend="${defectType.isActive} ? 'text-[#4CAF50]' : 'text-[#FF9800]'"
                     th:text="${defectType.isActive ? '활성' : '비활성'}"></td>
                 <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px] flex gap-[5px]">
-                    <form th:action="@{/admin/manual-management/manual}" th:method="delete">
+                    <form id="editForm" th:action="@{/admin/defect-type-management/defect-type}" th:method="put">
                         <input type="hidden" name="id" th:value="${defectType.id}"/>
-                        <button type="submit"
+                        <input type="hidden" name="newNameKo" id="newNameKo"/>
+                        <button type="button"
                                 class="bg-[#2196F3] px-[10px] py-[5px] text-[12px] text-white cursor-pointer
-                                        rounded-[4px] font-medium transition-all duration-300 hover:bg-[#0b7dda]">
+                                        rounded-[4px] font-medium transition-all duration-300 hover:bg-[#0b7dda]"
+                                onclick="openPromptAndSubmit()">
                             수정
                         </button>
                     </form>
@@ -180,4 +182,14 @@
 </div>
 >
 </body>
+
+<script>
+    function openPromptAndSubmit() {
+        const value = prompt('새 불량명(한글)을 입력하세요:');
+        if (value !== null && value.trim() !== "") {
+            document.getElementById('newNameKo').value = value;
+            document.getElementById('editForm').submit();
+        }
+    }
+</script>
 </html>
