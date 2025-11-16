@@ -243,4 +243,50 @@ public class AdminController {
         private List<Product> products;
         private Integer productId;
     }
+
+    @GetMapping("/defect-image-management")
+    public String defectImageManagement(@ModelAttribute DefectImageUploadForm defectImageUploadForm,
+                                        @ModelAttribute DefectImageInquiryForm defectImageInquiryForm,
+                                        Model model,
+                                        @PageableDefault Pageable pageable) {
+        List<Product> products = productRepository.findAll();
+        defectImageUploadForm.setProducts(products);
+        defectImageInquiryForm.setProducts(products);
+
+        List<DefectType> defectTypes = defectTypeRepository.findAll();
+        defectImageUploadForm.setDefectTypes(defectTypes);
+        defectImageInquiryForm.setDefectTypes(defectTypes);
+
+        Page<Image> imagePage;
+        if (defectImageInquiryForm.getProductId() != null) {
+            Product product = productRepository.findById(defectImageInquiryForm.getProductId())
+                    .orElseThrow();
+            imagePage = imageRepository.findByProductAndTypeAndUsed(product, "defect", true, pageable);
+
+        } else {
+            imagePage = imageRepository.findByTypeAndUsed("defect", true, pageable);
+        }
+        model.addAttribute("defectImages", imagePage.getContent());
+        model.addAttribute("defectImagePage", imagePage);
+
+        return "defect-image-management";
+    }
+
+    @Data
+    public static class DefectImageUploadForm {
+        private List<Product> products;
+        private Integer productId;
+
+        private List<DefectType> defectTypes;
+        private Integer defectTypeId;
+    }
+
+    @Data
+    public static class DefectImageInquiryForm {
+        private List<Product> products;
+        private Integer productId;
+
+        private List<DefectType> defectTypes;
+        private Integer defectTypeId;
+    }
 }

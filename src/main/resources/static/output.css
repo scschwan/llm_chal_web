@@ -591,6 +591,9 @@
   .border-b-\[\#f0f0f0\] {
     border-bottom-color: #f0f0f0;
   }
+  .border-b-\[\#f44336\] {
+    border-bottom-color: #f44336;
+  }
   .border-b-\[rgb\(240\,240\,240\)\] {
     border-bottom-color: rgb(240,240,240);
   }
