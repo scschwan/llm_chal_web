@@ -5,16 +5,21 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class SearchHistory {
+public class ResponseHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "search_id")
+    @Column(name = "response_Id")
     private Integer id;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "search_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+    private SearchHistory searchHistory;
+
     private String productCode;
-    private LocalDateTime searchedAt;
+    private String defectCode;
+    private Double similarityScore;
+    private Double anomalyScore;
 }

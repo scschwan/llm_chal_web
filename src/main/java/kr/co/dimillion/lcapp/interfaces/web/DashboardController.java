@@ -1,13 +1,11 @@
 package kr.co.dimillion.lcapp.interfaces.web;
 
-import kr.co.dimillion.lcapp.application.ImageRepository;
-import kr.co.dimillion.lcapp.application.Product;
-import kr.co.dimillion.lcapp.application.ProductRepository;
-import kr.co.dimillion.lcapp.application.SearchHistoryRepository;
+import kr.co.dimillion.lcapp.application.*;
 import lombok.Data;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.TemporalAdjusters;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
@@ -25,11 +25,13 @@ public class DashboardController {
     private final ProductRepository productRepository;
     private final ImageRepository imageRepository;
     private final SearchHistoryRepository searchHistoryRepository;
+    private final ResponseHistoryRepository responseHistoryRepository;
 
-    public DashboardController(ProductRepository productRepository, ImageRepository imageRepository, SearchHistoryRepository searchHistoryRepository) {
+    public DashboardController(ProductRepository productRepository, ImageRepository imageRepository, SearchHistoryRepository searchHistoryRepository, ResponseHistoryRepository responseHistoryRepository) {
         this.productRepository = productRepository;
         this.imageRepository = imageRepository;
         this.searchHistoryRepository = searchHistoryRepository;
+        this.responseHistoryRepository = responseHistoryRepository;
     }
 
     @GetMapping("/dashboard")
@@ -60,18 +62,48 @@ public class DashboardController {
         long thisWeekSearchCount = searchHistoryRepository.countBySearchedAtGreaterThanEqual(startOfWeek);
         model.addAttribute("thisWeekSearchCount", thisWeekSearchCount);
 
+        List<SearchHistory> searches = searchHistoryRepository.findTop20ByOrderByIdDesc();
+        List<SearchDto> searchDtoList = searches.stream()
+                .map(s -> {
+                    ResponseHistory r = responseHistoryRepository.findBySearchHistory(s)
+                            .orElse(null);
+                    return new SearchDto(s, r);
+                })
+                .toList();
+        model.addAttribute("searches", searchDtoList);
+
         Page<Product> productPage = productRepository.findAll(pageable);
         model.addAttribute("productPage", productPage);
         List<ProductDto> productDtoList = productPage.getContent()
                 .stream()
                 .map(p -> {
-                    long normalCount = imageRepository.countByProductAndTypeAndUsed(p, "normal", true);
-                    long defectCount = imageRepository.countByProductAndTypeAndUsed(p, "defect", true);
-                    return new ProductDto(p.getId(), p.getName(), normalCount, defectCount, 0);
+                    long nc = imageRepository.countByProductAndTypeAndUsed(p, "normal", true);
+                    long dc = imageRepository.countByProductAndTypeAndUsed(p, "defect", true);
+                    long sc = searchHistoryRepository.countByProductCode(p.getName());
+                    return new ProductDto(p.getId(), p.getName(), nc, dc, sc);
                 }).toList();
         model.addAttribute("products", productDtoList);
 
         return "dashboard";
+    }
+
+    @Data
+    public static class SearchDto {
+        private Integer id;
+        private LocalDateTime searchedAt;
+        private String productCode;
+        private String defectCode;
+        private Double similarityScore;
+        private Double anomalyScore;
+
+        public SearchDto(SearchHistory search, ResponseHistory response) {
+            this.id = search.getId();
+            this.searchedAt = search.getSearchedAt();
+            this.productCode = response != null ? response.getProductCode() : null;
+            this.defectCode = response != null ? response.getDefectCode() : null;
+            this.similarityScore = response != null ? response.getSimilarityScore() : null;
+            this.anomalyScore = response != null ? response.getAnomalyScore() : null;
+        }
     }
 
     @Data
@@ -93,8 +125,7 @@ public class DashboardController {
 
     private static LocalDateTime getLocalDateTime() {
         LocalDate today = LocalDate.now();
-        LocalDate monday = today.with(DayOfWeek.SUNDAY);
-        LocalDateTime startOfWeek = monday.atStartOfDay();
-        return startOfWeek;
+        LocalDate lastSunday = today.with(TemporalAdjusters.previousOrSame(DayOfWeek.SUNDAY));
+        return lastSunday.atStartOfDay();
     }
 }

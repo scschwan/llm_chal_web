@@ -108,11 +108,6 @@
     <div class="bg-white p-[25px] rounded-[10px] shadow-[0_2px_8px_rgba(0,0,0,0.1)] mb-[30px]">
         <div class="flex justify-between items-center mb-5">
             <div class="text-[18px] font-semibold text-[#333]">최근 20건</div>
-            <div class="relative">
-                <input type="text" placeholder="제품명, 작업자 검색"
-                       class="py-2 pr-[35px] pl-3 border border-[#ddd] rounded-[4px] text-[14px] w-[250px]">
-                <span class="absolute right-[10px] top-1/2 -translate-y-1/2 pointer-events-none text-lg">🔍</span>
-            </div>
         </div>
         <table class="w-full border-collapse border-spacing-[2px] border-gray-400">
             <thead class="bg-[#f5f7fa]">
@@ -127,7 +122,7 @@
                     불량 유형
                 </th>
                 <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
-                    결과
+                    유사도 점수
                 </th>
                 <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
                     이상 점수
@@ -138,13 +133,18 @@
             </tr>
             </thead>
             <tbody class="table-row-group vertical-align-middle ">
-            <tr>
-                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">2025-11-15 12:49:30</td>
-                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">prod1</td>
-                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">hole</td>
-                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">정상</td>
-                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">0.1234</td>
-                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">작업자1</td>
+            <tr th:each="search : ${searches}">
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
+                    th:text="*{#temporals.format(search.searchedAt, 'yyyy-MM-dd HH:mm:ss')}">2025-11-15 12:49:30</td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
+                    th:text="*{search.productCode} ?: '-'">prod1</td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
+                    th:text="*{search.defectCode} ?: '-'">hole</td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
+                    th:text="*{search.similarityScore} ?: '-'">0.1212</td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
+                    th:text="*{search.anomalyScore} ?: '-'">0.1234</td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">worker</td>
             </tr>
             </tbody>
         </table>
