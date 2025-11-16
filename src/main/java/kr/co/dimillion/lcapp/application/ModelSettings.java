@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class ModelSettings {
+public class ModelSettings extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "model_settings_id")
@@ -20,6 +20,11 @@ public class ModelSettings {
     @Enumerated(EnumType.STRING)
     private GenAi genAi;
 
+    public ModelSettings(DefectInspection defectInspection, SimilarityMatch similarityMatch, GenAi genAi) {
+        this.defectInspection = defectInspection;
+        this.similarityMatch = similarityMatch;
+        this.genAi = genAi;
+    }
 
     @Getter
     public enum DefectInspection {
