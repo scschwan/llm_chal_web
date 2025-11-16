@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link th:href="@{/output.css}" rel="stylesheet">
+</head>
+<body>
+<div class="max-w-[1200px] mx-auto bg-white p-[30px] rounded-[8px] shadow-[0_2px_4px_rgba(0,0,0,0.1)]">
+    <header class="flex justify-start items-center gap-[10px] text-[#333] mb-[30px] pb-[15px] border-b-[3px] border-b-[#9C27B0] font-bold text-[2rem]">
+        <a th:href="@{/admin}"> <img th:src="@{/images/arrow-back.svg}" alt="arrow-back"> </a>
+        <h1>불량 유형 관리</h1>
+    </header>
+    <div class="mt-[30px]">
+        <h2 class="text-[1.5rem] font-bold">등록된 불량 유형 목록</h2>
+        <div class="mb-5 p-[15px] bg-[#f9f9f9] rounded-[6px]">
+            <form th:action="@{/admin/defect-type-management}" method="get" th:object="${defectTypeInquiryForm}">
+                <label for="productId"
+                       class="mr-[10px] font-medium">
+                    제품 필터:
+                </label>
+                <select th:field="*{productId}"
+                        class="p-2 border border-[#ddd] rounded-[4px] bg-white text-[13px]"
+                        onchange="this.form.submit()">
+                    <option value="">전체 제품</option>
+                    <option th:each="product : *{products}"
+                            th:value="${product.id}"
+                            th:text="${product.name}">
+                    </option>
+                </select>
+            </form>
+        </div>
+        <table class="w-full border-collapse mt-5 table border-spacing-0.5">
+            <thead class="table-header-group virtical-align-middle">
+            <tr class="table-row">
+                <th class="bg-[#f5f5f5] font-semibold text-[#555] p-3 text-left border-b border-b-[#ddd]">ID</th>
+                <th class="bg-[#f5f5f5] font-semibold text-[#555] p-3 text-left border-b border-b-[#ddd]">제품</th>
+                <th class="bg-[#f5f5f5] font-semibold text-[#555] p-3 text-left border-b border-b-[#ddd]">불량명(한글)</th>
+                <th class="bg-[#f5f5f5] font-semibold text-[#555] p-3 text-left border-b border-b-[#ddd]">매핑명(영문)</th>
+                <th class="bg-[#f5f5f5] font-semibold text-[#555] p-3 text-left border-b border-b-[#ddd]">등록일</th>
+                <th class="bg-[#f5f5f5] font-semibold text-[#555] p-3 text-left border-b border-b-[#ddd]">상태</th>
+                <th class="bg-[#f5f5f5] font-semibold text-[#555] p-3 text-left border-b border-b-[#ddd]">작업</th>
+            </tr>
+            </thead>
+            <tbody class="table-row-group vertical-align-middle ">
+            <tr th:each="defectType : ${defectTypes}">
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
+                    th:text="${defectType.id}"></td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
+                    th:text="${defectType.product.name}"></td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
+                    th:text="${defectType.nameKo}"></td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
+                    th:text="${defectType.nameEn}"></td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
+                    th:text="${#temporals.format(defectType.createdAt, 'yyyy-MM-dd')}"></td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[14px]"
+                    th:classappend="${defectType.isActive} ? 'text-[#4CAF50]' : 'text-[#FF9800]'"
+                    th:text="${defectType.isActive ? '활성' : '비활성'}"></td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px] flex gap-[5px]">
+                    <form th:action="@{/admin/manual-management/manual}" th:method="delete">
+                        <input type="hidden" name="id" th:value="${defectType.id}"/>
+                        <button type="submit"
+                                class="bg-[#2196F3] px-[10px] py-[5px] text-[12px] text-white cursor-pointer
+                                        rounded-[4px] font-medium transition-all duration-300 hover:bg-[#0b7dda]">
+                            수정
+                        </button>
+                    </form>
+                    <form th:action="@{/admin/manual-management/manual}" th:method="delete">
+                        <input type="hidden" name="id" th:value="${defectType.id}"/>
+                        <button type="submit"
+                                class="bg-[#f44336] px-[10px] py-[5px] text-[12px] text-white cursor-pointer
+                                        rounded-[4px] font-medium transition-all duration-300 hover:bg-[#da190b]">
+                            삭제
+                        </button>
+                    </form>
+
+                </td>
+
+            </tr>
+            </tbody>
+
+        </table>
+        <div class="flex justify-center mt-6">
+            <nav>
+                <ul class="inline-flex -space-x-px">
+                    <li>
+                        <a th:if="${!page.first}" th:href="@{|?page=${page.number-1}|}"
+                           class="px-3 py-1 border border-gray-300">이전</a>
+                        <span th:if="${page.first}"
+                              class="px-3 py-1 border border-gray-200 text-gray-400 cursor-not-allowed">이전</span>
+                    </li>
+                    <li th:each="i : ${#numbers.sequence(0, page.totalPages-1)}">
+                        <a th:href="@{|?page=${i}|}"
+                           th:text="${i + 1}"
+                           th:classappend="${page.number == i} ? 'font-bold text-[#9C27B0]' : ''"
+                           class="px-3 py-1 border border-gray-200"></a>
+                    </li>
+                    <li>
+                        <a th:if="${!page.last}" th:href="@{|?page=${page.number+1}|}"
+                           class="px-3 py-1 border border-gray-300">다음</a>
+                        <span th:if="${page.last}"
+                              class="px-3 py-1 border border-gray-200 text-gray-400 cursor-not-allowed">다음</span>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+>
+</body>
+</html>

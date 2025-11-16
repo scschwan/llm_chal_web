@@ -45,33 +45,43 @@
                           class="min-h-[80px] resize-y w-full p-[10px] border-[1px] border-[#ddd] rounded-[4px] text-[14px] bg-white">
                 </textarea>
             </div>
-            <button type="submit" class="bg-[#4CAF50] text-white px-5 py-[10px] rounded-[4px] text-[14px] font-medium transition-all duration-300 cursor-pointer">
+            <button type="submit"
+                    class="bg-[#4CAF50] text-white px-5 py-[10px] rounded-[4px] text-[14px] font-medium transition-all duration-300 cursor-pointer">
                 등록
             </button>
-            <button type="reset" class="bg-[#2196F3] text-white px-5 py-[10px] rounded-[4px] text-[14px] font-medium transition-all duration-300 cursor-pointer">
+            <button type="reset"
+                    class="bg-[#2196F3] text-white px-5 py-[10px] rounded-[4px] text-[14px] font-medium transition-all duration-300 cursor-pointer">
                 초기화
             </button>
         </form>
     </div>
     <div class="mt-[30px]">
-       <h2 class="text-[1.5rem] font-bold">등록된 제품 목록</h2>
+        <h2 class="text-[1.5rem] font-bold">등록된 제품 목록</h2>
         <table class="w-full border-collapse mt-5 table border-spacing-0.5">
             <thead class="table-header-group virtical-align-middle">
-                <tr class="table-row">
-                    <th class="bg-[#f5f5f5] font-semibold text-[#555] p-3 text-left border-b border-b-[#ddd]">ID</th>
-                    <th class="bg-[#f5f5f5] font-semibold text-[#555] p-3 text-left border-b border-b-[#ddd]">제품 코드</th>
-                    <th class="bg-[#f5f5f5] font-semibold text-[#555] p-3 text-left border-b border-b-[#ddd]">제품명</th>
-                    <th class="bg-[#f5f5f5] font-semibold text-[#555] p-3 text-left border-b border-b-[#ddd]">등록일</th>
-                    <th class="bg-[#f5f5f5] font-semibold text-[#555] p-3 text-left border-b border-b-[#ddd]">상태</th>
-                </tr>
+            <tr class="table-row">
+                <th class="bg-[#f5f5f5] font-semibold text-[#555] p-3 text-left border-b border-b-[#ddd]">ID</th>
+                <th class="bg-[#f5f5f5] font-semibold text-[#555] p-3 text-left border-b border-b-[#ddd]">제품 코드</th>
+                <th class="bg-[#f5f5f5] font-semibold text-[#555] p-3 text-left border-b border-b-[#ddd]">제품명</th>
+                <th class="bg-[#f5f5f5] font-semibold text-[#555] p-3 text-left border-b border-b-[#ddd]">등록일</th>
+                <th class="bg-[#f5f5f5] font-semibold text-[#555] p-3 text-left border-b border-b-[#ddd]">상태</th>
+            </tr>
             </thead>
             <tbody class="table-row-group vertical-align-middle ">
             <tr th:each="product : ${products}">
                 <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]" th:text="${product.id}">1</td>
-                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]" th:text="${product.code}">prod5</td>
-                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]" th:text="${product.name}">테스트제품</td>
-                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]" th:text="${product.createdAt}">2025-11-22</td>
-                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]" th:text="${product.active ? '활성화' : '비활성화'}">상태종류?</td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]" th:text="${product.code}">
+                    prod5
+                </td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]" th:text="${product.name}">
+                    테스트제품
+                </td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
+                    th:text="${product.createdAt}">2025-11-22
+                </td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
+                    th:text="${product.active ? '활성화' : '비활성화'}">상태종류?
+                </td>
             </tr>
             </tbody>
 
@@ -81,8 +91,10 @@
                 <ul class="inline-flex -space-x-px">
                     <!-- Previous -->
                     <li>
-                        <a th:if="${!page.first}" th:href="@{|?page=${page.number-1}|}" class="px-3 py-1 border border-gray-300">이전</a>
-                        <span th:if="${page.first}" class="px-3 py-1 border border-gray-200 text-gray-400 cursor-not-allowed">이전</span>
+                        <a th:if="${!page.first}" th:href="@{|?page=${page.number-1}|}"
+                           class="px-3 py-1 border border-gray-300">이전</a>
+                        <span th:if="${page.first}"
+                              class="px-3 py-1 border border-gray-200 text-gray-400 cursor-not-allowed">이전</span>
                     </li>
                     <!-- Page Numbers -->
                     <li th:each="i : ${#numbers.sequence(0, page.totalPages-1)}">
@@ -93,8 +105,10 @@
                     </li>
                     <!-- Next -->
                     <li>
-                        <a th:if="${!page.last}" th:href="@{|?page=${page.number+1}|}" class="px-3 py-1 border border-gray-300">다음</a>
-                        <span th:if="${page.last}" class="px-3 py-1 border border-gray-200 text-gray-400 cursor-not-allowed">다음</span>
+                        <a th:if="${!page.last}" th:href="@{|?page=${page.number+1}|}"
+                           class="px-3 py-1 border border-gray-300">다음</a>
+                        <span th:if="${page.last}"
+                              class="px-3 py-1 border border-gray-200 text-gray-400 cursor-not-allowed">다음</span>
                     </li>
                 </ul>
             </nav>

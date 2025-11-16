@@ -23,6 +23,7 @@ public class AdminController {
     private final FileSystem fileSystem;
     private final ManualService manualService;
     private final ManualRepository manualRepository;
+    private final DefectTypeRepository defectTypeRepository;
 
     @GetMapping
     public String admin() {
@@ -107,16 +108,45 @@ public class AdminController {
         return "redirect:/admin/manual-management";
     }
 
+    @Data
+    public static class ManualUploadForm {
+        private Integer productId;
+    }
+
     @DeleteMapping("/manual-management/manual")
     public String manual(@RequestParam Integer id) {
         manualService.deactivate(id);
         return "redirect:/admin/manual-management";
     }
 
-    @Data
-    public static class ManualUploadForm {
-        private Integer productId;
+    @GetMapping("/defect-type-management")
+    public String defectManagement(@PageableDefault Pageable pageable,
+                                   Model model,
+                                   @RequestParam(required = false) Integer productId) {
+        List<Product> products = productRepository.findAll();
+        model.addAttribute("defectTypeInquiryForm", new DefectTypeInquiryForm(products, productId));
+
+        Page<DefectType> defectTypePage;
+        if (productId == null) {
+            defectTypePage = defectTypeRepository.findByUsed(true, pageable);
+        } else {
+            Product product = productRepository.findById(productId).orElseThrow();
+            defectTypePage = defectTypeRepository.findByProductAndUsed(product, true, pageable);
+        }
+        model.addAttribute("defectTypes", defectTypePage.getContent());
+        model.addAttribute("page", defectTypePage);
+
+        return "defect-type-management";
     }
 
+    @Data
+    public static class DefectTypeInquiryForm {
+        private List<Product> products;
+        private Integer productId;
 
+        public DefectTypeInquiryForm(List<Product> products, Integer productId) {
+            this.products = products;
+            this.productId = productId;
+        }
+    }
 }
