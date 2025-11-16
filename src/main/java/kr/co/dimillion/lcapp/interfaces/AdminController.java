@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
@@ -159,6 +160,14 @@ public class AdminController {
                 new DefectType(product, defectTypeCreateForm.getCode(), defectTypeCreateForm.getNameKo(),
                         defectTypeCreateForm.getNameEn(), defectTypeCreateForm.nameKo, defectTypeCreateForm.getDescription()));
         defectTypeCreateForm.setProductId(null);
+        return "redirect:/admin/defect-type-management";
+    }
+
+    @DeleteMapping("/defect-type-management/defect-type")
+    public String createDefectType(@RequestParam Integer id) {
+        DefectType defectType = defectTypeRepository.findById(id)
+                .orElseThrow();
+        defectType.deactivate();
         return "redirect:/admin/defect-type-management";
     }
 

@@ -55,4 +55,8 @@ public class DefectType {
         this.used = true;
         this.createdAt = LocalDateTime.now();
     }
+
+    public void deactivate() {
+        this.used = false;
+    }
 }
