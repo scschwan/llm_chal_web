@@ -25,6 +25,7 @@ public class AdminController {
     private final ManualService manualService;
     private final ManualRepository manualRepository;
     private final DefectTypeRepository defectTypeRepository;
+    private final DefectTypeService defectTypeService;
 
     @GetMapping
     public String admin() {
@@ -165,9 +166,7 @@ public class AdminController {
 
     @DeleteMapping("/defect-type-management/defect-type")
     public String createDefectType(@RequestParam Integer id) {
-        DefectType defectType = defectTypeRepository.findById(id)
-                .orElseThrow();
-        defectType.deactivate();
+        defectTypeService.delete(id);
         return "redirect:/admin/defect-type-management";
     }
 
