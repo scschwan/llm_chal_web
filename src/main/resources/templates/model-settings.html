@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en" class="bg-[#f5f7fa]">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link th:href="@{/output.css}" rel="stylesheet">
+</head>
+<body class="p-5">
+<div class="max-w-[1200px] mx-auto bg-white p-[30px] rounded-[8px] shadow-[0_2px_4px_rgba(0,0,0,0.1)]">
+    <header class="text-[#333] mb-[30px] pb-[15px] border-b-[3px] border-b-[#FF9800] font-bold text-[2rem]">
+        <div class="flex justify-start items-center gap-[10px]">
+            <a th:href="@{/admin}"> <img th:src="@{/images/arrow-back.svg}" alt="arrow-back"> </a>
+            <h1>AI 모델 선택</h1>
+        </div>
+        <p class="text-[#666] text-[14px] mt-3">유사도 검색 및 이상 탐지에 사용할 AI 모델을 선택합니다.</p>
+    </header>
+    <div class="bg-[#f9f9f9] p-[25px] rounded-[6px] mb-[30px]">
+        <form th:action="@{/admin/model-settings}"
+              method="post"
+              th:object="${modelSettingsForm}"
+              enctype="multipart/form-data">
+            <div class="mb-[15px]">
+                <label for="defectInspection"
+                       class="block mb-[5px] text-[#555] font-medium">
+                    불량 검사 모델 *
+                </label>
+                <select required
+                        th:field="*{defectInspection}"
+                        class="w-full p-[10px] border border-[#ddd] rounded-[4px] text-[14px] bg-white">
+                    <option value="">-- 모델을 선택하세요 --</option>
+                    <option th:each="defectInspection : *{defectInspections}"
+                            th:value="${defectInspection}"
+                            th:text="${defectInspection.getName()}"
+                            th:disabled="${!defectInspection.isReady()}">
+                    </option>
+                </select>
+            </div>
+            <div class="mb-[15px]">
+                <label for="similarityMatch"
+                       class="block mb-[5px] text-[#555] font-medium">
+                    유사도 매칭 모델 *
+                </label>
+                <select required
+                        th:field="*{similarityMatch}"
+                        class="w-full p-[10px] border border-[#ddd] rounded-[4px] text-[14px] bg-white">
+                    <option value="">-- 모델을 선택하세요 --</option>
+                    <option th:each="similarityMatch : *{similarityMatches}"
+                            th:value="${similarityMatch}"
+                            th:text="${similarityMatch.getName()}"
+                            th:disabled="${!similarityMatch.isReady()}">
+                    </option>
+                </select>
+            </div>
+            <div class="mb-[15px]">
+                <label for="genAi"
+                       class="block mb-[5px] text-[#555] font-medium">
+                    생성형 AI 모델 *
+                </label>
+                <select required
+                        th:field="*{genAi}"
+                        class="w-full p-[10px] border border-[#ddd] rounded-[4px] text-[14px] bg-white">
+                    <option value="">-- 모델을 선택하세요 --</option>
+                    <option th:each="genAi : *{genAis}"
+                            th:value="${genAi}"
+                            th:text="${genAi.getName()}"
+                            th:disabled="${!genAi.isReady()}">
+                    </option>
+                </select>
+            </div>
+            <button type="submit"
+                    class="bg-[#FF9800] text-white px-5 py-[10px] rounded-[4px] text-[14px] font-medium transition-all duration-300 mt-[15px] cursor-pointer">
+                등록
+            </button>
+            <button type="reset"
+                    class="bg-[#2196F3] text-white px-5 py-[10px] rounded-[4px] text-[14px] font-medium transition-all duration-300 mt-[15px] cursor-pointer">
+                초기화
+            </button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

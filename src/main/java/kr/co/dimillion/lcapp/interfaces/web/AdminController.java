@@ -1,6 +1,9 @@
 package kr.co.dimillion.lcapp.interfaces.web;
 
 import kr.co.dimillion.lcapp.application.*;
+import kr.co.dimillion.lcapp.application.ModelSettings.DefectInspection;
+import kr.co.dimillion.lcapp.application.ModelSettings.GenAi;
+import kr.co.dimillion.lcapp.application.ModelSettings.SimilarityMatch;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -12,7 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
@@ -27,6 +32,7 @@ public class AdminController {
     private final DefectTypeService defectTypeService;
     private final ImageRepository imageRepository;
     private final ImageService imageService;
+    private final ModelSettingsRepository modelSettingsRepository;
 
     @GetMapping
     public String admin() {
@@ -318,5 +324,38 @@ public class AdminController {
 
         private List<DefectType> defectTypes;
         private Integer defectTypeId;
+    }
+
+    @GetMapping("/model-settings")
+    public String modelSettings(@ModelAttribute("modelSettingsForm") ModelSettingsForm form) {
+        Optional<ModelSettings> maybeModelSettings = modelSettingsRepository.findFirstByOrderByIdDesc();
+        if (maybeModelSettings.isPresent()) {
+            ModelSettings modelSettings = maybeModelSettings.get();
+            form.setDefectInspection(modelSettings.getDefectInspection());
+            form.setSimilarityMatch(modelSettings.getSimilarityMatch());
+            form.setGenAi(modelSettings.getGenAi());
+        }
+        form.setDefectInspections(Arrays.stream(DefectInspection.values()).toList());
+        form.setSimilarityMatches(Arrays.stream(SimilarityMatch.values()).toList());
+        form.setGenAis(Arrays.stream(GenAi.values()).toList());
+        return "model-settings";
+    }
+
+    @PostMapping("/model-settings")
+    public String saveModelSettings(@ModelAttribute("modelSettingsForm") ModelSettingsForm form) {
+        modelSettingsRepository.save(new ModelSettings(form.getDefectInspection(), form.getSimilarityMatch(), form.getGenAi()));
+        return "redirect:/admin/model-settings";
+    }
+
+    @Data
+    public static class ModelSettingsForm {
+        private List<DefectInspection> defectInspections;
+        private DefectInspection defectInspection;
+
+        private List<SimilarityMatch> similarityMatches;
+        private SimilarityMatch similarityMatch;
+
+        private List<GenAi> genAis;
+        private GenAi genAi;
     }
 }
