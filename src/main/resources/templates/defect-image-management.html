@@ -78,10 +78,10 @@
         </div>
     </div>
     <div class="mt-[30px]">
-        <h2 class="text-[1.5rem] font-bold">등록된 정상 이미지</h2>
-        <div class="bg-[#e3f2fd] p-[15px] rounded-[6px] mb-[20px] flex justify-around text-center">
+        <h2 class="text-[1.5rem] font-bold">등록된 불량 이미지</h2>
+        <div class="bg-[#ffebee] p-[15px] rounded-[6px] mb-[20px] flex justify-around text-center">
             <div class="flex-1">
-                <div class="text-[24px] font-bold text-[#2196f3]" th:text="${defectImagePage.totalElements}">
+                <div class="text-[24px] font-bold text-[#f44336]" th:text="${defectImagePage.totalElements}">
                     111
                 </div>
                 <div class="text-[14px] text-[#666] mt-[5px]">
@@ -148,21 +148,24 @@
         </div>
         <div class="flex justify-center mt-6">
             <nav>
-                <ul class="inline-flex -space-x-px">
+                <ul class="inline-flex -space-x-px items-center">
+                    <!-- 이전 버튼 -->
                     <li>
-                        <a th:if="${!defectImagePage.first}" th:href="@{|?page=${defectImagePage.number-1}|}"
+                        <a th:if="${!defectImagePage.first}"
+                           th:href="@{|?page=${defectImagePage.number-1}|}"
                            class="px-3 py-1 border border-gray-300">이전</a>
                         <span th:if="${defectImagePage.first}"
                               class="px-3 py-1 border border-gray-200 text-gray-400 cursor-not-allowed">이전</span>
                     </li>
-                    <li th:each="i : ${#numbers.sequence(0, defectImagePage.totalPages-1)}">
-                        <a th:href="@{|?defectImagePage=${i}|}"
-                           th:text="${i + 1}"
-                           th:classappend="${defectImagePage.number == i} ? 'font-bold text-[#9C27B0]' : ''"
-                           class="px-3 py-1 border border-gray-200"></a>
-                    </li>
+                    <!-- 현재 페이지 숫자 (1부터 시작) -->
                     <li>
-                        <a th:if="${!defectImagePage.last}" th:href="@{|?defectImagePage=${defectImagePage.number+1}|}"
+                        <span class="px-3 py-1 border border-gray-200 font-bold text-[#9C27B0]"
+                              th:text="${defectImagePage.number + 1}"></span>
+                    </li>
+                    <!-- 다음 버튼 -->
+                    <li>
+                        <a th:if="${!defectImagePage.last}"
+                           th:href="@{|?page=${defectImagePage.number+1}|}"
                            class="px-3 py-1 border border-gray-300">다음</a>
                         <span th:if="${defectImagePage.last}"
                               class="px-3 py-1 border border-gray-200 text-gray-400 cursor-not-allowed">다음</span>

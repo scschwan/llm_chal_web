@@ -128,13 +128,13 @@
                               class="px-3 py-1 border border-gray-200 text-gray-400 cursor-not-allowed">이전</span>
                     </li>
                     <li th:each="i : ${#numbers.sequence(0, normalImagePage.totalPages-1)}">
-                        <a th:href="@{|?normalImagePage=${i}|}"
+                        <a th:href="@{|?page=${i}|}"
                            th:text="${i + 1}"
                            th:classappend="${normalImagePage.number == i} ? 'font-bold text-[#9C27B0]' : ''"
                            class="px-3 py-1 border border-gray-200"></a>
                     </li>
                     <li>
-                        <a th:if="${!normalImagePage.last}" th:href="@{|?normalImagePage=${normalImagePage.number+1}|}"
+                        <a th:if="${!normalImagePage.last}" th:href="@{|?page=${normalImagePage.number+1}|}"
                            class="px-3 py-1 border border-gray-300">다음</a>
                         <span th:if="${normalImagePage.last}"
                               class="px-3 py-1 border border-gray-200 text-gray-400 cursor-not-allowed">다음</span>

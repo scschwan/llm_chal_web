@@ -295,6 +295,13 @@ public class AdminController {
         return "redirect:/admin/defect-image-management";
     }
 
+    @DeleteMapping("/defect-image-management/image")
+    public String deleteDefectImage(@RequestParam Integer id) {
+        imageService.delete(id);
+
+        return "redirect:/admin/defect-image-management";
+    }
+
     @Data
     public static class DefectImageUploadForm {
         private List<Product> products;
