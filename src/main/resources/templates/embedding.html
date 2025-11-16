@@ -35,25 +35,40 @@
                 <br>
                 유사도 검색에 사용됩니다.
             </p>
-            <button class="bg-[#1976d2] text-white px-6 py-3 rounded-[6px] font-medium cursor-pointer transition-all
+            <form th:action="@{/admin/embedding/normal}" th:method="post">
+                <button type="submit"
+                        class="bg-[#1976d2] text-white px-6 py-3 rounded-[6px] font-medium cursor-pointer transition-all
                             duration-300 hover:bg-[#1565c0]">
-                재구축
-            </button>
+                    재구축
+                </button>
+            </form>
         </div>
         <div class="border-2 border-[#e0e0e0] p-5 text-center rounded-[8px]">
             <h3 class="text-[16px] font-bold mb-[12px] text-[#333]">
                 ❌ 불량 이미지 인덱스
-
             </h3>
             <p class="text-[14px] text-[#666] mb-5 leading-[1.6]">
                 불량 제품 이미지의 임베딩을 생성합니다.
                 <br>
                 유사도 검색에 사용됩니다.
             </p>
-            <button class="bg-[#1976d2] text-white px-6 py-3 rounded-[6px] font-medium cursor-pointer transition-all
+            <form th:action="@{/admin/embedding/defect}" th:method="post">
+                <button type="submit"
+                        class="bg-[#1976d2] text-white px-6 py-3 rounded-[6px] font-medium cursor-pointer transition-all
                             duration-300 hover:bg-[#1565c0]">
-                재구축
-            </button>
+                    재구축
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="flex flex-col w-full">
+        <div th:if="${param.normalSuccess}"
+             class="self-start mt-6 text-[15px] text-[#1b5e20] font-semibold bg-[#e8f5e9] rounded-[6px] py-3 px-5 border border-[#1de9b6] text-center w-[49%]">
+            임베딩 요청이 완료되었습니다. 백그라운드에서 실행됩니다.
+        </div>
+        <div th:if="${param.defectSuccess}"
+             class="self-end mt-6 text-[15px] text-[#1b5e20] font-semibold bg-[#e8f5e9] rounded-[6px] py-3 px-5 border border-[#1de9b6] text-center w-[49%]">
+            임베딩 요청이 완료되었습니다. 백그라운드에서 실행됩니다.
         </div>
     </div>
 </div>

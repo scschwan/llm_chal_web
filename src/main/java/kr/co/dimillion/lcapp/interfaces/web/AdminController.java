@@ -374,4 +374,16 @@ public class AdminController {
     public String embedding() {
         return "embedding";
     }
+
+    @PostMapping("/embedding/normal")
+    public String executeEmbeddingNormal() {
+        aiServerClient.deployClipNormal().subscribe();
+        return "redirect:/admin/embedding?normalSuccess";
+    }
+
+    @PostMapping("/embedding/defect")
+    public String executeEmbeddingDefect() {
+        aiServerClient.deployClipDefect().subscribe();
+        return "redirect:/admin/embedding?defectSuccess";
+    }
 }
