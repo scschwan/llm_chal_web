@@ -8,4 +8,6 @@ import reactor.core.publisher.Mono;
 public interface AiServerClient {
     @PostExchange("/admin/manual/sync-manual")
     Mono<Void> syncManuals();
+    @PostExchange("/admin/defect-type/refresh-mapping")
+    Mono<Void> refreshDefectTypeMapping();
 }

@@ -171,18 +171,21 @@ public class AdminController {
                 new DefectType(product, defectTypeCreateForm.getCode(), defectTypeCreateForm.getNameKo(),
                         defectTypeCreateForm.getNameEn(), defectTypeCreateForm.nameKo, defectTypeCreateForm.getDescription()));
         defectTypeCreateForm.setProductId(null);
+        aiServerClient.refreshDefectTypeMapping().subscribe();
         return "redirect:/admin/defect-type-management";
     }
 
     @PutMapping("/defect-type-management/defect-type")
     public String createDefectType(@RequestParam Integer id, @RequestParam String newNameKo) {
         defectTypeService.update(id, newNameKo);
+        aiServerClient.refreshDefectTypeMapping().subscribe();
         return "redirect:/admin/defect-type-management";
     }
 
     @DeleteMapping("/defect-type-management/defect-type")
     public String createDefectType(@RequestParam Integer id) {
         defectTypeService.delete(id);
+        aiServerClient.refreshDefectTypeMapping().subscribe();
         return "redirect:/admin/defect-type-management";
     }
 
