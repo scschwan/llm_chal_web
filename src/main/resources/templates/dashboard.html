@@ -42,10 +42,10 @@
                 <div class="text-[14px] text-[#666] mb-[5px]">
                     등록 제품
                 </div>
-                <div class="text-[32px] font-semibold text-[#333]">
+                <div class="text-[32px] font-semibold text-[#333]" th:text="${productCount}">
                     6
                 </div>
-                <div class="text-[#4caf50] text-[12px] mt-[5px]">
+                <div class="text-[#4caf50] text-[12px] mt-[5px]" th:text="'+' + ${thisWeekProductCount} + '(이번 주)'">
                     +0 (이번 주)
                 </div>
             </div>
@@ -59,10 +59,10 @@
                 <div class="text-[14px] text-[#666] mb-[5px]">
                     정상 이미지
                 </div>
-                <div class="text-[32px] font-semibold text-[#333]">
+                <div class="text-[32px] font-semibold text-[#333]" th:text="${normalImageCount}">
                     0
                 </div>
-                <div class="text-[#4caf50] text-[12px] mt-[5px]">
+                <div class="text-[#4caf50] text-[12px] mt-[5px]" th:text="'+' + ${thisWeekNormalImageCount} + '(이번 주)'">
                     +0 (이번 주)
                 </div>
             </div>
@@ -76,10 +76,10 @@
                 <div class="text-[14px] text-[#666] mb-[5px]">
                     불량 이미지
                 </div>
-                <div class="text-[32px] font-semibold text-[#333]">
+                <div class="text-[32px] font-semibold text-[#333]" th:text="${defectImageCount}">
                     1,990
                 </div>
-                <div class="text-[#4caf50] text-[12px] mt-[5px]">
+                <div class="text-[#4caf50] text-[12px] mt-[5px]" th:text="'+' + ${thisWeekDefectImageCount} + '(이번 주)'">
                     +0 (이번 주)
                 </div>
             </div>
@@ -93,59 +93,12 @@
                 <div class="text-[14px] text-[#666] mb-[5px]">
                     검사 횟수 (오늘)
                 </div>
-                <div class="text-[32px] font-semibold text-[#333]">
+                <div class="text-[32px] font-semibold text-[#333]" th:text="${searchCount}">
                     0
                 </div>
-                <div class="text-[#4caf50] text-[12px] mt-[5px]">
+                <div class="text-[#4caf50] text-[12px] mt-[5px]" th:text="'+' + ${thisWeekSearchCount} + '(이번 주)'">
                     +0 (전일 대비)
                 </div>
-            </div>
-        </div>
-    </div>
-    <h2 class="text-[20px] font-semibold text-[#333] mt-[30px] mb-[15px] pb-[10px] border-b-[2px] border-[#667eea]">
-        📈 검사 추이
-    </h2>
-    <div class="grid grid-cols-[repeat(auto-fit,_minmax(500px,_1fr))] gap-[20px] mb-[30px]">
-        <div class="bg-white p-[25px] rounded-[10px] shadow-[0_2px_8px_rgba(0,0,0,0.1)]">
-            <div class="flex justify-between items-center mb-[20px]">
-                <div class="text-[18px] font-semibold text-[#333]">
-                    일별 검사 건수
-                </div>
-                <div class="flex gap-[5px]">
-                    <button class="px-[12px] py-[5px] border border-[#ddd] bg-white text-[#666] rounded-[4px] cursor-pointer text-[12px] transition-all duration-300">
-                        7일
-                    </button>
-                    <button class="px-[12px] py-[5px] border border-[#ddd] bg-white text-[#666] rounded-[4px] cursor-pointer text-[12px] transition-all duration-300">
-                        30일
-                    </button>
-                    <button class="px-[12px] py-[5px] border border-[#ddd] bg-white text-[#666] rounded-[4px] cursor-pointer text-[12px] transition-all duration-300">
-                        90일
-                    </button>
-                </div>
-            </div>
-            <div class="h-[300px] flex items-center justify-center bg-[#f9f9f9] rounded-[8px] text-[#999] text-[14px]">
-                차트 데이터 불러오는 중...
-            </div>
-        </div>
-        <div class="bg-white p-[25px] rounded-[10px] shadow-[0_2px_8px_rgba(0,0,0,0.1)]">
-            <div class="flex justify-between items-center mb-[20px]">
-                <div class="text-[18px] font-semibold text-[#333]">
-                    제품별 불량 검출 비율
-                </div>
-                <div class="flex gap-[5px]">
-                    <button class="px-[12px] py-[5px] border border-[#ddd] bg-white text-[#666] rounded-[4px] cursor-pointer text-[12px] transition-all duration-300">
-                        오늘
-                    </button>
-                    <button class="px-[12px] py-[5px] border border-[#ddd] bg-white text-[#666] rounded-[4px] cursor-pointer text-[12px] transition-all duration-300">
-                        이번 주
-                    </button>
-                    <button class="px-[12px] py-[5px] border border-[#ddd] bg-white text-[#666] rounded-[4px] cursor-pointer text-[12px] transition-all duration-300">
-                        이번 달
-                    </button>
-                </div>
-            </div>
-            <div class="h-[300px] flex items-center justify-center bg-[#f9f9f9] rounded-[8px] text-[#999] text-[14px]">
-                차트 데이터 불러오는 중...
             </div>
         </div>
     </div>
@@ -182,9 +135,6 @@
                 <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
                     작업자
                 </th>
-                <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
-                    작업
-                </th>
             </tr>
             </thead>
             <tbody class="table-row-group vertical-align-middle ">
@@ -195,12 +145,6 @@
                 <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">정상</td>
                 <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">0.1234</td>
                 <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">작업자1</td>
-                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">
-                    <button class="px-2 py-1 border border-[#ddd] bg-white text-[#666] rounded-[4px] cursor-pointer
-                                    text-[12px] mr-[5px] transition-all duration-300">
-                        상세
-                    </button>
-                </td>
             </tr>
             </tbody>
         </table>
@@ -230,27 +174,49 @@
                 <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
                     불량 검출율
                 </th>
-                <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
-                    작업
-                </th>
             </tr>
             </thead>
             <tbody class="table-row-group vertical-align-middle ">
-            <tr>
-                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">주조제품</td>
-                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">0</td>
-                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">63</td>
-                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">0</td>
-                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">0.0%</td>
-                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">
-                    <button class="px-2 py-1 border border-[#ddd] bg-white text-[#666] rounded-[4px] cursor-pointer
-                                    text-[12px] mr-[5px] transition-all duration-300">
-                        관리
-                    </button>
-                </td>
+            <tr th:each="product : ${products}">
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
+                    th:text="*{product.name}">주조제품</td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
+                th:text="*{product.normalImageCount}">0</td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
+                    th:text="*{product.defectImageCount}">63</td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
+                    th:text="*{product.searchCount}">0</td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">- (준비중)</td>
             </tr>
             </tbody>
         </table>
+        <div class="flex justify-center mt-6">
+            <nav>
+                <ul class="inline-flex -space-x-px text-[12px]">
+                    <!-- Previous -->
+                    <li>
+                        <a th:if="${!productPage.first}" th:href="@{|?page=${productPage.number-1}|}"
+                           class="px-3 py-1 border border-gray-300">이전</a>
+                        <span th:if="${productPage.first}"
+                              class="px-3 py-1 border border-gray-200 text-gray-400 cursor-not-allowed">이전</span>
+                    </li>
+                    <!-- Page Numbers -->
+                    <li th:each="i : ${#numbers.sequence(0, productPage.totalPages-1)}">
+                        <a th:href="@{|?page=${i}|}"
+                           th:text="${i + 1}"
+                           th:classappend="${productPage.number == i} ? 'font-bold text-[#667eea]' : ''"
+                           class="px-3 py-1 border border-gray-200"></a>
+                    </li>
+                    <!-- Next -->
+                    <li>
+                        <a th:if="${!productPage.last}" th:href="@{|?page=${productPage.number+1}|}"
+                           class="px-3 py-1 border border-gray-300">다음</a>
+                        <span th:if="${productPage.last}"
+                              class="px-3 py-1 border border-gray-200 text-gray-400 cursor-not-allowed">다음</span>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </div>
 </div>
 </body>
