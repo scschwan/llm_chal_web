@@ -369,4 +369,9 @@ public class AdminController {
         private List<GenAi> genAis;
         private GenAi genAi;
     }
+
+    @GetMapping("/embedding")
+    public String embedding() {
+        return "embedding";
+    }
 }
