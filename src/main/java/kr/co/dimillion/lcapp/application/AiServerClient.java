@@ -17,4 +17,13 @@ public interface AiServerClient {
 
     @PostExchange("/admin/image/sync-defect")
     Mono<Void> syncDefectImages();
+
+    @PostExchange("/admin/deployment/v2/clip/normal")
+    Mono<Void> deployClipNormal();
+
+    @PostExchange("/admin/deployment/v2/clip/defect")
+    Mono<Void> deployClipDefect();
+
+    @PostExchange("/admin/deployment/patchcore")
+    Mono<Void> deployPatchCore();
 }
