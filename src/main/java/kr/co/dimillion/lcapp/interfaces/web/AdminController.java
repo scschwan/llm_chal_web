@@ -40,11 +40,6 @@ public class AdminController {
         return "admin";
     }
 
-    @GetMapping("/dashboard")
-    public String dashboard() {
-        return "dashboard";
-    }
-
     @GetMapping("/product-management")
     public String productManagement(@ModelAttribute ProductCreateForm productCreateForm, @PageableDefault Pageable pageable, Model model) {
         Page<Product> productPage = productRepository.findAll(pageable);
