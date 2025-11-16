@@ -27,7 +27,7 @@
                 </label>
                 <select required
                         th:field="*{productId}"
-                        class="w-full p-[10px] border border-[#ddd] rounded-[4px] text-[14px]">
+                        class="w-full p-[10px] border border-[#ddd] rounded-[4px] text-[14px] bg-white">
                     <option value="">-- 제품을 선택하세요 --</option>
                     <option th:each="product : ${products}"
                             th:value="${product.id}"

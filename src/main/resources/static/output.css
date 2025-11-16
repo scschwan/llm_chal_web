@@ -534,6 +534,9 @@
   .border-b-\[\#667eea\] {
     border-bottom-color: #667eea;
   }
+  .border-b-\[\#FF9800\] {
+    border-bottom-color: #FF9800;
+  }
   .border-b-\[\#ddd\] {
     border-bottom-color: #ddd;
   }
@@ -557,6 +560,9 @@
   }
   .bg-\[\#2196F3\] {
     background-color: #2196F3;
+  }
+  .bg-\[\#FF9800\] {
+    background-color: #FF9800;
   }
   .bg-\[\#e3f2fd\] {
     background-color: #e3f2fd;

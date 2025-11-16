@@ -33,6 +33,9 @@ public class DefectType {
     @Column(name = "full_name_ko", length = 200)
     private String fullNameKo;
 
+    @Column(columnDefinition = "text")
+    private String description;
+
     @Column(name = "is_active")
     private boolean active;
 
@@ -41,12 +44,13 @@ public class DefectType {
 
     private LocalDateTime createdAt;
 
-    public DefectType(Product product, String code, String nameKo, String nameEn, String fullNameKo) {
+    public DefectType(Product product, String code, String nameKo, String nameEn, String fullNameKo, String description) {
         this.product = product;
         this.code = code;
         this.nameKo = nameKo;
         this.nameEn = nameEn;
         this.fullNameKo = fullNameKo;
+        this.description = description;
         this.active = true;
         this.used = true;
         this.createdAt = LocalDateTime.now();

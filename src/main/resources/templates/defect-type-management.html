@@ -10,12 +10,80 @@
 </head>
 <body>
 <div class="max-w-[1200px] mx-auto bg-white p-[30px] rounded-[8px] shadow-[0_2px_4px_rgba(0,0,0,0.1)]">
-    <header class="flex justify-start items-center gap-[10px] text-[#333] mb-[30px] pb-[15px] border-b-[3px] border-b-[#9C27B0] font-bold text-[2rem]">
+    <header class="flex justify-start items-center gap-[10px] text-[#333] mb-[30px] pb-[15px] border-b-[3px] border-b-[#FF9800] font-bold text-[2rem]">
         <a th:href="@{/admin}"> <img th:src="@{/images/arrow-back.svg}" alt="arrow-back"> </a>
         <h1>불량 유형 관리</h1>
     </header>
+    <div class="bg-[#f9f9f9] p-[25px] rounded-[6px] mb-[30px]">
+        <h2 class="text-[#555] mb-5 text-[1.3rem] font-bold">신규 불량 유형 등록</h2>
+        <form th:action="@{/admin/defect-type-management/defect-type}"
+              method="post"
+              th:object="${defectTypeCreateForm}"
+              enctype="multipart/form-data">
+            <div class="mb-[15px]">
+                <label for="productId"
+                       class="block mb-[5px] text-[#555] font-medium">
+                    제품 선택 *
+                </label>
+                <select required
+                        th:field="*{productId}"
+                        class="w-full p-[10px] border border-[#ddd] rounded-[4px] text-[14px] bg-white">
+                    <option value="">-- 제품을 선택하세요 --</option>
+                    <option th:each="product : *{products}"
+                            th:value="${product.id}"
+                            th:text="${product.name}">
+                    </option>
+                </select>
+            </div>
+            <div class="mb-[15px]">
+                <label for="nameKo"
+                       class="block mb-[5px] text-[#555] font-medium">
+                    불량명 (한글) *
+                </label>
+                <input th:field="*{nameKo}" required
+                       placeholder="예: 긁힘, 기공, 버"
+                       class="w-full p-[10px] border-[1px] border-[#ddd] rounded-[4px] text-[14px] bg-white">
+            </div>
+            <div class="mb-[15px]">
+                <label for="code"
+                       class="block mb-[5px] text-[#555] font-medium">
+                    매핑명 (영문) *
+                </label>
+                <input th:field="*{code}" required
+                       placeholder="예: scratch, hole, burr"
+                       class="w-full p-[10px] border-[1px] border-[#ddd] rounded-[4px] text-[14px] bg-white">
+            </div>
+            <div class="mb-[15px]">
+                <label for="nameEn"
+                       class="block mb-[5px] text-[#555] font-medium">
+                    불량명 (영문)
+
+                </label>
+                <input th:field="*{nameEn}"
+                       placeholder="예: Scratch, Hole, Burr"
+                       class="w-full p-[10px] border-[1px] border-[#ddd] rounded-[4px] text-[14px] bg-white">
+            </div>
+            <div class="mb-[15px]">
+                <label for="description"
+                       class="block mb-[5px] text-[#555] font-medium">
+                    상세 설명
+                </label>
+                <textarea th:field="*{description}"
+                          placeholder="불량 유형에 대한 상세 설명을 입력하세요"
+                          class="min-h-[80px] resize-y w-full p-[10px] border-[1px] border-[#ddd] rounded-[4px] text-[14px] bg-white">
+                </textarea>
+            </div>
+            <button type="submit"
+                    class="bg-[#FF9800] text-white px-5 py-[10px] rounded-[4px] text-[14px] font-medium transition-all duration-300 mt-[15px] cursor-pointer">
+                등록
+            </button>
+            <button type="reset"
+                    class="bg-[#2196F3] text-white px-5 py-[10px] rounded-[4px] text-[14px] font-medium transition-all duration-300 mt-[15px] cursor-pointer">
+                초기화
+            </button>
+        </form>
+        </div>
     <div class="mt-[30px]">
-        <h2 class="text-[1.5rem] font-bold">등록된 불량 유형 목록</h2>
         <div class="mb-5 p-[15px] bg-[#f9f9f9] rounded-[6px]">
             <form th:action="@{/admin/defect-type-management}" method="get" th:object="${defectTypeInquiryForm}">
                 <label for="productId"

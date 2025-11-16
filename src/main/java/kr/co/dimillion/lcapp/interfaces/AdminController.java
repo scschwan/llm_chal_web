@@ -120,10 +120,12 @@ public class AdminController {
     }
 
     @GetMapping("/defect-type-management")
-    public String defectManagement(@PageableDefault Pageable pageable,
-                                   Model model,
+    public String defectManagement(Model model,
+                                   @ModelAttribute DefectTypeCreateForm defectTypeCreateForm,
+                                   @PageableDefault Pageable pageable,
                                    @RequestParam(required = false) Integer productId) {
         List<Product> products = productRepository.findAll();
+        defectTypeCreateForm.setProducts(products);
         model.addAttribute("defectTypeInquiryForm", new DefectTypeInquiryForm(products, productId));
 
         Page<DefectType> defectTypePage;
@@ -148,5 +150,26 @@ public class AdminController {
             this.products = products;
             this.productId = productId;
         }
+    }
+
+    @PostMapping("/defect-type-management/defect-type")
+    public String createDefectType(@ModelAttribute DefectTypeCreateForm defectTypeCreateForm) {
+        Product product = productRepository.findById(defectTypeCreateForm.getProductId()).orElseThrow();
+        defectTypeRepository.save(
+                new DefectType(product, defectTypeCreateForm.getCode(), defectTypeCreateForm.getNameKo(),
+                        defectTypeCreateForm.getNameEn(), defectTypeCreateForm.nameKo, defectTypeCreateForm.getDescription()));
+        defectTypeCreateForm.setProductId(null);
+        return "redirect:/admin/defect-type-management";
+    }
+
+    @Data
+    public static class DefectTypeCreateForm {
+        List<Product> products;
+        private Integer productId;
+        private String nameKo;
+        private String code;
+        private String nameEn;
+        private String description;
+
     }
 }
