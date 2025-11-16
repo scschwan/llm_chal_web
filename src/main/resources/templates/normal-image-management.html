@@ -49,6 +49,8 @@
                     <input type="file" id="files" name="files" accept=".jpg, .png" class="hidden" required multiple>
                     <p id="fileName" class="mt-[10px] text-[#666]"></p>
                 </div>
+                <div id="fileListArea" class="mt-[15px] max-h-[200px] overflow-y-auto bg-white p-[10px] rounded-[4px] border border-[#ddd]">
+                </div>
             </div>
             <button type="submit"
                     class="bg-[#2196F3] text-white px-5 py-[10px] rounded-[4px] text-[14px] font-medium transition-all duration-300 mt-[15px] cursor-pointer">
@@ -62,5 +64,82 @@
         </div>
     </div>
 </div>
+
+<script>
+    // 여러 파일을 저장 및 조작할 JS 배열
+    let uploadedFiles = [];
+
+    // 파일 input change 이벤트 핸들러
+    document.getElementById('files').addEventListener('change', function(e) {
+        // 기존 파일 + 새롭게 추가된 파일 병합(중복 허용 시 중복 제거 로직 필요)
+        uploadedFiles = Array.from(e.target.files);
+        renderFileList();
+    });
+
+    function renderFileList() {
+        const area = document.getElementById('fileListArea');
+        if (uploadedFiles.length === 0) {
+            area.style.display = 'none';
+            area.innerHTML = ""; // 혹시 모를 이전 내용 초기화
+        } else {
+            area.style.display = 'block';
+            area.innerHTML = "";
+            uploadedFiles.forEach((file, i) => {
+                const div = document.createElement('div');
+                div.className = "p-2 mb-[5px] bg-[#f5f5f5] rounded-[4px] flex justify-between items-center";
+                div.innerHTML =
+                    `<span>${file.name} (${(file.size/1024/1024).toFixed(2)} MB)</span>
+         <button type="button"
+            onclick="removeFile(${i})"
+            class="px-2 py-[3px] bg-[#f44336] text-white border-none rounded-[3px] cursor-pointer text-[12px]">
+           삭제
+         </button>`;
+                area.appendChild(div);
+            });
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('fileListArea').style.display = 'none';
+    });
+
+    // 삭제 버튼 클릭 시 호출되는 함수
+    function removeFile(idx) {
+        uploadedFiles.splice(idx, 1);
+        renderFileList();
+
+        // 파일이 없으면 input 재설정(required 등)
+        if(uploadedFiles.length === 0){
+            document.getElementById('files').value = '';
+        }
+    }
+
+    // 폼 submit 전에 FormData에 uploadedFiles 내용을 append
+    document.querySelector('form').addEventListener('submit', function(e){
+        if(uploadedFiles.length === 0){
+            alert('파일을 1개 이상 선택해야 합니다.');
+            e.preventDefault();
+            return;
+        }
+        const dt = new DataTransfer();
+        uploadedFiles.forEach(f => dt.items.add(f));
+        document.getElementById('files').files = dt.files; // 실제 input에 파일 할당
+    });
+
+    // 드래그 앤 드롭 옵션 추가 (필요 시)
+    document.getElementById('uploadArea').addEventListener('dragover', function(e) {
+        e.preventDefault();
+        this.classList.add('border-[#2196F3]');
+    });
+    document.getElementById('uploadArea').addEventListener('drop', function(e) {
+        e.preventDefault();
+        this.classList.remove('border-[#2196F3]');
+        const droppedFiles = Array.from(e.dataTransfer.files).filter(f => (
+            f.type === "image/png" || f.type === "image/jpeg"
+        ));
+        uploadedFiles = uploadedFiles.concat(droppedFiles);
+        renderFileList();
+    });
+</script>
 </body>
 </html>
