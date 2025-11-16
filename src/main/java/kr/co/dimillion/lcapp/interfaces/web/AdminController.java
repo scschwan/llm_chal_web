@@ -234,12 +234,17 @@ public class AdminController {
             long filesize = file.getSize();
             imageRepository.save(new Image(product, "normal", filename, filepath, filesize));
         }
+
+        aiServerClient.syncNormalImages().subscribe();
+
         return "redirect:/admin/normal-image-management";
     }
 
     @DeleteMapping("/normal-image-management/image")
     public String deleteNormalImage(@RequestParam Integer id) {
         imageService.delete(id);
+
+        aiServerClient.syncNormalImages().subscribe();
 
         return "redirect:/admin/normal-image-management";
     }
@@ -304,12 +309,17 @@ public class AdminController {
             long filesize = file.getSize();
             imageRepository.save(new Image(product, defectType, "defect", filename, filepath, filesize));
         }
+
+        aiServerClient.syncDefectImages().subscribe();
+
         return "redirect:/admin/defect-image-management";
     }
 
     @DeleteMapping("/defect-image-management/image")
     public String deleteDefectImage(@RequestParam Integer id) {
         imageService.delete(id);
+
+        aiServerClient.syncDefectImages().subscribe();
 
         return "redirect:/admin/defect-image-management";
     }
