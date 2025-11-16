@@ -386,4 +386,15 @@ public class AdminController {
         aiServerClient.deployClipDefect().subscribe();
         return "redirect:/admin/embedding?defectSuccess";
     }
+
+    @GetMapping("/patchcore")
+    public String patchcore() {
+        return "patchcore";
+    }
+
+    @PostMapping("/patchcore")
+    public String executePatchcore() {
+        aiServerClient.deployPatchCore().subscribe();
+        return "redirect:/admin/patchcore?success";
+    }
 }

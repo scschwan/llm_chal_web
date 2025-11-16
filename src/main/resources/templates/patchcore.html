@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en" class="bg-[#f5f7fa]">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link th:href="@{/output.css}" rel="stylesheet">
+</head>
+<body class="p-5 font-pretendard">
+<div class="max-w-[1200px] mx-auto bg-white p-[30px] rounded-[8px] shadow-[0_2px_4px_rgba(0,0,0,0.1)] mb-[25px]">
+    <header class="text-[#333] pb-[15px] font-bold text-[2rem] flex flex-col gap-[10px]">
+        <div class="flex justify-start items-center gap-[10px]">
+            <a th:href="@{/admin}"> <img th:src="@{/images/arrow-back.svg}" alt="arrow-back"> </a>
+            <h1>🧠 PatchCore 메모리뱅크 생성</h1>
+        </div>
+        <p class="text-[#666] text-[14px]">
+            정상 이미지를 기반으로 제품별 PatchCore 메모리뱅크를 생성합니다.
+        </p>
+    </header>
+</div>
+
+<div class="max-w-[1200px] mx-auto bg-white p-[30px] rounded-[8px] shadow-[0_2px_4px_rgba(0,0,0,0.1)]">
+    <h2 class="text-[18px] mb-[16px] pb-[12px] border-b-[2px] border-b-[#e0e0e0] font-bold">
+        메모리뱅크 생성
+    </h2>
+    <div class="bg-[#f8f9fa] rounded-[6px] p-4 mb-5">
+        <div class="py-2">
+            <span class="font-semibold text-[#555] mr-2">스크립트 경로:</span>
+            <code class="bg-[#e9ecef] px-[6px] py-[2px] rounded-[3px] text-[13px]">/home/dmillion/llm_chal_vlm/build_patchcore.sh</code>
+        </div>
+        <div class="py-2">
+            <span class="font-semibold text-[#555] mr-2">대상 제품:</span>
+            <span class="bg-[#e9ecef] px-[6px] py-[2px] rounded-[3px] text-[13px]">전체 제품 (prod1, prod2, prod3, leather, grid, carpet)</span>
+        </div>
+        <div class="py-2">
+            <span class="font-semibold text-[#555] mr-2">예상 소요 시간:</span>
+            <span class="bg-[#e9ecef] px-[6px] py-[2px] rounded-[3px] text-[13px]">약 10-15분</span>
+        </div>
+    </div>
+
+    <div class="text-center py-5">
+        <form th:action="@{/admin/patchcore}" th:method="post">
+            <button type="submit"
+                    id="btnBuild"
+                    class="px-8 py-3 rounded-[6px] text-[14px] font-medium cursor-pointer transition-all duration-300
+                    bg-[#1976d2] text-white hover:bg-[#1565c0]">
+                전체 메모리뱅크 생성 시작
+            </button>
+        </form>
+
+    </div>
+    <div class="w-full flex flex-col justify-center items-center">
+        <div th:if="${param.success}"
+             class="mt-6 text-[15px] text-[#1b5e20] font-semibold bg-[#e8f5e9] rounded-[6px] py-3 px-5 border border-[#1de9b6] text-center">
+            메모리뱅크 생성 요청이 완료되었습니다. 백그라운드에서 실행됩니다.
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+
