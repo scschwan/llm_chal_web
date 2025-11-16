@@ -20,6 +20,9 @@ public class Image {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Product product;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "defect_type_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+    private DefectType defectType;
 
     @Column(name = "image_type")
     private String type; // defect, normal
@@ -39,6 +42,18 @@ public class Image {
 
     public Image(Product product, String type, String name, String path, Long size) {
         this.product = product;
+        this.type = type;
+        this.name = name;
+        this.path = path;
+        this.size = size;
+        this.used = true;
+        this.synced = false;
+        this.uploadedAt = LocalDateTime.now();
+    }
+
+    public Image(Product product, DefectType defectType, String type, String name, String path, Long size) {
+        this.product = product;
+        this.defectType = defectType;
         this.type = type;
         this.name = name;
         this.path = path;

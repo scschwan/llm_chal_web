@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en" class="bg-[#f5f7fa]">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link th:href="@{/output.css}" rel="stylesheet">
+</head>
+<body class="p-5">
+<div class="max-w-[1200px] mx-auto bg-white p-[30px] rounded-[8px] shadow-[0_2px_4px_rgba(0,0,0,0.1)]">
+    <header class="flex justify-start items-center gap-[10px] text-[#333] mb-[30px] pb-[15px] border-b-[3px]
+                    border-b-[#f44336] font-bold text-[2rem]">
+        <a th:href="@{/admin}"> <img th:src="@{/images/arrow-back.svg}" alt="arrow-back"> </a>
+        <h1>불량 이미지 등록</h1>
+    </header>
+    <div class="bg-[#f9f9f9] p-[25px] rounded-[6px] mb-[30px]">
+        <h2 class="text-[#555] mb-5 text-[1.3rem] font-bold">매뉴얼 파일 업로드</h2>
+        <form th:action="@{/admin/defect-image-management/image}"
+              method="post"
+              th:object="${defectImageUploadForm}"
+              enctype="multipart/form-data">
+            <div class="mb-[15px]">
+                <label for="productId"
+                       class="block mb-[5px] text-[#555] font-medium">
+                    제품 선택 *
+                </label>
+                <select required
+                        id="uploadProductSelect"
+                        th:field="*{productId}"
+                        class="w-full p-[10px] border border-[#ddd] rounded-[4px] text-[14px] bg-white">
+                    <option value="">-- 제품을 선택하세요 --</option>
+                    <option th:each="product : *{products}"
+                            th:value="${product.id}"
+                            th:text="${product.name}">
+                    </option>
+                </select>
+            </div>
+            <div class="mb-[15px]">
+                <label for="productId"
+                       class="block mb-[5px] text-[#555] font-medium">
+                    불량 유형 선택 *
+                </label>
+                <select required
+                        id="uploadDefectTypeSelect"
+                        th:field="*{defectTypeId}"
+                        class="w-full p-[10px] border border-[#ddd] rounded-[4px] text-[14px] bg-white">
+                    <option value="">-- 제품을 먼저 선택하세요 --</option>
+                </select>
+            </div>
+            <div class="mb-[15px]">
+                <label for="uploadArea"
+                       class="block mb-[5px] text-[#555] font-medium">
+                    파일 선택 (jpg, png)
+                </label>
+                <div id="uploadArea"
+                     onclick="document.getElementById('files').click()"
+                     class="border-2 border-dashed border-[#ddd] rounded-[6px] p-[30px] text-center bg-[#fafafa] cursor-pointer transition-all duration-300 hover:border-[#2196F3] hover:bg-[#f5f5f5]">
+                    <p>📄 클릭하여 파일 선택 또는 드래그 앤 드롭</p>
+                    <p class="text-[0.9rem] text-[#999] mt-[5px]">다중 선택 가능</p>
+                    <input type="file" id="files" name="files" accept=".jpg, .png" class="hidden" required multiple>
+                    <p id="fileName" class="mt-[10px] text-[#666]"></p>
+                </div>
+                <div id="fileListArea"
+                     class="mt-[15px] max-h-[200px] overflow-y-auto bg-white p-[10px] rounded-[4px] border border-[#ddd]">
+                </div>
+            </div>
+            <button type="submit"
+                    class="bg-[#f44336] text-white px-5 py-[10px] rounded-[4px] text-[14px] font-medium transition-all duration-300 mt-[15px] cursor-pointer">
+                업로드
+            </button>
+        </form>
+        <div class="text-[#666] text-[0.9rem] mt-[10px]">
+            ※ 이미지는 Object Storage에 저장됩니다.
+            <br>
+            ※ 업로드 완료 후 서버 배포를 수행해야 인덱싱됩니다.
+        </div>
+    </div>
+    <div class="mt-[30px]">
+        <h2 class="text-[1.5rem] font-bold">등록된 정상 이미지</h2>
+        <div class="bg-[#e3f2fd] p-[15px] rounded-[6px] mb-[20px] flex justify-around text-center">
+            <div class="flex-1">
+                <div class="text-[24px] font-bold text-[#2196f3]" th:text="${defectImagePage.totalElements}">
+                    111
+                </div>
+                <div class="text-[14px] text-[#666] mt-[5px]">
+                    총 이미지 수
+                </div>
+            </div>
+        </div>
+        <div class="mt-[30px]">
+            <div class="mb-5 p-[15px] bg-[#f9f9f9] rounded-[6px]">
+                <form th:action="@{/admin/defect-image-management}" method="get" th:object="${defectImageInquiryForm}">
+                    <label for="productId"
+                           class="mr-[10px] font-medium">
+                        제품 필터:
+                    </label>
+                    <select id="inquiryProductSelect"
+                            th:field="*{productId}"
+                            class="p-2 border border-[#ddd] rounded-[4px] bg-white text-[13px]"
+                            onchange="this.form.submit()">
+                        <option value="">전체 제품</option>
+                        <option th:each="product : *{products}"
+                                th:value="${product.id}"
+                                th:text="${product.name}">
+                        </option>
+                    </select>
+                    <label for="defectType"
+                           class="mr-[10px] font-medium">
+                        불량 유형:
+                    </label>
+                    <select id="inquiryDefectTypeSelect"
+                            th:field="*{defectTypeId}"
+                            class="p-2 border border-[#ddd] rounded-[4px] bg-white text-[13px]"
+                            onchange="this.form.submit()">
+                        <option value="">전체 불량</option>
+                        <option th:each="defectType : *{defectTypes}"
+                                th:value="${defectType.id}"
+                                th:text="${defectType.nameKo}">
+                        </option>
+                    </select>
+                </form>
+            </div>
+        </div>
+        <div class="grid grid-cols-[repeat(auto-fill,_minmax(200px,_1fr))] gap-[15px] mt-5">
+            <div th:each="image : ${defectImages}"
+                 class="border border-[#ddd] rounded-[6px] overflow-hidden bg-white
+                        transition-transform duration-200 transition-shadow
+                        hover:-translate-y-1.5 hover:shadow-[0_4px_8px_rgba(0,0,0,0.15)]">
+                <img th:src="'https://kr.object.ncloudstorage.com/dm-obs' + ${image.path}" alt="defect-image"
+                     class="w-full h-[200px] object-cover bg-[#f5f5f5]">
+
+                <div class="p-[10px]">
+                    <div class="text-[12px] text-[#666] mb-2 break-all" th:text="${image.name}">filename</div>
+                    <div class="flex gap-[5px]">
+                        <form th:action="@{/admin/defect-image-management/image}" th:method="delete">
+                            <input type="hidden" name="id" th:value="${image.id}"/>
+                            <button type="submit"
+                                    class="bg-[#f44336] text-white text-[12px] px-[10px] py-[5px] rounded-[4px] cursor-pointer font-medium transition-all duration-300 hover:bg-[#da190b]"
+                                    th:onclick="'deleteImage(' + ${image.id} + ')'">
+                                삭제
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex justify-center mt-6">
+            <nav>
+                <ul class="inline-flex -space-x-px">
+                    <li>
+                        <a th:if="${!defectImagePage.first}" th:href="@{|?page=${defectImagePage.number-1}|}"
+                           class="px-3 py-1 border border-gray-300">이전</a>
+                        <span th:if="${defectImagePage.first}"
+                              class="px-3 py-1 border border-gray-200 text-gray-400 cursor-not-allowed">이전</span>
+                    </li>
+                    <li th:each="i : ${#numbers.sequence(0, defectImagePage.totalPages-1)}">
+                        <a th:href="@{|?defectImagePage=${i}|}"
+                           th:text="${i + 1}"
+                           th:classappend="${defectImagePage.number == i} ? 'font-bold text-[#9C27B0]' : ''"
+                           class="px-3 py-1 border border-gray-200"></a>
+                    </li>
+                    <li>
+                        <a th:if="${!defectImagePage.last}" th:href="@{|?defectImagePage=${defectImagePage.number+1}|}"
+                           class="px-3 py-1 border border-gray-300">다음</a>
+                        <span th:if="${defectImagePage.last}"
+                              class="px-3 py-1 border border-gray-200 text-gray-400 cursor-not-allowed">다음</span>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 여러 파일을 저장 및 조작할 JS 배열
+    let uploadedFiles = [];
+
+    // 파일 input change 이벤트 핸들러
+    document.getElementById('files').addEventListener('change', function (e) {
+        // 기존 파일 + 새롭게 추가된 파일 병합(중복 허용 시 중복 제거 로직 필요)
+        uploadedFiles = Array.from(e.target.files);
+        renderFileList();
+    });
+
+    function renderFileList() {
+        const area = document.getElementById('fileListArea');
+        if (uploadedFiles.length === 0) {
+            area.style.display = 'none';
+            area.innerHTML = ""; // 혹시 모를 이전 내용 초기화
+        } else {
+            area.style.display = 'block';
+            area.innerHTML = "";
+            uploadedFiles.forEach((file, i) => {
+                const div = document.createElement('div');
+                div.className = "p-2 mb-[5px] bg-[#f5f5f5] rounded-[4px] flex justify-between items-center";
+                div.innerHTML =
+                    `<span>${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)</span>
+         <button type="button"
+            onclick="removeFile(${i})"
+            class="px-2 py-[3px] bg-[#f44336] text-white border-none rounded-[3px] cursor-pointer text-[12px]">
+           삭제
+         </button>`;
+                area.appendChild(div);
+            });
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('fileListArea').style.display = 'none';
+    });
+
+    // 삭제 버튼 클릭 시 호출되는 함수
+    function removeFile(idx) {
+        uploadedFiles.splice(idx, 1);
+        renderFileList();
+
+        // 파일이 없으면 input 재설정(required 등)
+        if (uploadedFiles.length === 0) {
+            document.getElementById('files').value = '';
+        }
+    }
+
+    // 폼 submit 전에 FormData에 uploadedFiles 내용을 append
+    document.querySelector('form').addEventListener('submit', function (e) {
+        if (uploadedFiles.length === 0) {
+            alert('파일을 1개 이상 선택해야 합니다.');
+            e.preventDefault();
+            return;
+        }
+        const dt = new DataTransfer();
+        uploadedFiles.forEach(f => dt.items.add(f));
+        document.getElementById('files').files = dt.files; // 실제 input에 파일 할당
+    });
+
+    // 드래그 앤 드롭 옵션 추가 (필요 시)
+    document.getElementById('uploadArea').addEventListener('dragover', function (e) {
+        e.preventDefault();
+        this.classList.add('border-[#2196F3]');
+    });
+    document.getElementById('uploadArea').addEventListener('drop', function (e) {
+        e.preventDefault();
+        this.classList.remove('border-[#2196F3]');
+        const droppedFiles = Array.from(e.dataTransfer.files).filter(f => (
+            f.type === "image/png" || f.type === "image/jpeg"
+        ));
+        uploadedFiles = uploadedFiles.concat(droppedFiles);
+        renderFileList();
+    });
+
+    document.getElementById('uploadProductSelect').addEventListener('change', function () {
+        const productId = this.value;
+        fetch('/api/v1/defect-types?productId=' + productId)
+            .then(res => res.json())
+            .then(data => {
+                const dfSelect = document.getElementById('uploadDefectTypeSelect');
+                dfSelect.innerHTML = '<option value="">불량 유형을 선택하세요</option>';
+                data.forEach(type => {
+                    const opt = document.createElement('option');
+                    opt.value = type.id;
+                    opt.text = type.nameKo;
+                    dfSelect.appendChild(opt);
+                });
+                dfSelect.disabled = false;
+            });
+    });
+</script>
+</body>
+</html>

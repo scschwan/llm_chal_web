@@ -21,7 +21,8 @@
         </div>
         <button
                 onclick="document.querySelector('.error-modal-bg').style.display='none'"
-                class="mt-[8px] py-[8px] px-[22px] bg-[#667eea] text-white rounded-[6px] text-[14px] font-semibold focus:outline-none" autofocus>
+                class="mt-[8px] py-[8px] px-[22px] bg-[#667eea] text-white rounded-[6px] text-[14px] font-semibold focus:outline-none"
+                autofocus>
             닫기
         </button>
     </div>
@@ -37,12 +38,8 @@
     <div class="text-[#666] text-[14px] text-center mb-[30px]">
         Manufacturing Defect Detection System
     </div>
-    <div class="flex justify-between items-center font-medium text-[#999] w-[320px] h-[49px] mb-[25px] border-b-[1.5px] border-b-[rgb(240,240,240)]">
-        <label class="role-tab w-[160px] h-[49px] cursor-pointer transition-all duration-300 ease-in-out hover:bg-[rgb(249,249,249)] flex justify-center items-center "
-               data-role="worker">
-            <span>👷 작업자</span>
-        </label>
-        <label class="role-tab w-[160px] h-[49px] cursor-pointer transition-all duration-300 ease-in-out hover:bg-[rgb(249,249,249)] flex justify-center items-center"
+    <div class="flex justify-center items-center font-medium text-[#999] w-[320px] h-[49px] mb-[25px] border-b-[3px] border-b-[#667eea]">
+        <label class="role-tab w-[160px] h-[49px] transition-all duration-300 ease-in-out  flex justify-center items-center text-[#667eea]"
                data-role="admin">
             <span>
                 👨‍💼 관리자
@@ -50,16 +47,20 @@
         </label>
     </div>
     <form th:action="@{/login}" method="post" class="flex flex-col w-[320px]">
-        <input type="hidden" name="role" id="role-input" value="worker">
+        <input type="hidden" name="role" id="role-input" value="admin">
         <div class="flex flex-col mb-[20px]">
             <label class="text-[#555] text-[14px] font-medium mb-[8px]">아이디</label>
             <input class="py-[12px] px-[15px] border-[1px] text-[14px] border-[rgb(221,221,221)] rounded-[6px] focus:border-[#667eea]"
-                   type="text" name="username"/>
+                   type="text"
+                   name="username"
+                   required/>
         </div>
         <div class="flex flex-col mb-[20px]">
             <label class="text-[#555] text-[14px] font-medium mb-[8px]">비밀번호 </label>
             <input class="py-[12px] px-[15px] border-[1px] text-[14px] border-[rgb(221,221,221)] rounded-[6px] focus:border-[#667eea]"
-                   type="password" name="password"/>
+                   type="password"
+                   name="password"
+                   required/>
         </div>
         <button type="submit"
                 class="w-full p-[14px] bg-[linear-gradient(135deg,_#667eea_0%,_#764ba2_100%)] text-white rounded-[6px] text-[16px] font-semibold">
@@ -70,42 +71,11 @@
         <div class="mb-[8px] text-[#333] text-[13px] font-bold">
             테스트 계정
         </div>
-        <div id="role-desc-worker" class="bg-white p-[8px] rounded-[4px] mt-[5px] text-[13px] text-[#666] font-mono">
-            ID: worker / PW: worker
-        </div>
         <div id="role-desc-admin" class="bg-white p-[8px] rounded-[4px] mt-[5px] text-[13px] text-[#666] font-mono">
             ID: admin / PW: admin
         </div>
     </div>
 </div>
-
-<script>
-    let current = localStorage.getItem('loginRole') || 'worker';
-
-    function updateUI() {
-        document.querySelectorAll('.role-tab').forEach(tab => {
-            const active = tab.dataset.role === current;
-            tab.classList.toggle('text-[#667eea]', active);
-            tab.classList.toggle('border-b-[3px]', active);
-            tab.classList.toggle('border-b-[#667eea]', active);
-
-        });
-        document.getElementById('role-desc-worker').style.display = (current === 'worker' ? '' : 'none');
-        document.getElementById('role-desc-admin').style.display = (current === 'admin' ? '' : 'none');
-        document.getElementById('role-input').value = current;
-    }
-
-    document.querySelectorAll('.role-tab').forEach(tab => {
-        tab.addEventListener('click', () => {
-            current = tab.dataset.role;
-            localStorage.setItem('loginRole', current);
-            updateUI();
-        });
-    });
-
-    // 최초 렌더링 상태
-    updateUI();
-</script>
 
 </body>
 </html>
