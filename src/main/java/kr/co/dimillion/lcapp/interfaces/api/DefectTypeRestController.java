@@ -1,4 +1,4 @@
-package kr.co.dimillion.lcapp.interfaces;
+package kr.co.dimillion.lcapp.interfaces.api;
 
 import kr.co.dimillion.lcapp.application.DefectType;
 import kr.co.dimillion.lcapp.application.DefectTypeRepository;
@@ -13,11 +13,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-public class DefectTypeApiController {
+public class DefectTypeRestController {
     private final DefectTypeRepository defectTypeRepository;
     private final ProductRepository productRepository;
 
-    public DefectTypeApiController(DefectTypeRepository defectTypeRepository, ProductRepository productRepository) {
+    public DefectTypeRestController(DefectTypeRepository defectTypeRepository, ProductRepository productRepository) {
         this.defectTypeRepository = defectTypeRepository;
         this.productRepository = productRepository;
     }

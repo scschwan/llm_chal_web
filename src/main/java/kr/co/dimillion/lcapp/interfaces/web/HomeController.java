@@ -1,4 +1,4 @@
-package kr.co.dimillion.lcapp.interfaces;
+package kr.co.dimillion.lcapp.interfaces.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

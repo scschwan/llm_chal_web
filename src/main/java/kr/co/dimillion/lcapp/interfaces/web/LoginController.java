@@ -1,4 +1,4 @@
-package kr.co.dimillion.lcapp.interfaces;
+package kr.co.dimillion.lcapp.interfaces.web;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;

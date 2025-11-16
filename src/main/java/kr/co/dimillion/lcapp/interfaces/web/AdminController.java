@@ -1,4 +1,4 @@
-package kr.co.dimillion.lcapp.interfaces;
+package kr.co.dimillion.lcapp.interfaces.web;
 
 import kr.co.dimillion.lcapp.application.*;
 import lombok.Data;
