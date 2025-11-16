@@ -96,13 +96,28 @@
                            class="mr-[10px] font-medium">
                         제품 필터:
                     </label>
-                    <select th:field="*{productId}"
+                    <select id="inquiryProductSelect"
+                            th:field="*{productId}"
                             class="p-2 border border-[#ddd] rounded-[4px] bg-white text-[13px]"
                             onchange="this.form.submit()">
                         <option value="">전체 제품</option>
                         <option th:each="product : *{products}"
                                 th:value="${product.id}"
                                 th:text="${product.name}">
+                        </option>
+                    </select>
+                    <label for="defectType"
+                           class="mr-[10px] font-medium">
+                        불량 유형:
+                    </label>
+                    <select id="inquiryDefectTypeSelect"
+                            th:field="*{defectTypeId}"
+                            class="p-2 border border-[#ddd] rounded-[4px] bg-white text-[13px]"
+                            onchange="this.form.submit()">
+                        <option value="">전체 불량</option>
+                        <option th:each="defectType : *{defectTypes}"
+                                th:value="${defectType.id}"
+                                th:text="${defectType.nameKo}">
                         </option>
                     </select>
                 </form>
@@ -120,7 +135,7 @@
                     <div class="text-[12px] text-[#666] mb-2 break-all" th:text="${image.name}">filename</div>
                     <div class="flex gap-[5px]">
                         <form th:action="@{/admin/defect-image-management/image}" th:method="delete">
-                            <input type="hidden" name="id" th:value="${image.id}" />
+                            <input type="hidden" name="id" th:value="${image.id}"/>
                             <button type="submit"
                                     class="bg-[#f44336] text-white text-[12px] px-[10px] py-[5px] rounded-[4px] cursor-pointer font-medium transition-all duration-300 hover:bg-[#da190b]"
                                     th:onclick="'deleteImage(' + ${image.id} + ')'">
@@ -234,7 +249,7 @@
         renderFileList();
     });
 
-    document.getElementById('uploadProductSelect').addEventListener('change', function() {
+    document.getElementById('uploadProductSelect').addEventListener('change', function () {
         const productId = this.value;
         fetch('/api/v1/defect-types?productId=' + productId)
             .then(res => res.json())

@@ -261,15 +261,38 @@ public class AdminController {
         if (defectImageInquiryForm.getProductId() != null) {
             Product product = productRepository.findById(defectImageInquiryForm.getProductId())
                     .orElseThrow();
-            imagePage = imageRepository.findByProductAndTypeAndUsed(product, "defect", true, pageable);
-
+            List<DefectType> defectTypesByProduct = defectTypeRepository.findByProductAndUsed(product, true);
+            defectImageInquiryForm.setDefectTypes(defectTypesByProduct);
+            if (defectImageInquiryForm.getDefectTypeId() != null) {
+                DefectType defectType = defectTypeRepository.findById(defectImageInquiryForm.getDefectTypeId())
+                        .orElseThrow();
+                imagePage = imageRepository.findByProductAndDefectTypeAndTypeAndUsed(product, defectType, "defect", true, pageable);
+            } else {
+                imagePage = imageRepository.findByProductAndTypeAndUsed(product, "defect", true, pageable);
+            }
         } else {
             imagePage = imageRepository.findByTypeAndUsed("defect", true, pageable);
         }
+
         model.addAttribute("defectImages", imagePage.getContent());
         model.addAttribute("defectImagePage", imagePage);
 
         return "defect-image-management";
+    }
+
+    @PostMapping("/defect-image-management/image")
+    public String createDefectImage(@ModelAttribute DefectImageUploadForm defectImageUploadForm, @RequestParam MultipartFile[] files) {
+        Product product = productRepository.findById(defectImageUploadForm.getProductId())
+                .orElseThrow();
+        DefectType defectType = defectTypeRepository.findById(defectImageUploadForm.getDefectTypeId())
+                .orElseThrow();
+        for (MultipartFile file : files) {
+            String filename = file.getOriginalFilename();
+            String filepath = fileSystem.uploadFile(file, "def_split");
+            long filesize = file.getSize();
+            imageRepository.save(new Image(product, defectType, "defect", filename, filepath, filesize));
+        }
+        return "redirect:/admin/defect-image-management";
     }
 
     @Data
