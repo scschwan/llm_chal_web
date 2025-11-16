@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="bg-[#f5f7fa]">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -8,7 +8,7 @@
     <title>Document</title>
     <link th:href="@{/output.css}" rel="stylesheet">
 </head>
-<body>
+<body class="p-5">
 <div class="max-w-[1200px] mx-auto bg-white p-[30px] rounded-[8px] shadow-[0_2px_4px_rgba(0,0,0,0.1)]">
     <header class="flex justify-start items-center gap-[10px] text-[#333] mb-[30px] pb-[15px] border-b-[3px] border-b-[#FF9800] font-bold text-[2rem]">
         <a th:href="@{/admin}"> <img th:src="@{/images/arrow-back.svg}" alt="arrow-back"> </a>
@@ -82,7 +82,7 @@
                 초기화
             </button>
         </form>
-        </div>
+    </div>
     <div class="mt-[30px]">
         <div class="mb-5 p-[15px] bg-[#f9f9f9] rounded-[6px]">
             <form th:action="@{/admin/defect-type-management}" method="get" th:object="${defectTypeInquiryForm}">
