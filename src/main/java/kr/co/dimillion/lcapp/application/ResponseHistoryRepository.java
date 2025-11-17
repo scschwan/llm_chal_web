@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface ResponseHistoryRepository extends JpaRepository<ResponseHistory, Integer> {
-    Optional<ResponseHistory> findBySearchHistory(SearchHistory searchHistory);
+    Optional<ResponseHistory> findTop1BySearchHistory(SearchHistory searchHistory);
 }

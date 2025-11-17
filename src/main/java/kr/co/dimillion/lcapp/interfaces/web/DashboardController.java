@@ -65,7 +65,7 @@ public class DashboardController {
         List<SearchHistory> searches = searchHistoryRepository.findTop20ByOrderByIdDesc();
         List<SearchDto> searchDtoList = searches.stream()
                 .map(s -> {
-                    ResponseHistory r = responseHistoryRepository.findBySearchHistory(s)
+                    ResponseHistory r = responseHistoryRepository.findTop1BySearchHistory(s)
                             .orElse(null);
                     return new SearchDto(s, r);
                 })
