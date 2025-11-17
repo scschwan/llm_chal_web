@@ -29,8 +29,8 @@ public class ModelSettings extends BaseEntity {
     @Getter
     public enum DefectInspection {
         ANOMALY("anomaly", true),
-        YOLO("YOLO", false),
-        ROLE_BASED("Rule-based", false);
+        YOLO("YOLO(준비중)", false),
+        ROLE_BASED("Rule-based(준비중)", false);
 
         private final String name;
         private final boolean ready;
@@ -43,7 +43,7 @@ public class ModelSettings extends BaseEntity {
 
     @Getter
     public enum SimilarityMatch {
-        CLIP("CLIP", true), BLIP("BLIP", false), VIT("VIT", false);
+        CLIP("CLIP", true), BLIP("BLIP(준비중)", false), VIT("VIT(준비중)", false);
 
         private final String name;
         private final boolean ready;
@@ -59,8 +59,8 @@ public class ModelSettings extends BaseEntity {
         HYPER_CLOVA("hyperClova", true),
         EXAONE("exaone", true),
         LLAVA("Llava", true),
-        GPT("GPT", false),
-        Gemini("Gemini", false);
+        GPT("GPT(준비중)", false),
+        Gemini("Gemini(준비중)", false);
 
         private final String name;
         private final boolean ready;
