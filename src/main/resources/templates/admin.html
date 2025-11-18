@@ -1,5 +1,7 @@
 <!doctype html>
-<html lang="en" class="bg-[#f5f7fa]">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      class="bg-[#f5f7fa]">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -38,21 +40,21 @@
         <a class="bg-white p-[30px] rounded-[10px] shadow-[0_2px_8px_rgba(0,0,0,0.1)] cursor-pointer transition-all duration-300 block
                     hover:shadow-[0_5px_20px_rgba(0,0,0,0.15)] hover:translate-y-[-5px]"
            th:href="@{/admin/product-management}">
-            <div class="text-[48px] mb-[15px]">📦</div>
+            <img class="mb-[15px]" th:src="@{/images/product.png}" alt="product" width="72px" height="72px"/>
             <div class="text-[20px] font-semibold text-[#333] mb-[10px]">제품 관리</div>
             <div class="text-[14px] text-[#666] leading-[1.6]">제품 등록, 수정, 삭제 및 제품 정보 관리</div>
         </a>
         <a class="bg-white p-[30px] rounded-[10px] shadow-[0_2px_8px_rgba(0,0,0,0.1)] cursor-pointer transition-all duration-300 block
                     hover:shadow-[0_5px_20px_rgba(0,0,0,0.15)] hover:translate-y-[-5px]"
            th:href="@{/admin/manual-management}">
-            <div class="text-[48px] mb-[15px]">📄</div>
+            <img class="mb-[15px]" th:src="@{/images/manual.png}" alt="manual" width="72px" height="72px"/>
             <div class="text-[20px] font-semibold text-[#333] mb-[10px]">매뉴얼 관리</div>
             <div class="text-[14px] text-[#666] leading-[1.6]">제품별 대응 매뉴얼 PDF 파일 업로드 및 관리</div>
         </a>
         <a class="bg-white p-[30px] rounded-[10px] shadow-[0_2px_8px_rgba(0,0,0,0.1)] cursor-pointer transition-all duration-300 block
                     hover:shadow-[0_5px_20px_rgba(0,0,0,0.15)] hover:translate-y-[-5px]"
            th:href="@{/admin/defect-type-management}">
-            <div class="text-[48px] mb-[15px]">⚠️</div>
+            <img class="mb-[15px]" th:src="@{/images/defect.png}" alt="defect" width="72px" height="72px"/>
             <div class="text-[20px] font-semibold text-[#333] mb-[10px]">불량 유형 관리</div>
             <div class="text-[14px] text-[#666] leading-[1.6]">제품별 불량 유형 등록 및 매핑 관리</div>
         </a>
@@ -64,7 +66,7 @@
         <a class="bg-white p-[30px] rounded-[10px] shadow-[0_2px_8px_rgba(0,0,0,0.1)] cursor-pointer transition-all duration-300 block
                     hover:shadow-[0_5px_20px_rgba(0,0,0,0.15)] hover:translate-y-[-5px]"
            th:href="@{/admin/normal-image-management}">
-            <div class="text-[48px] mb-[15px]">✅</div>
+            <img class="mb-[15px]" th:src="@{/images/normal-img.png}" alt="normal" width="72px" height="72px"/>
             <div class="text-[20px] font-semibold text-[#333] mb-[10px]">정상 이미지 등록</div>
             <div class="text-[14px] text-[#666] leading-[1.6]">
                 제품별 정상 이미지 업로드 및 관리 (다중/ZIP 지원)
@@ -73,7 +75,7 @@
         <a class="bg-white p-[30px] rounded-[10px] shadow-[0_2px_8px_rgba(0,0,0,0.1)] cursor-pointer transition-all duration-300 block
                     hover:shadow-[0_5px_20px_rgba(0,0,0,0.15)] hover:translate-y-[-5px]"
            th:href="@{/admin/defect-image-management}">
-            <div class="text-[48px] mb-[15px]">❌</div>
+            <img class="mb-[15px]" th:src="@{/images/defect-img.png}" alt="defect" width="72px" height="72px"/>
             <div class="text-[20px] font-semibold text-[#333] mb-[10px]">불량 이미지 등록</div>
             <div class="text-[14px] text-[#666] leading-[1.6]">
                 <div class="menu-description">
@@ -89,7 +91,7 @@
         <a class="bg-white p-[30px] rounded-[10px] shadow-[0_2px_8px_rgba(0,0,0,0.1)] cursor-pointer transition-all duration-300 block
                     hover:shadow-[0_5px_20px_rgba(0,0,0,0.15)] hover:translate-y-[-5px]"
            th:href="@{/admin/model-settings}">
-            <div class="text-[48px] mb-[15px]">🤖</div>
+            <img class="mb-[15px]" th:src="@{/images/model.png}" alt="model" width="72px" height="72px"/>
             <div class="text-[20px] font-semibold text-[#333] mb-[10px]">모델 선택</div>
             <div class="text-[14px] text-[#666] leading-[1.6]">
                 <div class="menu-description">
@@ -105,7 +107,7 @@
         <a class="bg-white p-[30px] rounded-[10px] shadow-[0_2px_8px_rgba(0,0,0,0.1)] cursor-pointer transition-all duration-300 block
                     hover:shadow-[0_5px_20px_rgba(0,0,0,0.15)] hover:translate-y-[-5px]"
            th:href="@{/admin/embedding}">
-            <div class="text-[48px] mb-[15px]">🔄</div>
+            <img class="mb-[15px]" th:src="@{/images/clip.png}" alt="clip" width="72px" height="72px"/>
             <div class="text-[20px] font-semibold text-[#333] mb-[10px]">CLIP 임베딩 재구축</div>
             <div class="text-[14px] text-[#666] leading-[1.6]">
                 정상/불량 이미지 인덱스 재구축 및 배포
@@ -114,7 +116,7 @@
         <a class="bg-white p-[30px] rounded-[10px] shadow-[0_2px_8px_rgba(0,0,0,0.1)] cursor-pointer transition-all duration-300 block
                     hover:shadow-[0_5px_20px_rgba(0,0,0,0.15)] hover:translate-y-[-5px]"
            th:href="@{/admin/patchcore}">
-            <div class="text-[48px] mb-[15px]">🧠</div>
+            <img class="mb-[15px]" th:src="@{/images/memory-bank.png}" alt="memory-bank" width="72px" height="72px"/>
             <div class="text-[20px] font-semibold text-[#333] mb-[10px]">PatchCore 메모리뱅크 생성</div>
             <div class="text-[14px] text-[#666] leading-[1.6]">
                 <div class="menu-description">
