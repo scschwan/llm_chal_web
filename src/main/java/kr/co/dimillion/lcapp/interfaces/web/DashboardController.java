@@ -24,12 +24,14 @@ public class DashboardController {
     private final ImageRepository imageRepository;
     private final SearchHistoryRepository searchHistoryRepository;
     private final ResponseHistoryRepository responseHistoryRepository;
+    private final DefectTypeRepository defectTypeRepository;
 
-    public DashboardController(ProductRepository productRepository, ImageRepository imageRepository, SearchHistoryRepository searchHistoryRepository, ResponseHistoryRepository responseHistoryRepository) {
+    public DashboardController(ProductRepository productRepository, ImageRepository imageRepository, SearchHistoryRepository searchHistoryRepository, ResponseHistoryRepository responseHistoryRepository, DefectTypeRepository defectTypeRepository) {
         this.productRepository = productRepository;
         this.imageRepository = imageRepository;
         this.searchHistoryRepository = searchHistoryRepository;
         this.responseHistoryRepository = responseHistoryRepository;
+        this.defectTypeRepository = defectTypeRepository;
     }
 
     @GetMapping("/dashboard")
@@ -37,7 +39,9 @@ public class DashboardController {
                             @RequestParam(defaultValue = "0") int productPageNumber,
                             @RequestParam(defaultValue = "10") int productPageSize,
                             @RequestParam(defaultValue = "0") int searchPageNumber,
-                            @RequestParam(defaultValue = "10") int searchPageSize) {
+                            @RequestParam(defaultValue = "10") int searchPageSize,
+                            @RequestParam(defaultValue = "0") int responsePageNumber,
+                            @RequestParam(defaultValue = "10") int responsePageSize) {
         long count = productRepository.count();
         model.addAttribute("productCount", count);
 
@@ -80,36 +84,30 @@ public class DashboardController {
         model.addAttribute("searchPage", searchPage);
         model.addAttribute("searches", searchPage.getContent());
 
+        Page<ResponseHistory> responsePage = responseHistoryRepository.findByOrderByIdDesc(PageRequest.of(responsePageNumber, responsePageSize));
+        model.addAttribute("responsePage", responsePage);
+        List<ResponseDto> responses = responsePage.stream()
+                .map(r -> {
+                    Product product = productRepository.findTop1ByCode(r.getProductCode())
+                            .orElseThrow();
+                    DefectType defectType = defectTypeRepository.findTop1ByCode(r.getDefectCode())
+                            .orElseThrow();
+                    return new ResponseDto(r, product, defectType);
+                }).toList();
+        model.addAttribute("responses", responses);
+
+
         return "dashboard";
     }
 
     @Data
-    public static class SearchDto {
-        private Integer id;
-        private LocalDateTime searchedAt;
-        private String productCode;
-        private String defectCode;
-        private Double similarityScore;
-        private Double anomalyScore;
-
-        public SearchDto(SearchHistory search, ResponseHistory response) {
-            this.id = search.getId();
-            this.searchedAt = search.getSearchedAt();
-            this.productCode = response != null ? response.getProductCode() : null;
-            this.defectCode = response != null ? response.getDefectCode() : null;
-            this.similarityScore = response != null ? response.getSimilarityScore() : null;
-            this.anomalyScore = response != null ? response.getAnomalyScore() : null;
-        }
-    }
-
-    @Data
     public static class ProductDto {
+
         private Integer id;
         private String name;
         private long normalImageCount;
         private long defectImageCount;
         private long searchCount;
-
         public ProductDto(Integer id, String name, long normalImageCount, long defectImageCount, long searchCount) {
             this.id = id;
             this.name = name;
@@ -117,11 +115,44 @@ public class DashboardController {
             this.defectImageCount = defectImageCount;
             this.searchCount = searchCount;
         }
-    }
 
+    }
     private static LocalDateTime getLocalDateTime() {
         LocalDate today = LocalDate.now();
         LocalDate lastSunday = today.with(TemporalAdjusters.previousOrSame(DayOfWeek.SUNDAY));
         return lastSunday.atStartOfDay();
+    }
+
+    @Data
+    public static class ResponseDto {
+        private LocalDateTime executedAt;
+        private String productName;
+        private String defectName;
+        private Double similarityScore;
+        private Double anomalyScore;
+        private String modelType;
+        private String guideContent;
+        private LocalDateTime guideGeneratedAt;
+        private Double processingTime;
+        private Integer feedbackRating;
+        private String feedbackText;
+        private String feedbackUser;
+        private LocalDateTime feedbackAt;
+
+        public ResponseDto(ResponseHistory response, Product product, DefectType defectType) {
+            executedAt = response.getExecutedAt();
+            productName = product.getName();
+            defectName = defectType.getNameKo();
+            similarityScore = response.getSimilarityScore();
+            anomalyScore = response.getAnomalyScore();
+            modelType = response.getModelType();
+            guideContent = response.getGuideContent();
+            guideGeneratedAt = response.getGuideGeneratedAt();
+            processingTime = response.getProcessingTime();
+            feedbackRating = response.getFeedbackRating();
+            feedbackText = response.getFeedbackText();
+            feedbackUser = response.getFeedbackUser();
+            feedbackAt = response.getFeedbackAt();
+        }
     }
 }

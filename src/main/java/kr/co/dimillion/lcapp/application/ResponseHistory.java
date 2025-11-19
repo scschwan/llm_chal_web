@@ -5,6 +5,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -22,4 +24,14 @@ public class ResponseHistory {
     private String defectCode;
     private Double similarityScore;
     private Double anomalyScore;
+    private String modelType;
+    private String guideContent;
+    private LocalDateTime guideGeneratedAt;
+    private Double processingTime;
+    private Integer feedbackRating;
+    private String feedbackText;
+    private String feedbackUser;
+    private LocalDateTime feedbackAt;
+
+    private LocalDateTime executedAt;
 }

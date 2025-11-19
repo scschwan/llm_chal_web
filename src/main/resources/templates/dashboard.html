@@ -134,13 +134,17 @@
             <tbody class="table-row-group vertical-align-middle ">
             <tr th:each="product : ${products}">
                 <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
-                    th:text="*{product.name}">주조제품</td>
+                    th:text="*{product.name}">주조제품
+                </td>
                 <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
-                th:text="*{product.normalImageCount}">0</td>
+                    th:text="*{product.normalImageCount}">0
+                </td>
                 <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
-                    th:text="*{product.defectImageCount}">63</td>
+                    th:text="*{product.defectImageCount}">63
+                </td>
                 <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
-                    th:text="*{product.searchCount}">0</td>
+                    th:text="*{product.searchCount}">0
+                </td>
                 <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">- (준비중)</td>
             </tr>
             </tbody>
@@ -197,13 +201,17 @@
             <tbody class="table-row-group vertical-align-middle ">
             <tr th:each="search : ${searches}">
                 <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
-                    th:text="*{#temporals.format(search.searchedAt, 'yyyy-MM-dd HH:mm:ss')}">2025-11-15 12:49:30</td>
+                    th:text="*{#temporals.format(search.searchedAt, 'yyyy-MM-dd HH:mm:ss')}">2025-11-15 12:49:30
+                </td>
                 <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
-                    th:text="*{search.productCode} ?: '-'">prod1</td>
+                    th:text="*{search.productCode} ?: '-'">prod1
+                </td>
                 <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
-                    th:text="*{search.defectCode} ?: '-'">hole</td>
+                    th:text="*{search.defectCode} ?: '-'">hole
+                </td>
                 <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
-                    th:text="*{search.processingTime} ?: '-'">0.1212</td>
+                    th:text="*{search.processingTime} ?: '-'">0.1212
+                </td>
             </tr>
             </tbody>
         </table>
@@ -229,6 +237,128 @@
                         <a th:if="${!searchPage.last}" th:href="@{|?searchPageNumber=${searchPage.number+1}|}"
                            class="px-3 py-1 border border-gray-300">다음</a>
                         <span th:if="${searchPage.last}"
+                              class="px-3 py-1 border border-gray-200 text-gray-400 cursor-not-allowed">다음</span>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <h2 class="text-[20px] font-semibold text-[#333] mt-[30px] mb-[15px] pb-[10px] border-b-[2px] border-[#667eea]">
+        📄 이상수치, 매뉴얼 생성 및 답변 내역 조회
+    </h2>
+    <div class="bg-white p-[25px] rounded-[10px] shadow-[0_2px_8px_rgba(0,0,0,0.1)] mb-[30px] ">
+        <div class="overflow-x-auto">
+            <table class="w-full border-collapse border-spacing-[2px] border-gray-400 min-w-max">
+                <thead class="bg-[#f5f7fa]">
+                <tr class="table-row">
+                    <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
+                        이상 검출 수행 일자
+                    </th>
+                    <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
+                        제품명
+                    </th>
+                    <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
+                        불량명
+                    </th>
+                    <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
+                        불량 유사도 수치
+                    </th>
+                    <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
+                        이상 수치
+                    </th>
+                    <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
+                        대응 매뉴얼 생성 모델링
+                    </th>
+                    <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
+                        대응 매뉴얼 생성 답변 내역
+                    </th>
+                    <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
+                        매뉴얼 답변 생성 일자
+                    </th>
+                    <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
+                        매뉴얼 답변 생성 처리 시간
+                    </th>
+                    <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
+                        피드백 점수
+                    </th>
+                    <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
+                        피드백 내용
+                    </th>
+                    <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
+                        작성자명
+                    </th>
+                    <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
+                        피드백 생성 일자
+                    </th>
+                </tr>
+                </thead>
+                <tbody class="table-row-group vertical-align-middle ">
+                <tr th:each="response : ${responses}">
+                    <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
+                        th:text="*{#temporals.format(response.executedAt, 'yyyy-MM-dd HH:mm:ss')}">2025-11-15 12:49:30
+                    </td>
+                    <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
+                        th:text="*{response.productName} ?: '-'">prod1
+                    </td>
+                    <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
+                        th:text="*{response.defectName} ?: '-'">hole
+                    </td>
+                    <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
+                        th:text="*{response.similarityScore} ?: '-'">0.1212
+                    </td>
+                    <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
+                        th:text="*{response.anomalyScore}">2025-11-15 12:49:30
+                    </td>
+                    <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
+                        th:text="*{response.modelType}">2025-11-15 12:49:30
+                    </td>
+                    <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px] truncate max-w-[500px]"
+                        th:text="*{response.guideContent}">2025-11-15 12:49:30
+                    </td>
+                    <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
+                        th:text="*{#temporals.format(response.guideGeneratedAt, 'yyyy-MM-dd HH:mm:ss')}">2025-11-15 12:49:30
+                    </td>
+                    <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
+                        th:text="*{response.processingTime}">2025-11-15 12:49:30
+                    </td>
+                    <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
+                        th:text="*{response.feedbackRating}">2025-11-15 12:49:30
+                    </td>
+                    <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px] truncate max-w-[300px]"
+                        th:text="*{response.feedbackText}">2025-11-15 12:49:30
+                    </td>
+                    <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
+                        th:text="*{response.feedbackUser}">2025-11-15 12:49:30
+                    </td>
+                    <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
+                        th:text="*{#temporals.format(response.feedbackAt, 'yyyy-MM-dd HH:mm:ss')}">2025-11-15 12:49:30
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="flex justify-center mt-6">
+            <nav>
+                <ul class="inline-flex -space-x-px text-[12px]">
+                    <!-- Previous -->
+                    <li>
+                        <a th:if="${!responsePage.first}" th:href="@{|?responsePageNumber=${responsePage.number-1}|}"
+                           class="px-3 py-1 border border-gray-300">이전</a>
+                        <span th:if="${responsePage.first}"
+                              class="px-3 py-1 border border-gray-200 text-gray-400 cursor-not-allowed">이전</span>
+                    </li>
+                    <!-- Page Numbers -->
+                    <li th:each="i : ${#numbers.sequence(0, responsePage.totalPages-1)}">
+                        <a th:href="@{|?responsePageNumber=${i}|}"
+                           th:text="${i + 1}"
+                           th:classappend="${responsePage.number == i} ? 'font-bold text-[#667eea]' : ''"
+                           class="px-3 py-1 border border-gray-200"></a>
+                    </li>
+                    <!-- Next -->
+                    <li>
+                        <a th:if="${!responsePage.last}" th:href="@{|?responsePageNumber=${responsePage.number+1}|}"
+                           class="px-3 py-1 border border-gray-300">다음</a>
+                        <span th:if="${responsePage.last}"
                               class="px-3 py-1 border border-gray-200 text-gray-400 cursor-not-allowed">다음</span>
                     </li>
                 </ul>
