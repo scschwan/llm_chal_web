@@ -105,53 +105,6 @@
         </div>
     </div>
     <h2 class="text-[20px] font-semibold text-[#333] mt-[30px] mb-[15px] pb-[10px] border-b-[2px] border-[#667eea]">
-        🕒 최근 검사 내역
-    </h2>
-    <div class="bg-white p-[25px] rounded-[10px] shadow-[0_2px_8px_rgba(0,0,0,0.1)] mb-[30px]">
-        <div class="flex justify-between items-center mb-5">
-            <div class="text-[18px] font-semibold text-[#333]">최근 20건</div>
-        </div>
-        <table class="w-full border-collapse border-spacing-[2px] border-gray-400">
-            <thead class="bg-[#f5f7fa]">
-            <tr class="table-row">
-                <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
-                    시간
-                </th>
-                <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
-                    제품
-                </th>
-                <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
-                    불량 유형
-                </th>
-                <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
-                    유사도 점수
-                </th>
-                <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
-                    이상 점수
-                </th>
-                <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
-                    작업자
-                </th>
-            </tr>
-            </thead>
-            <tbody class="table-row-group vertical-align-middle ">
-            <tr th:each="search : ${searches}">
-                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
-                    th:text="*{#temporals.format(search.searchedAt, 'yyyy-MM-dd HH:mm:ss')}">2025-11-15 12:49:30</td>
-                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
-                    th:text="*{search.productCode} ?: '-'">prod1</td>
-                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
-                    th:text="*{search.defectCode} ?: '-'">hole</td>
-                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
-                    th:text="*{search.similarityScore} ?: '-'">0.1212</td>
-                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
-                    th:text="*{search.anomalyScore} ?: '-'">0.1234</td>
-                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]">worker</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <h2 class="text-[20px] font-semibold text-[#333] mt-[30px] mb-[15px] pb-[10px] border-b-[2px] border-[#667eea]">
         📦 제품별 통계
     </h2>
     <div class="bg-white p-[25px] rounded-[10px] shadow-[0_2px_8px_rgba(0,0,0,0.1)] mb-[30px]">
@@ -197,23 +150,85 @@
                 <ul class="inline-flex -space-x-px text-[12px]">
                     <!-- Previous -->
                     <li>
-                        <a th:if="${!productPage.first}" th:href="@{|?page=${productPage.number-1}|}"
+                        <a th:if="${!productPage.first}" th:href="@{|?productPageNumber=${productPage.number-1}|}"
                            class="px-3 py-1 border border-gray-300">이전</a>
                         <span th:if="${productPage.first}"
                               class="px-3 py-1 border border-gray-200 text-gray-400 cursor-not-allowed">이전</span>
                     </li>
                     <!-- Page Numbers -->
                     <li th:each="i : ${#numbers.sequence(0, productPage.totalPages-1)}">
-                        <a th:href="@{|?page=${i}|}"
+                        <a th:href="@{|?productPageNumber=${i}|}"
                            th:text="${i + 1}"
                            th:classappend="${productPage.number == i} ? 'font-bold text-[#667eea]' : ''"
                            class="px-3 py-1 border border-gray-200"></a>
                     </li>
                     <!-- Next -->
                     <li>
-                        <a th:if="${!productPage.last}" th:href="@{|?page=${productPage.number+1}|}"
+                        <a th:if="${!productPage.last}" th:href="@{|?productPageNumber=${productPage.number+1}|}"
                            class="px-3 py-1 border border-gray-300">다음</a>
                         <span th:if="${productPage.last}"
+                              class="px-3 py-1 border border-gray-200 text-gray-400 cursor-not-allowed">다음</span>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <h2 class="text-[20px] font-semibold text-[#333] mt-[30px] mb-[15px] pb-[10px] border-b-[2px] border-[#667eea]">
+        🔎 유사도 검색 결과조회
+    </h2>
+    <div class="bg-white p-[25px] rounded-[10px] shadow-[0_2px_8px_rgba(0,0,0,0.1)] mb-[30px]">
+        <table class="w-full border-collapse border-spacing-[2px] border-gray-400">
+            <thead class="bg-[#f5f7fa]">
+            <tr class="table-row">
+                <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
+                    검색일자
+                </th>
+                <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
+                    제품명
+                </th>
+                <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
+                    불량명
+                </th>
+                <th class="p-3 text-left font-semibold text-[#333] text-[14px] border-b-2 border-b-[#e0e0e0] table-cell">
+                    수행시간
+                </th>
+            </tr>
+            </thead>
+            <tbody class="table-row-group vertical-align-middle ">
+            <tr th:each="search : ${searches}">
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
+                    th:text="*{#temporals.format(search.searchedAt, 'yyyy-MM-dd HH:mm:ss')}">2025-11-15 12:49:30</td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
+                    th:text="*{search.productCode} ?: '-'">prod1</td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
+                    th:text="*{search.defectCode} ?: '-'">hole</td>
+                <td class="p-3 border-b-[1px] border-b-[#f0f0f0] text-[#666] text-[14px]"
+                    th:text="*{search.processingTime} ?: '-'">0.1212</td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="flex justify-center mt-6">
+            <nav>
+                <ul class="inline-flex -space-x-px text-[12px]">
+                    <!-- Previous -->
+                    <li>
+                        <a th:if="${!searchPage.first}" th:href="@{|?searchPageNumber=${searchPage.number-1}|}"
+                           class="px-3 py-1 border border-gray-300">이전</a>
+                        <span th:if="${searchPage.first}"
+                              class="px-3 py-1 border border-gray-200 text-gray-400 cursor-not-allowed">이전</span>
+                    </li>
+                    <!-- Page Numbers -->
+                    <li th:each="i : ${#numbers.sequence(0, searchPage.totalPages-1)}">
+                        <a th:href="@{|?searchPageNumber=${i}|}"
+                           th:text="${i + 1}"
+                           th:classappend="${searchPage.number == i} ? 'font-bold text-[#667eea]' : ''"
+                           class="px-3 py-1 border border-gray-200"></a>
+                    </li>
+                    <!-- Next -->
+                    <li>
+                        <a th:if="${!searchPage.last}" th:href="@{|?searchPageNumber=${searchPage.number+1}|}"
+                           class="px-3 py-1 border border-gray-300">다음</a>
+                        <span th:if="${searchPage.last}"
                               class="px-3 py-1 border border-gray-200 text-gray-400 cursor-not-allowed">다음</span>
                     </li>
                 </ul>

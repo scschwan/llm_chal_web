@@ -16,5 +16,7 @@ public class SearchHistory {
     @Column(name = "search_id")
     private Integer id;
     private String productCode;
+    private String defectCode;
+    private double processingTime;
     private LocalDateTime searchedAt;
 }

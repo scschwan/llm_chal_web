@@ -3,20 +3,18 @@ package kr.co.dimillion.lcapp.interfaces.web;
 import kr.co.dimillion.lcapp.application.*;
 import lombok.Data;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.security.core.parameters.P;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
@@ -35,7 +33,11 @@ public class DashboardController {
     }
 
     @GetMapping("/dashboard")
-    public String dashboard(Model model, @PageableDefault Pageable pageable) {
+    public String dashboard(Model model,
+                            @RequestParam(defaultValue = "0") int productPageNumber,
+                            @RequestParam(defaultValue = "10") int productPageSize,
+                            @RequestParam(defaultValue = "0") int searchPageNumber,
+                            @RequestParam(defaultValue = "10") int searchPageSize) {
         long count = productRepository.count();
         model.addAttribute("productCount", count);
 
@@ -62,17 +64,7 @@ public class DashboardController {
         long thisWeekSearchCount = searchHistoryRepository.countBySearchedAtGreaterThanEqual(startOfWeek);
         model.addAttribute("thisWeekSearchCount", thisWeekSearchCount);
 
-        List<SearchHistory> searches = searchHistoryRepository.findTop20ByOrderByIdDesc();
-        List<SearchDto> searchDtoList = searches.stream()
-                .map(s -> {
-                    ResponseHistory r = responseHistoryRepository.findTop1BySearchHistory(s)
-                            .orElse(null);
-                    return new SearchDto(s, r);
-                })
-                .toList();
-        model.addAttribute("searches", searchDtoList);
-
-        Page<Product> productPage = productRepository.findAll(pageable);
+        Page<Product> productPage = productRepository.findAll(PageRequest.of(productPageNumber, productPageSize));
         model.addAttribute("productPage", productPage);
         List<ProductDto> productDtoList = productPage.getContent()
                 .stream()
@@ -83,6 +75,10 @@ public class DashboardController {
                     return new ProductDto(p.getId(), p.getName(), nc, dc, sc);
                 }).toList();
         model.addAttribute("products", productDtoList);
+
+        Page<SearchHistory> searchPage = searchHistoryRepository.findByOrderByIdDesc(PageRequest.of(searchPageNumber, searchPageSize));
+        model.addAttribute("searchPage", searchPage);
+        model.addAttribute("searches", searchPage.getContent());
 
         return "dashboard";
     }
