@@ -91,7 +91,6 @@ public class DashboardController {
                 .toList();
         model.addAttribute("responses", responses);
 
-
         return "dashboard";
     }
 
