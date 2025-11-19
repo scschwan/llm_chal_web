@@ -87,13 +87,8 @@ public class DashboardController {
         Page<ResponseHistory> responsePage = responseHistoryRepository.findByOrderByIdDesc(PageRequest.of(responsePageNumber, responsePageSize));
         model.addAttribute("responsePage", responsePage);
         List<ResponseDto> responses = responsePage.stream()
-                .map(r -> {
-                    Product product = productRepository.findTop1ByCode(r.getProductCode())
-                            .orElseThrow();
-                    DefectType defectType = defectTypeRepository.findTop1ByCode(r.getDefectCode())
-                            .orElseThrow();
-                    return new ResponseDto(r, product, defectType);
-                }).toList();
+                .map(ResponseDto::new)
+                .toList();
         model.addAttribute("responses", responses);
 
 
@@ -139,10 +134,10 @@ public class DashboardController {
         private String feedbackUser;
         private LocalDateTime feedbackAt;
 
-        public ResponseDto(ResponseHistory response, Product product, DefectType defectType) {
+        public ResponseDto(ResponseHistory response) {
             executedAt = response.getExecutedAt();
-            productName = product.getName();
-            defectName = defectType.getNameKo();
+            productName = response.getSearchHistory().getProductCode();
+            defectName = response.getSearchHistory().getDefectCode();
             similarityScore = response.getSimilarityScore();
             anomalyScore = response.getAnomalyScore();
             modelType = response.getModelType();
