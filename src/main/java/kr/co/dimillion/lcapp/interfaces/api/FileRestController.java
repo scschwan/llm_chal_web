@@ -1,4 +1,4 @@
-package kr.co.dimillion.lcapp.interfaces.web;
+package kr.co.dimillion.lcapp.interfaces.api;
 
 import kr.co.dimillion.lcapp.application.FileSystem;
 import kr.co.dimillion.lcapp.application.ManualRepository;
@@ -14,7 +14,7 @@ import java.nio.charset.StandardCharsets;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-public class FileApiController {
+public class FileRestController {
     private final FileSystem fileSystem;
     private final ManualRepository manualRepository;
 
