@@ -14,7 +14,7 @@ import java.nio.charset.StandardCharsets;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-public class FileRestController {
+public class FileController {
     private final FileSystem fileSystem;
     private final ManualRepository manualRepository;
 

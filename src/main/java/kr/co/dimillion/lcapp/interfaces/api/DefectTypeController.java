@@ -13,11 +13,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-public class DefectTypeRestController {
+public class DefectTypeController {
     private final DefectTypeRepository defectTypeRepository;
     private final ProductRepository productRepository;
 
-    public DefectTypeRestController(DefectTypeRepository defectTypeRepository, ProductRepository productRepository) {
+    public DefectTypeController(DefectTypeRepository defectTypeRepository, ProductRepository productRepository) {
         this.defectTypeRepository = defectTypeRepository;
         this.productRepository = productRepository;
     }
