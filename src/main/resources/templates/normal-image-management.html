@@ -122,21 +122,24 @@
         </div>
         <div class="flex justify-center mt-6">
             <nav>
-                <ul class="inline-flex -space-x-px text-[12px]">
+                <ul class="inline-flex -space-x-px items-center text-[12px]">
+                    <!-- 이전 버튼 -->
                     <li>
-                        <a th:if="${!normalImagePage.first}" th:href="@{|?page=${normalImagePage.number-1}|}"
+                        <a th:if="${!normalImagePage.first}"
+                           th:href="@{|?page=${normalImagePage.number-1}|}"
                            class="px-3 py-1 border border-gray-300">이전</a>
                         <span th:if="${normalImagePage.first}"
                               class="px-3 py-1 border border-gray-200 text-gray-400 cursor-not-allowed">이전</span>
                     </li>
-                    <li th:each="i : ${#numbers.sequence(0, normalImagePage.totalPages-1)}">
-                        <a th:href="@{|?page=${i}|}"
-                           th:text="${i + 1}"
-                           th:classappend="${normalImagePage.number == i} ? 'font-bold text-[#2196F3]' : ''"
-                           class="px-3 py-1 border border-gray-200"></a>
-                    </li>
+                    <!-- 현재 페이지 숫자 (1부터 시작) -->
                     <li>
-                        <a th:if="${!normalImagePage.last}" th:href="@{|?page=${normalImagePage.number+1}|}"
+                        <span class="px-3 py-1 border border-gray-200 font-bold text-[#2196F3]"
+                              th:text="${normalImagePage.number + 1}"></span>
+                    </li>
+                    <!-- 다음 버튼 -->
+                    <li>
+                        <a th:if="${!normalImagePage.last}"
+                           th:href="@{|?page=${normalImagePage.number+1}|}"
                            class="px-3 py-1 border border-gray-300">다음</a>
                         <span th:if="${normalImagePage.last}"
                               class="px-3 py-1 border border-gray-200 text-gray-400 cursor-not-allowed">다음</span>
