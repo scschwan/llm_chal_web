@@ -315,6 +315,12 @@
   .h-5 {
     height: calc(var(--spacing) * 5);
   }
+  .h-\[20px\] {
+    height: 20px;
+  }
+  .h-\[24\.5px\] {
+    height: 24.5px;
+  }
   .h-\[49px\] {
     height: 49px;
   }
@@ -336,17 +342,32 @@
   .w-5 {
     width: calc(var(--spacing) * 5);
   }
+  .w-\[40px\] {
+    width: 40px;
+  }
+  .w-\[46px\] {
+    width: 46px;
+  }
   .w-\[49\%\] {
     width: 49%;
   }
+  .w-\[60px\] {
+    width: 60px;
+  }
   .w-\[70px\] {
     width: 70px;
+  }
+  .w-\[100px\] {
+    width: 100px;
   }
   .w-\[160px\] {
     width: 160px;
   }
   .w-\[320px\] {
     width: 320px;
+  }
+  .w-auto {
+    width: auto;
   }
   .w-full {
     width: 100%;
@@ -670,6 +691,12 @@
   .bg-blue-500 {
     background-color: var(--color-blue-500);
   }
+  .bg-gray-200 {
+    background-color: var(--color-gray-200);
+  }
+  .bg-gray-300 {
+    background-color: var(--color-gray-300);
+  }
   .bg-gray-500 {
     background-color: var(--color-gray-500);
   }
@@ -750,6 +777,9 @@
   }
   .px-8 {
     padding-inline: calc(var(--spacing) * 8);
+  }
+  .px-\[3px\] {
+    padding-inline: 3px;
   }
   .px-\[6px\] {
     padding-inline: 6px;
@@ -889,6 +919,14 @@
   }
   .text-\[60px\] {
     font-size: 60px;
+  }
+  .leading-1 {
+    --tw-leading: calc(var(--spacing) * 1);
+    line-height: calc(var(--spacing) * 1);
+  }
+  .leading-3 {
+    --tw-leading: calc(var(--spacing) * 3);
+    line-height: calc(var(--spacing) * 3);
   }
   .leading-5 {
     --tw-leading: calc(var(--spacing) * 5);
@@ -1167,6 +1205,11 @@
       border-color: var(--color-blue-300);
     }
   }
+  .focus\:border-gray-300 {
+    &:focus {
+      border-color: var(--color-gray-300);
+    }
+  }
   .focus\:outline-none {
     &:focus {
       --tw-outline-style: none;
@@ -1176,6 +1219,16 @@
   .active\:bg-gray-100 {
     &:active {
       background-color: var(--color-gray-100);
+    }
+  }
+  .active\:bg-gray-300 {
+    &:active {
+      background-color: var(--color-gray-300);
+    }
+  }
+  .active\:text-gray-300 {
+    &:active {
+      color: var(--color-gray-300);
     }
   }
   .active\:text-gray-500 {
