@@ -148,32 +148,62 @@
                 </div>
             </div>
         </div>
-        <div class="flex justify-center mt-6">
-            <nav>
-                <ul class="inline-flex -space-x-px items-center text-[12px]">
-                    <!-- 이전 버튼 -->
-                    <li>
-                        <a th:if="${!defectImagePage.first}"
-                           th:href="@{|?page=${defectImagePage.number-1}|}"
-                           class="px-3 py-1 border border-gray-300">이전</a>
-                        <span th:if="${defectImagePage.first}"
-                              class="px-3 py-1 border border-gray-200 text-gray-400 cursor-not-allowed">이전</span>
-                    </li>
-                    <!-- 현재 페이지 숫자 (1부터 시작) -->
-                    <li>
-                        <span class="px-3 py-1 border border-gray-200 font-bold text-[#f44336]"
-                              th:text="${defectImagePage.number + 1}"></span>
-                    </li>
-                    <!-- 다음 버튼 -->
-                    <li>
-                        <a th:if="${!defectImagePage.last}"
-                           th:href="@{|?page=${defectImagePage.number+1}|}"
-                           class="px-3 py-1 border border-gray-300">다음</a>
-                        <span th:if="${defectImagePage.last}"
-                              class="px-3 py-1 border border-gray-200 text-gray-400 cursor-not-allowed">다음</span>
-                    </li>
-                </ul>
-            </nav>
+        <div class="bg-white py-5 flex items-center justify-between border-t border-gray-200 px-1 w-full">
+            <div class="flex-1"></div>
+            <div class="flex-1 flex items-center justify-center">
+                <nav id="pagination-actions" class="relative z-0 inline-flex shadow-sm">
+                    <a id="pagination-previous"
+                       th:href="@{|?page=${defectImagePage.number-1}|}"
+                       class="relative inline-flex items-center px-2 py-2 rounded-l-md border bg-white text-sm leading-5 font-medium"
+                       th:aria-label="이전"
+                       th:classappend="${defectImagePage.isFirst()?'pointer-events-none text-gray-200 border-gray-200':'border-gray-300 text-gray-500 hover:text-gray-400 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150'}"
+                       th:disabled="${defectImagePage.isFirst()}">
+                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                  d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                                  clip-rule="evenodd"/>
+                        </svg>
+                    </a>
+
+                    <th:block
+                            th:with="startPage=${T(java.lang.Math).max(1, defectImagePage.getNumber() - 2)},endPage=${T(java.lang.Math).min(startPage + 6, defectImagePage.getTotalPages())}">
+                        <a th:each="pageNumber : ${#numbers.sequence(startPage, endPage)}"
+                           th:id="${'pagination-page-' + pageNumber}"
+                           th:href="@{|?page=${pageNumber - 1}|}"
+                           class="-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm leading-5 font-medium focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150"
+                           th:classappend="${defectImagePage.number == pageNumber - 1?'font-bold text-[#F44336]':''}"
+                        >
+                            <span th:text="${pageNumber}" th:remove="tag"></span>
+                        </a>
+                    </th:block>
+
+                    <a id="pagination-next"
+                       th:href="@{|?page=${defectImagePage.number+1}|}"
+                       class="-ml-px relative inline-flex items-center px-2 py-2 rounded-r-md border bg-white text-sm leading-5 font-medium"
+                       th:aria-label="다음"
+                       th:classappend="${defectImagePage.isLast()?'pointer-events-none text-gray-200 border-gray-200':'border-gray-300 text-gray-500 hover:text-gray-400 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150'}"
+                       th:disabled="${defectImagePage.isLast()}">
+                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                  clip-rule="evenodd"/>
+                        </svg>
+                    </a>
+                </nav>
+            </div>
+            <div class="flex-1 text-right">
+                <p id="pagination-summary" class="text-sm leading-5 text-gray-700">
+                    총
+                    <span class="font-medium" th:text="${defectImagePage.getTotalElements()}">97</span>
+                    개 결과 중
+                    <span class="font-medium"
+                          th:text="${(defectImagePage.getSize() * defectImagePage.getNumber()) + 1}">1</span>
+                    번부터
+                    <span class="font-medium"
+                          th:text="${(defectImagePage.getSize() * defectImagePage.getNumber()) + defectImagePage.getNumberOfElements()}">10</span>
+                    번까지 표시 중
+                </p>
+            </div>
         </div>
     </div>
 </div>
