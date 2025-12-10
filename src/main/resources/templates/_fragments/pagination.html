@@ -9,7 +9,7 @@
     <div class="flex-1 flex items-center justify-center">
         <nav id="pagination-actions" class="relative z-0 inline-flex text-[12px]">
             <a id="pagination-previous"
-               th:href="@{|?page=${page.number-1}|}"
+               th:href="@{|?${pageParam}=${page.number-1}|}"
                class="relative inline-flex items-center px-3 py-1 rounded-l-md border bg-white leading-3 font-medium"
                th:aria-label="이전"
                th:classappend="${page.isFirst()?'pointer-events-none text-gray-200 border-gray-200':'border-gray-300 hover:text-gray-400 focus:z-10 focus:outline-none focus:border-gray-300 focus:shadow-outline-blue active:bg-gray-300 active:text-gray-300 transition ease-in-out duration-150'}"
@@ -23,7 +23,7 @@
                     th:with="startPage=${T(java.lang.Math).max(1, page.getNumber() - 2)},endPage=${T(java.lang.Math).min(startPage + 6, page.getTotalPages())}">
                 <a th:each="pageNumber : ${#numbers.sequence(startPage, endPage)}"
                    th:id="${'pagination-page-' + pageNumber}"
-                   th:href="@{|?page=${pageNumber - 1}|}"
+                   th:href="@{|?${pageParam}=${pageNumber - 1}|}"
                    class="-ml-px relative inline-flex items-center px-3 py-1 border border-gray-300 leading-3 font-medium focus:z-10 focus:outline-none focus:border-gray-300 focus:shadow-outline-blue active:bg-gray-300 active:text-gray-300 transition ease-in-out duration-150 hover:text-gray-400"
                    th:classappend="${page.number == pageNumber - 1?'font-bold text-[#667EEA]':''}"
                 >
@@ -32,7 +32,7 @@
             </th:block>
 
             <a id="pagination-next"
-               th:href="@{|?page=${page.number+1}|}"
+               th:href="@{|?${pageParam}=${page.number+1}|}"
                class="-ml-px relative inline-flex items-center px-3 py-1 rounded-r-md border bg-white leading-3 font-medium"
                th:aria-label="다음"
                th:classappend="${page.isLast()?'pointer-events-none text-gray-200 border-gray-200':'border-gray-300 hover:text-gray-400 focus:z-10 focus:outline-none focus:border-gray-300 focus:shadow-outline-blue active:bg-gray-300 active:text-gray-300 transition ease-in-out duration-150'}"

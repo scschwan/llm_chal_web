@@ -108,10 +108,10 @@
                                 th:text="${product.name}">
                         </option>
                     </select>
-                    <label for="defectType"
+                    <lasubel for="defectType"
                            class="mr-[10px] font-medium">
                         불량 유형:
-                    </label>
+                    </lasubel>
                     <select id="inquiryDefectTypeSelect"
                             th:field="*{defectTypeId}"
                             class="p-2 border border-[#ddd] rounded-[4px] bg-white text-[13px]"
@@ -148,7 +148,7 @@
                 </div>
             </div>
         </div>
-        <div th:replace="~{_fragments/pagination :: controls(page=${defectImagePage})}"></div>
+        <div th:replace="~{_fragments/pagination :: controls(page=${defectImagePage},pageParam=${'page'})}"></div>
     </div>
 </div>
 
