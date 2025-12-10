@@ -149,33 +149,7 @@
             </tr>
             </tbody>
         </table>
-        <div class="flex justify-center mt-6">
-            <nav>
-                <ul class="inline-flex -space-x-px text-[12px]">
-                    <!-- Previous -->
-                    <li>
-                        <a th:if="${!productPage.first}" th:href="@{|?productPageNumber=${productPage.number-1}|}"
-                           class="px-3 py-1 border border-gray-300">이전</a>
-                        <span th:if="${productPage.first}"
-                              class="px-3 py-1 border border-gray-200 text-gray-400 cursor-not-allowed">이전</span>
-                    </li>
-                    <!-- Page Numbers -->
-                    <li th:each="i : ${#numbers.sequence(0, productPage.totalPages-1)}">
-                        <a th:href="@{|?productPageNumber=${i}|}"
-                           th:text="${i + 1}"
-                           th:classappend="${productPage.number == i} ? 'font-bold text-[#667eea]' : ''"
-                           class="px-3 py-1 border border-gray-200"></a>
-                    </li>
-                    <!-- Next -->
-                    <li>
-                        <a th:if="${!productPage.last}" th:href="@{|?productPageNumber=${productPage.number+1}|}"
-                           class="px-3 py-1 border border-gray-300">다음</a>
-                        <span th:if="${productPage.last}"
-                              class="px-3 py-1 border border-gray-200 text-gray-400 cursor-not-allowed">다음</span>
-                    </li>
-                </ul>
-            </nav>
-        </div>
+        <div th:replace="~{_fragments/pagination :: controls(page=${productPage},pageParam=${'productPageNumber'})}"></div>
     </div>
     <h2 class="text-[20px] font-semibold text-[#333] mt-[30px] mb-[15px] pb-[10px] border-b-[2px] border-[#667eea]">
         🔎 유사도 검색 결과조회
@@ -215,33 +189,7 @@
             </tr>
             </tbody>
         </table>
-        <div class="flex justify-center mt-6">
-            <nav>
-                <ul class="inline-flex -space-x-px text-[12px]">
-                    <!-- Previous -->
-                    <li>
-                        <a th:if="${!searchPage.first}" th:href="@{|?searchPageNumber=${searchPage.number-1}|}"
-                           class="px-3 py-1 border border-gray-300">이전</a>
-                        <span th:if="${searchPage.first}"
-                              class="px-3 py-1 border border-gray-200 text-gray-400 cursor-not-allowed">이전</span>
-                    </li>
-                    <!-- Page Numbers -->
-                    <li th:each="i : ${#numbers.sequence(0, searchPage.totalPages-1)}">
-                        <a th:href="@{|?searchPageNumber=${i}|}"
-                           th:text="${i + 1}"
-                           th:classappend="${searchPage.number == i} ? 'font-bold text-[#667eea]' : ''"
-                           class="px-3 py-1 border border-gray-200"></a>
-                    </li>
-                    <!-- Next -->
-                    <li>
-                        <a th:if="${!searchPage.last}" th:href="@{|?searchPageNumber=${searchPage.number+1}|}"
-                           class="px-3 py-1 border border-gray-300">다음</a>
-                        <span th:if="${searchPage.last}"
-                              class="px-3 py-1 border border-gray-200 text-gray-400 cursor-not-allowed">다음</span>
-                    </li>
-                </ul>
-            </nav>
-        </div>
+        <div th:replace="~{_fragments/pagination :: controls(page=${searchPage},pageParam=${'searchPageNumber'})}"></div>
     </div>
     <h2 class="text-[20px] font-semibold text-[#333] mt-[30px] mb-[15px] pb-[10px] border-b-[2px] border-[#667eea]">
         📄 이상수치, 매뉴얼 생성 및 답변 내역 조회
@@ -337,33 +285,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="flex justify-center mt-6">
-            <nav>
-                <ul class="inline-flex -space-x-px text-[12px]">
-                    <!-- Previous -->
-                    <li>
-                        <a th:if="${!responsePage.first}" th:href="@{|?responsePageNumber=${responsePage.number-1}|}"
-                           class="px-3 py-1 border border-gray-300">이전</a>
-                        <span th:if="${responsePage.first}"
-                              class="px-3 py-1 border border-gray-200 text-gray-400 cursor-not-allowed">이전</span>
-                    </li>
-                    <!-- Page Numbers -->
-                    <li th:each="i : ${#numbers.sequence(0, responsePage.totalPages-1)}">
-                        <a th:href="@{|?responsePageNumber=${i}|}"
-                           th:text="${i + 1}"
-                           th:classappend="${responsePage.number == i} ? 'font-bold text-[#667eea]' : ''"
-                           class="px-3 py-1 border border-gray-200"></a>
-                    </li>
-                    <!-- Next -->
-                    <li>
-                        <a th:if="${!responsePage.last}" th:href="@{|?responsePageNumber=${responsePage.number+1}|}"
-                           class="px-3 py-1 border border-gray-300">다음</a>
-                        <span th:if="${responsePage.last}"
-                              class="px-3 py-1 border border-gray-200 text-gray-400 cursor-not-allowed">다음</span>
-                    </li>
-                </ul>
-            </nav>
-        </div>
+        <div th:replace="~{_fragments/pagination :: controls(page=${responsePage},pageParam=${'responsePageNumber'})}"></div>
     </div>
 </div>
 </body>

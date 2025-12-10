@@ -111,30 +111,7 @@
             </tbody>
 
         </table>
-        <div class="flex justify-center mt-6">
-            <nav>
-                <ul class="inline-flex -space-x-px text-[12px]">
-                    <li>
-                        <a th:if="${!manualPage.first}" th:href="@{|?page=${manualPage.number-1}|}"
-                           class="px-3 py-1 border border-gray-300">이전</a>
-                        <span th:if="${manualPage.first}"
-                              class="px-3 py-1 border border-gray-200 text-gray-400 cursor-not-allowed">이전</span>
-                    </li>
-                    <li th:each="i : ${#numbers.sequence(0, manualPage.totalPages-1)}">
-                        <a th:href="@{|?page=${i}|}"
-                           th:text="${i + 1}"
-                           th:classappend="${manualPage.number == i} ? 'font-bold text-[#9C27B0]' : ''"
-                           class="px-3 py-1 border border-gray-200"></a>
-                    </li>
-                    <li>
-                        <a th:if="${!manualPage.last}" th:href="@{|?page=${manualPage.number+1}|}"
-                           class="px-3 py-1 border border-gray-300">다음</a>
-                        <span th:if="${manualPage.last}"
-                              class="px-3 py-1 border border-gray-200 text-gray-400 cursor-not-allowed">다음</span>
-                    </li>
-                </ul>
-            </nav>
-        </div>
+        <div th:replace="~{_fragments/pagination :: controls(page=${manualPage},pageParam=${'page'})}"></div>
     </div>
 </div>
 
