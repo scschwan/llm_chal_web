@@ -25,7 +25,7 @@
                    th:id="${'pagination-page-' + pageNumber}"
                    th:href="@{|?page=${pageNumber - 1}|}"
                    class="-ml-px relative inline-flex items-center px-3 py-1 border border-gray-300 leading-3 font-medium focus:z-10 focus:outline-none focus:border-gray-300 focus:shadow-outline-blue active:bg-gray-300 active:text-gray-300 transition ease-in-out duration-150 hover:text-gray-400"
-                   th:classappend="${page.number == pageNumber - 1?'font-bold bg-gray-200':''}"
+                   th:classappend="${page.number == pageNumber - 1?'font-bold text-[#667EEA]':''}"
                 >
                     <span th:text="${pageNumber}" th:remove="tag"></span>
                 </a>
